@@ -102,9 +102,7 @@ async function fetchSubConvert(sub: string, { backend }: Query): Promise<any> {
   const response = await fetch(url);
   if (!response.ok) {
     const message: string = await response.text();
-    throw new HTTPException(response.status as any, {
-      message: `Failed to fetch "${sub}": ${message}`,
-    });
+    throw new HTTPException(response.status as any, { message: message });
   }
   const data = await response.json();
   return data;
