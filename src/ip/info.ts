@@ -69,7 +69,7 @@ type IpInfo = {
 
 appIpInfo.openapi(
   createRoute({
-    summary: "Get IP info",
+    summary: "Get info about client IP address",
     method: "get",
     path: "/",
     request: {

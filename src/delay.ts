@@ -6,7 +6,7 @@ const DEFAULT_DELAY_MILLISECONDS = 5000;
 
 appDelay.openapi(
   createRoute({
-    summary: "Return after a delay",
+    summary: `Return after ${DEFAULT_DELAY_MILLISECONDS}ms delay`,
     method: "head",
     path: "/",
     responses: {
@@ -26,7 +26,7 @@ appDelay.openapi(
 
 appDelay.openapi(
   createRoute({
-    summary: "Return after a delay",
+    summary: `Return after ${DEFAULT_DELAY_MILLISECONDS}ms delay`,
     method: "get",
     path: "/",
     responses: {
