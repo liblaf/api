@@ -103,6 +103,7 @@ export function defaultRoute(query: Query): Route {
       geosite("bing"),
       geosite("category-ads-all"),
       geosite("category-games@cn"),
+      geosite("cn"),
       geosite("geolocation-!cn"),
       geosite("geolocation-cn"),
       geosite("openai"),

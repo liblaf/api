@@ -11,6 +11,6 @@ export function defaultLog(query: Query): Log {
   return {
     disabled: false,
     level: "warn",
-    timestamp: true,
+    timestamp: false,
   };
 }
