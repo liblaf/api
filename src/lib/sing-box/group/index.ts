@@ -89,7 +89,7 @@ export class Emby implements GroupSelector {
       tag: this.tag,
       type: "urltest",
       outbounds: this.outbounds,
-      url: "https://cp.cloudflare.com",
+      url: "https://emby.aca.best",
     };
   }
 

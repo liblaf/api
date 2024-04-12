@@ -18,6 +18,7 @@ type RouteRuleDefault = {
   network?: ("tcp" | "udp")[];
   auth_user?: string[];
   protocol?: string[];
+  domain_suffix?: string[];
   ip_is_private?: boolean;
   port?: number[];
   clash_mode?: ClashMode;
@@ -102,6 +103,10 @@ export function defaultRoute(query: Query): Route {
       {
         rule_set: ["ruleset:emby"],
         outbound: OutboundTag.EMBY,
+      },
+      {
+        domain_suffix: ["byr.pt"],
+        outbound: OutboundTag.IPv6,
       },
     ],
     rule_set: [
