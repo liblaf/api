@@ -7,6 +7,11 @@ type Provider = {
   fetch?: (sub: string) => Promise<Outbound[]>;
 };
 
+type NodeList = {
+  name: string;
+  outbounds: Outbound[];
+};
+
 const PROVIDERS: Record<string, Provider> = {
   "cos.cat": {
     name: "🏳️‍⚧️ 私房菜",
@@ -15,7 +20,7 @@ const PROVIDERS: Record<string, Provider> = {
       url.searchParams.set("flag", "sing");
       const response = await fetch(url);
       const data = (await response.json()) as any;
-      const outbounds: Outbound[] = data.outbounds;
+      const outbounds = data.outbounds as Outbound[];
       return outbounds;
     },
   },
@@ -49,10 +54,7 @@ export async function fetchOutbounds(
   }
 }
 
-async function fetchSub(
-  sub: string,
-  query: Query,
-): Promise<{ name: string; outbounds: Outbound[] }> {
+async function fetchSub(sub: string, query: Query): Promise<NodeList> {
   const url = new URL(sub);
   for (const [key, provider] of Object.entries(PROVIDERS)) {
     if (url.hostname.endsWith(key)) {
@@ -64,14 +66,14 @@ async function fetchSub(
       } else {
         return {
           name: provider.name,
-          outbounds: await fetchSubConvert(sub, query),
+          outbounds: (await fetchSubConvert(sub, query)).outbounds,
         };
       }
     }
   }
   return {
     name: url.hostname,
-    outbounds: await fetchSubConvert(sub, query),
+    outbounds: (await fetchSubConvert(sub, query)).outbounds,
   };
 }
 
@@ -79,11 +81,12 @@ async function fetchSubConvert(sub: string, { backend }: Query): Promise<any> {
   const url = new URL(backend);
   url.searchParams.set("target", "singbox");
   url.searchParams.set("list", "true");
-  url.search += `&sub=${encodeURIComponent(sub)}`;
+  url.search += `&url=${encodeURIComponent(sub)}`;
   const response = await fetch(url);
   if (!response.ok) {
+    const message: string = await response.text();
     throw new HTTPException(response.status as any, {
-      message: await response.text(),
+      message: `Failed to fetch "${sub}": ${message}`,
     });
   }
   const data = await response.json();

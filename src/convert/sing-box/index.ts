@@ -1,5 +1,5 @@
 import { convert } from "@/lib/sing-box/convert";
-import { Query } from "../query";
+import { Query } from "@/lib/sing-box/query";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 
 export const appConvertSingBox = new OpenAPIHono();
