@@ -40,7 +40,6 @@ type RuleSetCommon = {
 
 type RuleSetRemote = RuleSetCommon & {
   type: "remote";
-  format: "source" | "binary";
   url: string;
   download_detour?: string;
 };
@@ -92,8 +91,17 @@ export function defaultRoute(query: Query): Route {
         outbound: OutboundTag.DIRECT,
       },
       {
-        rule_set: ["geosite:bing", "geosite:openai"],
+        rule_set: [
+          "geosite:bing",
+          "geosite:openai",
+          "ruleset:claude",
+          "ruleset:gemini",
+        ],
         outbound: OutboundTag.AI,
+      },
+      {
+        rule_set: ["ruleset:emby"],
+        outbound: OutboundTag.EMBY,
       },
     ],
     rule_set: [
@@ -108,6 +116,18 @@ export function defaultRoute(query: Query): Route {
       geosite("geolocation-cn"),
       geosite("openai"),
       geosite("private"),
+      remoteBinary(
+        "ruleset:claude",
+        "https://raw.githubusercontent.com/NotSFC/for-sing-box-and-surge/master/sing-box/Claude/Claude.srs",
+      ),
+      remoteBinary(
+        "ruleset:emby",
+        "https://raw.githubusercontent.com/NotSFC/rulelist/main/sing-box/Emby/Emby.srs",
+      ),
+      remoteBinary(
+        "ruleset:gemini",
+        "https://raw.githubusercontent.com/NotSFC/for-sing-box-and-surge/master/sing-box/Gemini/Gemini.srs",
+      ),
     ],
     final: "PROXY",
     auto_detect_interface: true,
@@ -122,6 +142,7 @@ function geoip(tag: string): RuleSet {
     url: proxy(
       `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/${tag}.srs`,
     ),
+    download_detour: OutboundTag.DIRECT,
   };
 }
 
@@ -133,5 +154,16 @@ function geosite(tag: string): RuleSet {
     url: proxy(
       `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/${tag}.srs`,
     ),
+    download_detour: OutboundTag.DIRECT,
+  };
+}
+
+function remoteBinary(tag: string, url: string): RuleSet {
+  return {
+    type: "remote",
+    tag: tag,
+    format: "binary",
+    url: proxy(url),
+    download_detour: OutboundTag.DIRECT,
   };
 }

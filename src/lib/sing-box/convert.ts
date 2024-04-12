@@ -26,9 +26,8 @@ export async function convert(query: Query): Promise<any> {
     for (const outbound of outbounds) {
       group.push(outbound);
     }
-    const outbound: OutboundSelector | OutboundURLTest = group.build();
-    if (outbound.outbounds.length > 0) {
-      config.outbounds?.push(outbound);
+    if (group.outbounds.length > 0) {
+      config.outbounds?.push(group.build());
       proxyGroup.outbounds.push(group.tag);
     }
   }
