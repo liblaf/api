@@ -88,20 +88,12 @@ appIpInfo.openapi(
   }),
   async (c) => {
     const ip: string | undefined = c.req.header("X-Real-IP");
-    if (!ip) {
-      throw new HTTPException(400, { message: "IP Not Found" });
-    }
+    if (!ip) throw new HTTPException(400, { message: "IP Not Found" });
     const { geo, risk, security } = c.req.valid("query");
     const promises: Promise<IpInfo>[] = [];
-    if (geo) {
-      promises.push(getGeo(ip));
-    }
-    if (risk) {
-      promises.push(getRisk(ip));
-    }
-    if (security) {
-      promises.push(getSecurity(ip));
-    }
+    if (geo) promises.push(getGeo(ip));
+    if (risk) promises.push(getRisk(ip));
+    if (security) promises.push(getSecurity(ip));
     const results: IpInfo[] = await Promise.all(promises);
     return c.json(Object.assign({ ip: ip }, ...results));
   },
@@ -133,15 +125,9 @@ appIpInfo.openapi(
     const { ip } = c.req.valid("param");
     const { geo, risk, security } = c.req.valid("query");
     const promises: Promise<IpInfo>[] = [];
-    if (geo) {
-      promises.push(getGeo(ip));
-    }
-    if (risk) {
-      promises.push(getRisk(ip));
-    }
-    if (security) {
-      promises.push(getSecurity(ip));
-    }
+    if (geo) promises.push(getGeo(ip));
+    if (risk) promises.push(getRisk(ip));
+    if (security) promises.push(getSecurity(ip));
     const results: IpInfo[] = await Promise.all(promises);
     return c.json(Object.assign({ ip: ip }, ...results));
   },

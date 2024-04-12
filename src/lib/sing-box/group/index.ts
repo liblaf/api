@@ -101,6 +101,7 @@ export class Emby implements GroupSelector {
     const rate: number = inferRate(outbound.tag);
     if (rate < 1) {
       this.outbounds.push(outbound.tag);
+      return;
     }
   }
 }

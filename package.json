@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.11.0",
-    "hono": "^4.2.3",
-    "opencc-js": "^1.0.5"
+    "chinese-simple2traditional": "^2.1.0",
+    "hono": "^4.2.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240405.0",

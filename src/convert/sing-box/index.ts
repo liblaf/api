@@ -70,9 +70,7 @@ appConvertSingBox.openapi(
   }),
   async (c) => {
     const { uuid } = c.req.valid("param");
-    if (uuid !== c.env?.MY_UUID) {
-      throw new HTTPException(403);
-    }
+    if (uuid !== c.env?.MY_UUID) throw new HTTPException(403);
     const url: string[] = (c.env?.MY_URLS as string).split("\n");
     const query: Query = { ...c.req.valid("query"), url: url };
     const config = await convert(query);

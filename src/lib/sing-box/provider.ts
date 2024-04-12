@@ -1,3 +1,4 @@
+import { toSimplified } from "chinese-simple2traditional";
 import { HTTPException } from "hono/http-exception";
 import { Query } from "./query";
 import { Outbound } from "./types/outbound";
@@ -20,7 +21,8 @@ export async function fetchOutbounds(
       (outbound) => !EXCLUDE_OUTBOUND_TYPES.has(outbound.type),
     );
     outbounds.forEach((outbound) => {
-      outbound.tag = `${outbound.tag} [${name}]`;
+      const tag: string = toSimplified(outbound.tag);
+      outbound.tag = `${tag} [${name}]`;
     });
     return outbounds;
   } catch (err) {
