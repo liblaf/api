@@ -1,5 +1,5 @@
-import { toSimplified } from "chinese-simple2traditional";
 import { HTTPException } from "hono/http-exception";
+import { toSimplified } from "../text";
 import { Query } from "./query";
 import { Outbound } from "./types/outbound";
 
