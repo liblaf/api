@@ -1,5 +1,6 @@
-import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
-import { HTTPException } from "hono/http-exception";
+import { convert } from "@/lib/sing-box/convert";
+import { Query } from "../query";
+import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 
 export const appConvertSingBox = new OpenAPIHono();
 
@@ -11,7 +12,9 @@ appConvertSingBox.openapi(
     request: {
       query: z.object({
         backend: z.string().default("https://api.ytools.cc/sub"),
-        url: z.string(),
+        url: z.preprocess((val) => {
+          return Array.isArray(val) ? val : [val];
+        }, z.array(z.string().url())),
       }),
     },
     responses: {
@@ -19,13 +22,15 @@ appConvertSingBox.openapi(
         description: "OK",
         content: {
           "application/json": {
-            schema: z.any(),
+            schema: z.any({ description: "sing-box config" }),
           },
         },
       },
     },
   }),
   async (c) => {
-    throw new HTTPException(501);
-  }
+    const query: Query = c.req.valid("query");
+    const config = await convert(query);
+    return c.json(config);
+  },
 );

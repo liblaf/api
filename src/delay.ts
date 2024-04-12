@@ -17,11 +17,11 @@ appDelay.openapi(
   }),
   async (c) => {
     await new Promise((resolve) =>
-      setTimeout(resolve, DEFAULT_DELAY_MILLISECONDS)
+      setTimeout(resolve, DEFAULT_DELAY_MILLISECONDS),
     );
     c.status(204);
     return c.newResponse(null);
-  }
+  },
 );
 
 appDelay.openapi(
@@ -37,11 +37,11 @@ appDelay.openapi(
   }),
   async (c) => {
     await new Promise((resolve) =>
-      setTimeout(resolve, DEFAULT_DELAY_MILLISECONDS)
+      setTimeout(resolve, DEFAULT_DELAY_MILLISECONDS),
     );
     c.status(204);
     return c.newResponse(null);
-  }
+  },
 );
 
 const paramsSchema = z.object({
@@ -71,7 +71,7 @@ appDelay.openapi(
     await new Promise((resolve) => setTimeout(resolve, milliseconds));
     c.status(204);
     return c.newResponse(null);
-  }
+  },
 );
 
 appDelay.openapi(
@@ -93,5 +93,5 @@ appDelay.openapi(
     await new Promise((resolve) => setTimeout(resolve, milliseconds));
     c.status(204);
     return c.newResponse(null);
-  }
+  },
 );

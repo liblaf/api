@@ -104,7 +104,7 @@ appIpInfo.openapi(
     }
     const results: IpInfo[] = await Promise.all(promises);
     return c.json(Object.assign({ ip: ip }, ...results));
-  }
+  },
 );
 
 appIpInfo.openapi(
@@ -144,7 +144,7 @@ appIpInfo.openapi(
     }
     const results: IpInfo[] = await Promise.all(promises);
     return c.json(Object.assign({ ip: ip }, ...results));
-  }
+  },
 );
 
 async function getGeo(ip: string): Promise<IpInfo> {
@@ -168,7 +168,7 @@ async function getGeo(ip: string): Promise<IpInfo> {
 
 function getFlagEmoji(countryCode: string): string {
   const codePoints: number[] = [...countryCode].map(
-    (char: string): number => 127397 + char.charCodeAt(0)
+    (char: string): number => 127397 + char.charCodeAt(0),
   );
   return String.fromCodePoint(...codePoints);
 }

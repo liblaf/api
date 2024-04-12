@@ -27,7 +27,7 @@ appIp.openapi(
       throw new HTTPException(400, { message: "IP Not Found" });
     }
     return c.text(ip);
-  }
+  },
 );
 
 appIp.route("/info", appIpInfo);
