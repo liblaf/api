@@ -2,30 +2,6 @@ import { HTTPException } from "hono/http-exception";
 import { Query } from "./query";
 import { Outbound } from "./types/outbound";
 
-type Provider = {
-  name: string;
-  fetch?: (sub: string) => Promise<Outbound[]>;
-};
-
-type NodeList = {
-  name: string;
-  outbounds: Outbound[];
-};
-
-const PROVIDERS: Record<string, Provider> = {
-  "cos.cat": {
-    name: "🏳️‍⚧️ 私房菜",
-    fetch: async (sub: string): Promise<Outbound[]> => {
-      const url = new URL(sub);
-      url.searchParams.set("flag", "sing");
-      const response = await fetch(url);
-      const data = (await response.json()) as any;
-      const outbounds = data.outbounds as Outbound[];
-      return outbounds;
-    },
-  },
-};
-
 const EXCLUDE_OUTBOUND_TYPES = new Set([
   "direct",
   "block",
@@ -54,27 +30,68 @@ export async function fetchOutbounds(
   }
 }
 
+type NodeList = {
+  name: string;
+  outbounds: Outbound[];
+};
+
+type Provider = {
+  pattern: RegExp;
+  fetch: (sub: string, query: Query) => Promise<NodeList>;
+};
+
+function defaultFetch(name: string) {
+  return async (sub: string, query: Query): Promise<NodeList> => {
+    const data = await fetchSubConvert(sub, query);
+    const outbounds = data.outbounds as Outbound[];
+    return {
+      name,
+      outbounds,
+    };
+  };
+}
+
+const PROVIDERS: Provider[] = [
+  {
+    pattern: /aca/,
+    fetch: defaultFetch("ACA"),
+  },
+  {
+    pattern: /fldylink/,
+    fetch: defaultFetch("FastLink"),
+  },
+  {
+    pattern: /fbsublink/,
+    fetch: defaultFetch("FlyingBird"),
+  },
+  {
+    pattern: /nthu/,
+    fetch: defaultFetch("NTHU.CC"),
+  },
+  {
+    pattern: /cos.cat/,
+    fetch: async (sub: string, query: Query): Promise<NodeList> => {
+      const url = new URL(sub);
+      url.searchParams.set("flag", "sing");
+      const response = await fetch(url);
+      const data = (await response.json()) as any;
+      const outbounds = data.outbounds as Outbound[];
+      return {
+        name: "🏳️‍⚧️ 私房菜",
+        outbounds,
+      };
+    },
+  },
+];
+
 async function fetchSub(sub: string, query: Query): Promise<NodeList> {
   const url = new URL(sub);
-  for (const [key, provider] of Object.entries(PROVIDERS)) {
-    if (url.hostname.endsWith(key)) {
-      if (provider.fetch) {
-        return {
-          name: provider.name,
-          outbounds: await provider.fetch(sub),
-        };
-      } else {
-        return {
-          name: provider.name,
-          outbounds: (await fetchSubConvert(sub, query)).outbounds,
-        };
-      }
+  for (const provider of PROVIDERS) {
+    if (provider.pattern.test(url.hostname)) {
+      return await provider.fetch(sub, query);
     }
   }
-  return {
-    name: url.hostname,
-    outbounds: (await fetchSubConvert(sub, query)).outbounds,
-  };
+  throw new HTTPException(400, { message: `Unsupported sub: ${sub}` });
 }
 
 async function fetchSubConvert(sub: string, { backend }: Query): Promise<any> {
