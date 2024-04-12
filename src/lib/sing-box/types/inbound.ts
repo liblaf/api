@@ -23,7 +23,7 @@ export function defaultInbounds(query: Query): Inbound[] {
       type: "mixed",
       tag: "in:mixed",
       listen: "0.0.0.0",
-      listen_port: 10080,
+      listen_port: query.listen_port,
       sniff: true,
     },
   ];

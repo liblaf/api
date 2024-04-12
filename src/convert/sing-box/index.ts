@@ -12,6 +12,7 @@ appConvertSingBox.openapi(
     request: {
       query: z.object({
         backend: z.string().default("https://api.ytools.cc/sub"),
+        listen_port: z.coerce.number().int().gte(0).lte(65535).default(64393),
         url: z.preprocess((val) => {
           return Array.isArray(val) ? val : [val];
         }, z.array(z.string().url())),

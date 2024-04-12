@@ -18,3 +18,6 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        env:
+          MY_UUID: ${{ secrets.MY_UUID }}
+          MY_URLS: ${{ secrets.MY_URLS }}

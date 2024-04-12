@@ -135,27 +135,17 @@ export function defaultRoute(query: Query): Route {
 }
 
 function geoip(tag: string): RuleSet {
-  return {
-    type: "remote",
-    tag: `geoip:${tag}`,
-    format: "binary",
-    url: proxy(
-      `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/${tag}.srs`,
-    ),
-    download_detour: OutboundTag.DIRECT,
-  };
+  return remoteBinary(
+    `geoip:${tag}`,
+    `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/${tag}.srs`,
+  );
 }
 
 function geosite(tag: string): RuleSet {
-  return {
-    type: "remote",
-    tag: `geosite:${tag}`,
-    format: "binary",
-    url: proxy(
-      `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/${tag}.srs`,
-    ),
-    download_detour: OutboundTag.DIRECT,
-  };
+  return remoteBinary(
+    `geosite:${tag}`,
+    `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/${tag}.srs`,
+  );
 }
 
 function remoteBinary(tag: string, url: string): RuleSet {
