@@ -1,0 +1,5 @@
+{
+  "words": ["hono", "lockb"],
+  "ignorePaths": ["**/*-lock.*", "**/*.lock", "**/.cspell.json"],
+  "allowCompoundWords": true
+}
