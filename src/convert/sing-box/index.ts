@@ -5,11 +5,27 @@ import { HTTPException } from "hono/http-exception";
 
 export const appConvertSingBox = new OpenAPIHono();
 
+function preprocessBoolean(val: any): any {
+  const str: string = String(val).toLowerCase();
+
+  if (str === "1") return true;
+  if (str === "true") return true;
+  if (str === "y") return true;
+  if (str === "yes") return true;
+
+  if (str === "0") return false;
+  if (str === "false") return false;
+  if (str === "n") return false;
+  if (str === "no") return false;
+
+  return val;
+}
+
 const querySchema = {
   backend: z.string().default("https://api.ytools.cc/sub"),
   listen_port: z.coerce.number().int().gte(0).lte(65535).default(64393),
-  mixed: z.preprocess((val) => val === "true", z.boolean().default(true)),
-  tun: z.preprocess((val) => val === "true", z.boolean().default(false)),
+  mixed: z.preprocess(preprocessBoolean, z.boolean().default(true)),
+  tun: z.preprocess(preprocessBoolean, z.boolean().default(false)),
 };
 
 appConvertSingBox.openapi(
