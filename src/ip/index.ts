@@ -7,6 +7,7 @@ export const appIp = new OpenAPIHono();
 
 appIp.openapi(
   createRoute({
+    tags: ["IP"],
     summary: "Get IP address",
     method: "get",
     path: "/",

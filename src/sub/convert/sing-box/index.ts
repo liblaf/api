@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "@/lib/sub/consts";
+import { BACKEND_URL } from "@/lib/sub/const";
 import { convert } from "@/lib/sub/sing-box/convert";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
@@ -30,7 +30,8 @@ const querySchema = {
 
 appSubConvertSingbox.openapi(
   createRoute({
-    summary: "Convert to sing-box",
+    tags: ["Subscription"],
+    summary: "Convert subscription to sing-box",
     method: "get",
     path: "/",
     request: {
@@ -66,6 +67,7 @@ appSubConvertSingbox.openapi(
 
 appSubConvertSingbox.openapi(
   createRoute({
+    tags: ["Subscription"],
     summary: "Download my sing-box config",
     method: "get",
     path: "/{uuid}",

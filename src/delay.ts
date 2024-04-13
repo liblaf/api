@@ -6,6 +6,7 @@ const DEFAULT_DELAY_MILLISECONDS = 5000;
 
 appDelay.openapi(
   createRoute({
+    tags: ["IP"],
     summary: `Return after ${DEFAULT_DELAY_MILLISECONDS}ms delay`,
     method: "head",
     path: "/",
@@ -26,6 +27,7 @@ appDelay.openapi(
 
 appDelay.openapi(
   createRoute({
+    tags: ["IP"],
     summary: `Return after ${DEFAULT_DELAY_MILLISECONDS}ms delay`,
     method: "get",
     path: "/",
@@ -54,6 +56,7 @@ const paramsSchema = z.object({
 
 appDelay.openapi(
   createRoute({
+    tags: ["IP"],
     summary: "Return after a delay",
     method: "head",
     path: "/{milliseconds}",
@@ -76,6 +79,7 @@ appDelay.openapi(
 
 appDelay.openapi(
   createRoute({
+    tags: ["IP"],
     summary: "Return after a delay",
     method: "get",
     path: "/{milliseconds}",

@@ -69,6 +69,7 @@ type IpInfo = {
 
 appIpInfo.openapi(
   createRoute({
+    tags: ["IP"],
     summary: "Get info about client IP address",
     method: "get",
     path: "/",
@@ -101,6 +102,7 @@ appIpInfo.openapi(
 
 appIpInfo.openapi(
   createRoute({
+    tags: ["IP"],
     summary: "Get IP info",
     method: "get",
     path: "/{ip}",

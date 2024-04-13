@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "@/lib/sub/consts";
+import { BACKEND_URL } from "@/lib/sub/const";
 import { fetchInfo, UserInfo } from "@/lib/sub/info";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
@@ -12,9 +12,16 @@ const querySchema = {
 const responseSchema = z.object({
   info: z.array(
     z.object({
-      name: z.string(),
-      url: z.string().url(),
-      web_page_url: z.string().url().optional(),
+      name: z.string().openapi({ example: "Nexitally" }),
+      url: z.string().url().openapi({
+        example:
+          "https://sub.nexitally.com/api/v1/client/subscribe?token=5647ece2f4219be897d104764daa3afc",
+      }),
+      web_page_url: z
+        .string()
+        .url()
+        .optional()
+        .openapi({ example: "https://nexitally.com" }),
       upload: z
         .number()
         .positive()
@@ -46,6 +53,7 @@ const responseSchema = z.object({
 
 appSubInfo.openapi(
   createRoute({
+    tags: ["Subscription"],
     summary: "Get subscription user info",
     method: "get",
     path: "/",
@@ -80,7 +88,8 @@ appSubInfo.openapi(
 
 appSubInfo.openapi(
   createRoute({
-    summary: "Download my subscription info",
+    tags: ["Subscription"],
+    summary: "Get my subscription info",
     method: "get",
     path: "/{uuid}",
     request: {
