@@ -8,11 +8,13 @@ export const appConvertSingBox = new OpenAPIHono();
 const querySchema = {
   backend: z.string().default("https://api.ytools.cc/sub"),
   listen_port: z.coerce.number().int().gte(0).lte(65535).default(64393),
+  mixed: z.preprocess((val) => val === "true", z.boolean().default(true)),
+  tun: z.preprocess((val) => val === "true", z.boolean().default(false)),
 };
 
 appConvertSingBox.openapi(
   createRoute({
-    summary: "Convert to sing-box (WIP)",
+    summary: "Convert to sing-box",
     method: "get",
     path: "/",
     request: {
