@@ -41,7 +41,11 @@ export class Country implements GroupSelector {
   }
 }
 
-const AI_EXCLUDE_COUNTRIES = new Set([COUNTRIES.HK, COUNTRIES.OT]);
+const AI_EXCLUDE_COUNTRIES = new Set([
+  COUNTRIES.HK,
+  COUNTRIES.MO,
+  COUNTRIES.OT,
+]);
 
 export class AI implements GroupSelector {
   tag: string = OutboundTag.AI;
