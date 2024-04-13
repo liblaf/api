@@ -1,7 +1,7 @@
 export type Query = {
-  backend: string;
+  backend: URL;
   listen_port: number;
   mixed: boolean;
   tun: boolean;
-  url: string[];
+  url: URL[];
 };

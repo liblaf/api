@@ -2,8 +2,8 @@ import {
   Outbound,
   OutboundSelector,
   OutboundURLTest,
-} from "@/lib/sing-box/types/outbound";
-import { OutboundTag } from "@/lib/sing-box/types/shared";
+} from "@/lib/sub/sing-box/types/outbound";
+import { OutboundTag } from "@/lib/sub/sing-box/types/shared";
 import { COUNTRIES, inferCountry } from "./country";
 import { inferRate } from "./infer";
 

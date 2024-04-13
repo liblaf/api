@@ -1,9 +1,9 @@
-import { convert } from "@/lib/sing-box/convert";
-import { Query } from "@/lib/sing-box/query";
+import { BACKEND_URL } from "@/lib/sub/consts";
+import { convert } from "@/lib/sub/sing-box/convert";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 
-export const appConvertSingBox = new OpenAPIHono();
+export const appSubConvertSingbox = new OpenAPIHono();
 
 function preprocessBoolean(val: any): any {
   const str: string = String(val).toLowerCase();
@@ -22,13 +22,13 @@ function preprocessBoolean(val: any): any {
 }
 
 const querySchema = {
-  backend: z.string().default("https://api.ytools.cc/sub"),
+  backend: z.string().url().default(BACKEND_URL.toString()),
   listen_port: z.coerce.number().int().gte(0).lte(65535).default(64393),
   mixed: z.preprocess(preprocessBoolean, z.boolean().default(true)),
   tun: z.preprocess(preprocessBoolean, z.boolean().default(false)),
 };
 
-appConvertSingBox.openapi(
+appSubConvertSingbox.openapi(
   createRoute({
     summary: "Convert to sing-box",
     method: "get",
@@ -53,13 +53,18 @@ appConvertSingBox.openapi(
     },
   }),
   async (c) => {
-    const query: Query = c.req.valid("query");
+    const queryRaw = c.req.valid("query");
+    const query = {
+      ...queryRaw,
+      backend: new URL(queryRaw.backend),
+      url: queryRaw.url.map((url: string) => new URL(url)),
+    };
     const config = await convert(query);
     return c.json(config);
   },
 );
 
-appConvertSingBox.openapi(
+appSubConvertSingbox.openapi(
   createRoute({
     summary: "Download my sing-box config",
     method: "get",
@@ -89,8 +94,15 @@ appConvertSingBox.openapi(
   async (c) => {
     const { uuid } = c.req.valid("param");
     if (uuid !== c.env?.MY_UUID) throw new HTTPException(403);
-    const url: string[] = (c.env?.MY_URLS as string).split("\n");
-    const query: Query = { ...c.req.valid("query"), url: url };
+    const url: URL[] = (c.env?.MY_URLS as string)
+      .split("\n")
+      .map((url) => new URL(url));
+    const queryRaw = c.req.valid("query");
+    const query = {
+      ...queryRaw,
+      backend: new URL(queryRaw.backend),
+      url: url,
+    };
     const config = await convert(query);
     return c.json(config);
   },

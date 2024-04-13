@@ -1,12 +1,12 @@
 import { Query } from "./query";
 import { defaultConfig } from "./types";
-import { Outbound, OutboundSelector, OutboundURLTest } from "./types/outbound";
+import { Outbound, OutboundSelector } from "./types/outbound";
 import { fetchOutbounds } from "./provider";
 import { AI, Auto, Country, Emby, Good, IPv6 } from "./group";
 import { COUNTRIES } from "./group/country";
 
 export async function convert(query: Query): Promise<any> {
-  const urls: string[] = query.url;
+  const urls: URL[] = query.url;
   const config = defaultConfig(query);
   const outbounds: Outbound[] = (
     await Promise.all(urls.map((url) => fetchOutbounds(url, query)))

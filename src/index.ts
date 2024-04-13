@@ -1,8 +1,8 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { appConvert } from "./convert";
 import { appDelay } from "./delay";
 import { appIp } from "./ip";
 import { appProxy } from "./proxy";
+import { appSub } from "./sub";
 
 const app = new OpenAPIHono();
 
@@ -75,9 +75,9 @@ app.get("/", (c) => {
 </html>
 `);
 });
-app.route("/convert", appConvert);
 app.route("/delay", appDelay);
 app.route("/ip", appIp);
 app.route("/proxy", appProxy);
+app.route("/sub", appSub);
 
 export default app;
