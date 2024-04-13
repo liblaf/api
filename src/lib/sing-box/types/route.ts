@@ -82,6 +82,10 @@ export function defaultRoute(query: Query): Route {
         outbound: OutboundTag.REJECT,
       },
       {
+        domain_suffix: ["byr.pt"],
+        outbound: OutboundTag.IPv6,
+      },
+      {
         rule_set: [
           "geoip:cn",
           "geosite:apple@cn",
@@ -103,10 +107,6 @@ export function defaultRoute(query: Query): Route {
       {
         rule_set: ["ruleset:emby"],
         outbound: OutboundTag.EMBY,
-      },
-      {
-        domain_suffix: ["byr.pt"],
-        outbound: OutboundTag.IPv6,
       },
     ],
     rule_set: [
