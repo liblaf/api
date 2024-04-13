@@ -11,7 +11,7 @@ export interface GroupSelector {
   tag: string;
   outbounds: string[];
   build(): OutboundSelector | OutboundURLTest;
-  push(outbound: Outbound): void;
+  filter(outbounds: Outbound[]): Outbound[];
 }
 
 export class Country implements GroupSelector {
@@ -31,10 +31,13 @@ export class Country implements GroupSelector {
     };
   }
 
-  push(outbound: Outbound): void {
-    const country: string = inferCountry(outbound.tag);
-    if (country !== this.tag) return;
-    this.outbounds.push(outbound.tag);
+  filter(outbounds: Outbound[]): Outbound[] {
+    for (const outbound of outbounds) {
+      const country: string = inferCountry(outbound.tag);
+      if (country !== this.tag) continue;
+      this.outbounds.push(outbound.tag);
+    }
+    return [];
   }
 }
 
@@ -53,10 +56,13 @@ export class AI implements GroupSelector {
     };
   }
 
-  push(outbound: Outbound) {
-    const country: string = inferCountry(outbound.tag);
-    if (AI_EXCLUDE_COUNTRIES.has(country)) return;
-    this.outbounds.push(outbound.tag);
+  filter(outbounds: Outbound[]): Outbound[] {
+    for (const outbound of outbounds) {
+      const country: string = inferCountry(outbound.tag);
+      if (AI_EXCLUDE_COUNTRIES.has(country)) continue;
+      this.outbounds.push(outbound.tag);
+    }
+    return [];
   }
 }
 
@@ -73,10 +79,13 @@ export class Auto implements GroupSelector {
     };
   }
 
-  push(outbound: Outbound) {
-    const country: string = inferCountry(outbound.tag);
-    if (country === COUNTRIES.OT) return;
-    this.outbounds.push(outbound.tag);
+  filter(outbounds: Outbound[]): Outbound[] {
+    for (const outbound of outbounds) {
+      const country: string = inferCountry(outbound.tag);
+      if (country === COUNTRIES.OT) continue;
+      this.outbounds.push(outbound.tag);
+    }
+    return [];
   }
 }
 
@@ -93,22 +102,25 @@ export class Emby implements GroupSelector {
     };
   }
 
-  push(outbound: Outbound) {
-    if (/emby/i.test(outbound.tag)) {
-      this.outbounds.push(outbound.tag);
-      return;
+  filter(outbounds: Outbound[]): Outbound[] {
+    for (const outbound of outbounds) {
+      if (/emby/i.test(outbound.tag)) {
+        this.outbounds.push(outbound.tag);
+        continue;
+      }
+      const rate: number = inferRate(outbound.tag);
+      if (rate < 1) {
+        this.outbounds.push(outbound.tag);
+        continue;
+      }
     }
-    const rate: number = inferRate(outbound.tag);
-    if (rate < 1) {
-      this.outbounds.push(outbound.tag);
-      return;
-    }
+    return [];
   }
 }
 
 export class Good implements GroupSelector {
   tag: string = OutboundTag.GOOD;
-  outbounds: string[] = [OutboundTag.DIRECT];
+  outbounds: string[] = [];
 
   build(): OutboundURLTest {
     return {
@@ -119,10 +131,13 @@ export class Good implements GroupSelector {
     };
   }
 
-  push(outbound: Outbound) {
-    const country: string = inferCountry(outbound.tag);
-    if (country === COUNTRIES.OT) return;
-    this.outbounds.push(outbound.tag);
+  filter(outbounds: Outbound[]): Outbound[] {
+    for (const outbound of outbounds) {
+      const country: string = inferCountry(outbound.tag);
+      if (country === COUNTRIES.OT) continue;
+      this.outbounds.push(outbound.tag);
+    }
+    return [];
   }
 }
 
@@ -139,10 +154,17 @@ export class IPv6 implements GroupSelector {
     };
   }
 
-  push(outbound: Outbound) {
-    const country: string = inferCountry(outbound.tag);
-    if (country === COUNTRIES.OT) return;
-    this.outbounds.push(outbound.tag);
+  filter(outbounds: Outbound[]): Outbound[] {
+    const outboundsIPv6: Outbound[] = [];
+    for (const outbound of outbounds) {
+      const country: string = inferCountry(outbound.tag);
+      if (country === COUNTRIES.OT) continue;
+      const outboundIPv6: Outbound = structuredClone(outbound);
+      outboundIPv6.tag += "[IPv6]";
+      outboundsIPv6.push(outboundIPv6);
+      this.outbounds.push(outboundIPv6.tag);
+    }
+    return outboundsIPv6;
   }
 }
 
@@ -158,9 +180,12 @@ export class Other implements GroupSelector {
     };
   }
 
-  push(outbound: Outbound) {
-    const country: string = inferCountry(outbound.tag);
-    if (country !== COUNTRIES.OT) return;
-    this.outbounds.push(outbound.tag);
+  filter(outbounds: Outbound[]): Outbound[] {
+    for (const outbound of outbounds) {
+      const country: string = inferCountry(outbound.tag);
+      if (country !== COUNTRIES.OT) continue;
+      this.outbounds.push(outbound.tag);
+    }
+    return [];
   }
 }

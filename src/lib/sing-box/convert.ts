@@ -22,15 +22,15 @@ export async function convert(query: Query): Promise<any> {
     new IPv6(),
     ...Object.values(COUNTRIES).map((country) => new Country(country)),
   ];
+  const outboundsAux: Outbound[] = [];
   for (const group of groups) {
-    for (const outbound of outbounds) {
-      group.push(outbound);
-    }
+    outboundsAux.push(...group.filter(outbounds));
     if (group.outbounds.length > 0) {
       config.outbounds?.push(group.build());
       proxyGroup.outbounds.push(group.tag);
     }
   }
   config.outbounds?.push(...outbounds);
+  config.outbounds?.push(...outboundsAux);
   return config;
 }
