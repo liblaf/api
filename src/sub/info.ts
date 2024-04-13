@@ -80,7 +80,7 @@ appSubInfo.openapi(
 
 appSubInfo.openapi(
   createRoute({
-    summary: "Download my sing-box config",
+    summary: "Download my subscription info",
     method: "get",
     path: "/{uuid}",
     request: {
