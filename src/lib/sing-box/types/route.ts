@@ -51,7 +51,7 @@ export function defaultRoute(query: Query): Route {
       {
         type: "logical",
         mode: "or",
-        rules: [{ protocol: ["dns"], port: [53] }],
+        rules: [{ protocol: ["dns"] }, { port: [53] }],
         outbound: OutboundTag.DNS,
       },
       {
