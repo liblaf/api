@@ -1,4 +1,4 @@
-import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
+import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { appIpInfo } from "./info";
@@ -22,6 +22,7 @@ appIp.openapi(
       },
     },
   }),
+  // @ts-ignore
   async (c: Context) => {
     const ip: string | undefined = c.req.header("X-Real-IP");
     if (!ip) throw new HTTPException(400, { message: "IP Not Found" });
