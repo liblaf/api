@@ -1,1 +1,1 @@
-export const BACKEND_URL = new URL("https://api.ytools.cc/sub");
+export const BACKEND_URL = new URL("https://api.v1.mk/sub");
