@@ -16,12 +16,12 @@ export async function convert(urls: URL[], query: Query): Promise<any> {
     await Promise.all(urls.map((url) => fetchOutbounds(url, query)))
   ).flat();
   const proxyGroup = config.outbounds?.find(
-    (outbound) => outbound.tag === "PROXY"
+    (outbound) => outbound.tag === "PROXY",
   )! as OutboundSelector;
   const groups: SmartGroup[] = [new AI(), new Auto(), new Emby()];
   if (query.ipv6) groups.push(new IPv6());
   groups.push(
-    ...Object.values(COUNTRIES).map((country) => new Country(country))
+    ...Object.values(COUNTRIES).map((country) => new Country(country)),
   );
   const outboundsAux: Outbound[] = [];
   for (const group of groups) {

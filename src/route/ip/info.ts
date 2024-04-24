@@ -27,7 +27,7 @@ type Result = z.infer<typeof ResponseSchema>;
 
 async function fetchResult(
   ip: string,
-  { geo, risk, security }: Query
+  { geo, risk, security }: Query,
 ): Promise<Result> {
   const [geoData, riskData, securityData] = await Promise.all([
     geo ? fetchGeo(ip) : undefined,
@@ -68,7 +68,7 @@ appIpInfo.openapi(
     const query: Query = c.req.valid("query");
     const result: Result = await fetchResult(ip, query);
     return c.json(result);
-  }
+  },
 );
 
 appIpInfo.openapi(
@@ -99,5 +99,5 @@ appIpInfo.openapi(
     const query: Query = c.req.valid("query");
     const result: Result = await fetchResult(ip, query);
     return c.json(result);
-  }
+  },
 );

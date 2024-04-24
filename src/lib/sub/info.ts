@@ -46,7 +46,7 @@ export type UserInfo = z.infer<typeof UserInfoSchema>;
 
 export async function fetchInfo(
   urls: URL[],
-  backend: URL
+  backend: URL,
 ): Promise<UserInfo[]> {
   return await Promise.all(urls.map((url) => fetchInfoOnce(url, backend)));
 }
