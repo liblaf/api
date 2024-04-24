@@ -31,7 +31,7 @@ export function defaultExperimental(query: Query): Experimental {
       external_controller: "127.0.0.1:9090",
       external_ui: "ui",
       external_ui_download_url: proxy(
-        "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+        "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
       ),
       external_ui_download_detour: OutboundTag.DIRECT,
       default_mode: "rule",

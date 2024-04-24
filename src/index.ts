@@ -1,8 +1,9 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { appIp } from "./ip";
-import { appProxy } from "./proxy";
-import { appSub } from "./sub";
-import SWAGGER_UI from "./swagger-ui";
+
+import SWAGGER_UI from "@/lib/swagger-ui";
+import { appIp } from "@/route/ip";
+import { appProxy } from "@/route/proxy";
+import { appSub } from "@/route/sub";
 
 const app = new OpenAPIHono();
 

@@ -1,7 +1,8 @@
-import { BACKEND_URL } from "@/lib/sub/const";
-import { fetchInfo, UserInfo } from "@/lib/sub/info";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
+
+import { BACKEND_URL } from "@/lib/sub/const";
+import { fetchInfo, UserInfo, UserInfoSchema } from "@/lib/sub/info";
 
 export const appSubInfo = new OpenAPIHono();
 
@@ -10,45 +11,7 @@ const querySchema = {
 };
 
 const responseSchema = z.object({
-  info: z.array(
-    z.object({
-      name: z.string().openapi({ example: "Nexitally" }),
-      url: z.string().url().openapi({
-        example:
-          "https://sub.nexitally.com/api/v1/client/subscribe?token=5647ece2f4219be897d104764daa3afc",
-      }),
-      web_page_url: z
-        .string()
-        .url()
-        .optional()
-        .openapi({ example: "https://nexitally.com" }),
-      upload: z
-        .number()
-        .positive()
-        .int()
-        .optional()
-        .openapi({ example: 10737418240 }),
-      download: z
-        .number()
-        .positive()
-        .int()
-        .optional()
-        .openapi({ example: 53687091200 }),
-      total: z
-        .number()
-        .positive()
-        .int()
-        .optional()
-        .openapi({ example: 107374182400 }),
-      expire: z
-        .number()
-        .positive()
-        .int()
-        .optional()
-        .describe("Unix timestamp")
-        .openapi({ example: 1893427200 }),
-    }),
-  ),
+  info: z.array(UserInfoSchema),
 });
 
 appSubInfo.openapi(
@@ -80,10 +43,10 @@ appSubInfo.openapi(
     const { backend, url } = c.req.valid("query");
     const info: UserInfo[] = await fetchInfo(
       url.map((url: string) => new URL(url)),
-      new URL(backend),
+      new URL(backend)
     );
     return c.json({ info: info });
-  },
+  }
 );
 
 appSubInfo.openapi(
@@ -123,5 +86,5 @@ appSubInfo.openapi(
       .map((url: string) => new URL(url));
     const info: UserInfo[] = await fetchInfo(urls, new URL(backend));
     return c.json({ info: info });
-  },
+  }
 );

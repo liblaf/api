@@ -1,26 +1,3 @@
-export type Provider = {
-  name: string;
-  url: URL;
-  singBoxUrl: URL;
-  userInfoUrl: URL;
-};
-
-export function makeProvider(sub: URL, backend: URL): Provider {
-  for (const { pattern, name, userInfoUrl, singBoxUrl } of PROVIDERS) {
-    if (pattern.test(sub.hostname)) {
-      return {
-        name: name ? name(sub) : sub.hostname,
-        url: sub,
-        userInfoUrl: userInfoUrl ? userInfoUrl(sub) : sub,
-        singBoxUrl: singBoxUrl
-          ? singBoxUrl(sub)
-          : subConvert(sub, "singbox", backend),
-      };
-    }
-  }
-  throw new Error(`Unsupported subscription: ${sub}`);
-}
-
 interface ProviderFactory {
   pattern: RegExp;
   name?: (sub: URL) => string;
@@ -87,3 +64,26 @@ const PROVIDERS: ProviderFactory[] = [
     pattern: /.*/,
   },
 ];
+
+export type Provider = {
+  name: string;
+  url: URL;
+  singBoxUrl: URL;
+  userInfoUrl: URL;
+};
+
+export function makeProvider(sub: URL, backend: URL): Provider {
+  for (const { pattern, name, userInfoUrl, singBoxUrl } of PROVIDERS) {
+    if (pattern.test(sub.hostname)) {
+      return {
+        name: name ? name(sub) : sub.hostname,
+        url: sub,
+        userInfoUrl: userInfoUrl ? userInfoUrl(sub) : sub,
+        singBoxUrl: singBoxUrl
+          ? singBoxUrl(sub)
+          : subConvert(sub, "singbox", backend),
+      };
+    }
+  }
+  throw new Error(`Unsupported subscription: ${sub}`);
+}

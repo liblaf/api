@@ -1,6 +1,7 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
+
 import { appIpInfo } from "./info";
 
 export const appIp = new OpenAPIHono();
@@ -27,7 +28,7 @@ appIp.openapi(
     const ip: string | undefined = c.req.header("X-Real-IP");
     if (!ip) throw new HTTPException(400, { message: "IP Not Found" });
     return c.text(ip);
-  },
+  }
 );
 
 appIp.route("/info", appIpInfo);

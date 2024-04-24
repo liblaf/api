@@ -1,27 +1,13 @@
 import { COUNTRIES, inferCountry } from "@/lib/sub/infer/country";
 import { SmartGroup } from ".";
-import {
-  Outbound,
-  OutboundSelector,
-  OutboundURLTest,
-} from "../config/outbound";
+import { Outbound, OutboundURLTest } from "../config/outbound";
+import { OutboundTag } from "../config/shared";
 
-export class Country implements SmartGroup {
-  tag: string;
+export class Auto implements SmartGroup {
+  tag: string = OutboundTag.AUTO;
   outbounds: string[] = [];
 
-  constructor(tag: string) {
-    this.tag = tag;
-  }
-
-  build(): OutboundSelector | OutboundURLTest {
-    if (this.tag == COUNTRIES.OT) {
-      return {
-        tag: this.tag,
-        type: "selector",
-        outbounds: this.outbounds,
-      };
-    }
+  build(): OutboundURLTest {
     return {
       tag: this.tag,
       type: "urltest",
@@ -33,7 +19,7 @@ export class Country implements SmartGroup {
   filter(outbounds: Outbound[]): Outbound[] {
     for (const outbound of outbounds) {
       const country: string = inferCountry(outbound.tag);
-      if (country !== this.tag) continue;
+      if (country === COUNTRIES.OT) continue;
       this.outbounds.push(outbound.tag);
     }
     return [];

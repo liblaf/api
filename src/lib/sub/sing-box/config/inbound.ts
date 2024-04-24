@@ -43,7 +43,7 @@ export function defaultInbounds({ listen_port, mixed, tun }: Query): Inbound[] {
       inet4_address: "172.19.0.1/30",
       inet6_address: "fdfe:dcba:9876::1/126",
       auto_route: true,
-      strict_route: false,
+      strict_route: true,
     });
   return inbounds;
 }

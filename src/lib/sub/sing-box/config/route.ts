@@ -88,10 +88,13 @@ export function defaultRoute(query: Query): Route {
       {
         rule_set: [
           "geoip:cn",
-          "geosite:apple@cn",
+          "geosite:apple-cn",
           "geosite:category-games@cn",
           "geosite:cn",
           "geosite:geolocation-cn",
+          "geosite:microsoft@cn",
+          "geosite:onedrive",
+          "geosite:steam@cn",
         ],
         outbound: OutboundTag.DIRECT,
       },
@@ -112,26 +115,29 @@ export function defaultRoute(query: Query): Route {
     rule_set: [
       geoip("cn"),
       geoip("private"),
-      geosite("apple@cn"),
+      geosite("apple-cn"),
       geosite("bing"),
       geosite("category-ads-all"),
       geosite("category-games@cn"),
       geosite("cn"),
       geosite("geolocation-!cn"),
       geosite("geolocation-cn"),
+      geosite("microsoft@cn"),
+      geosite("onedrive"),
       geosite("openai"),
       geosite("private"),
+      geosite("steam@cn"),
       remoteBinary(
         "ruleset:claude",
-        "https://raw.githubusercontent.com/NotSFC/for-sing-box-and-surge/master/sing-box/Claude/Claude.srs",
+        "https://raw.githubusercontent.com/NotSFC/for-sing-box-and-surge/master/sing-box/Claude/Claude.srs"
       ),
       remoteBinary(
         "ruleset:emby",
-        "https://raw.githubusercontent.com/NotSFC/rulelist/main/sing-box/Emby/Emby.srs",
+        "https://raw.githubusercontent.com/NotSFC/rulelist/main/sing-box/Emby/Emby.srs"
       ),
       remoteBinary(
         "ruleset:gemini",
-        "https://raw.githubusercontent.com/NotSFC/for-sing-box-and-surge/master/sing-box/Gemini/Gemini.srs",
+        "https://raw.githubusercontent.com/NotSFC/for-sing-box-and-surge/master/sing-box/Gemini/Gemini.srs"
       ),
     ],
     final: "PROXY",
@@ -142,14 +148,14 @@ export function defaultRoute(query: Query): Route {
 function geoip(tag: string): RuleSet {
   return remoteBinary(
     `geoip:${tag}`,
-    `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/${tag}.srs`,
+    `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/${tag}.srs`
   );
 }
 
 function geosite(tag: string): RuleSet {
   return remoteBinary(
     `geosite:${tag}`,
-    `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/${tag}.srs`,
+    `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/${tag}.srs`
   );
 }
 

@@ -1,9 +1,10 @@
-import { coerceBoolean } from "@/lib/zod-utils";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
-import { fetchGeo, GeoSchema } from "./geo";
-import { fetchRisk, RiskSchema } from "./risk";
-import { fetchSecurity, SecuritySchema } from "./security";
+
+import { fetchGeo, GeoSchema } from "@/lib/ip/info/geo";
+import { fetchRisk, RiskSchema } from "@/lib/ip/info/risk";
+import { fetchSecurity, SecuritySchema } from "@/lib/ip/info/security";
+import { coerceBoolean } from "@/lib/zod";
 
 export const appIpInfo = new OpenAPIHono();
 
@@ -26,7 +27,7 @@ type Result = z.infer<typeof ResponseSchema>;
 
 async function fetchResult(
   ip: string,
-  { geo, risk, security }: Query,
+  { geo, risk, security }: Query
 ): Promise<Result> {
   const [geoData, riskData, securityData] = await Promise.all([
     geo ? fetchGeo(ip) : undefined,
@@ -67,7 +68,7 @@ appIpInfo.openapi(
     const query: Query = c.req.valid("query");
     const result: Result = await fetchResult(ip, query);
     return c.json(result);
-  },
+  }
 );
 
 appIpInfo.openapi(
@@ -98,5 +99,5 @@ appIpInfo.openapi(
     const query: Query = c.req.valid("query");
     const result: Result = await fetchResult(ip, query);
     return c.json(result);
-  },
+  }
 );

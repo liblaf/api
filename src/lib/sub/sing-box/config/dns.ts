@@ -5,7 +5,9 @@ export type DNS = {
   servers?: DNSServer[];
   rules?: DNSRule[];
   final?: string;
+  independent_cache?: boolean;
   client_subnet?: string;
+  fakeip?: FakeIP;
 };
 
 export type DNSServer = {
@@ -26,6 +28,7 @@ export type DNSRule = _DNSRule & {
 type _DNSRule = DNSRuleDefault | DNSRuleLogical;
 
 type DNSRuleDefault = {
+  query_type?: (number | string)[];
   clash_mode?: ClashMode;
   rule_set?: string[];
   invert?: boolean;
@@ -38,54 +41,63 @@ type DNSRuleLogical = {
   rules: _DNSRule[];
 };
 
-export function defaultDNS(query: Query): DNS {
-  return {
+type FakeIP = {
+  enabled?: boolean;
+  inet4_range?: string;
+  inet6_range?: string;
+};
+
+export function defaultDNS({ tun }: Query): DNS {
+  const dns: DNS = {
     servers: [
       {
-        tag: DNSServerTag.CLOUDFLARE,
+        tag: DnsTag.CLOUDFLARE,
         address: "https://cloudflare-dns.com/dns-query",
-        address_resolver: DNSServerTag.LOCAL,
+        address_resolver: DnsTag.LOCAL,
       },
       {
-        tag: DNSServerTag.LOCAL,
+        tag: DnsTag.LOCAL,
         address: "local",
         detour: OutboundTag.DIRECT,
       },
       {
-        tag: DNSServerTag.REJECT,
+        tag: DnsTag.REJECT,
         address: "rcode://success",
       },
     ],
     rules: [
       {
         rule_set: ["geosite:private"],
-        server: DNSServerTag.LOCAL,
+        server: DnsTag.LOCAL,
       },
       {
         outbound: "any",
-        server: DNSServerTag.LOCAL,
+        server: DnsTag.LOCAL,
       },
       {
         rule_set: ["geosite:category-ads-all"],
-        server: DNSServerTag.REJECT,
+        server: DnsTag.REJECT,
+        disable_cache: true,
       },
       {
         clash_mode: "direct",
-        server: DNSServerTag.LOCAL,
+        server: DnsTag.LOCAL,
       },
       {
         clash_mode: "global",
-        server: DNSServerTag.CLOUDFLARE,
+        server: DnsTag.CLOUDFLARE,
       },
       {
         rule_set: [
-          "geoip:cn",
-          "geosite:apple@cn",
+          "geosite:apple-cn",
           "geosite:category-games@cn",
           "geosite:cn",
           "geosite:geolocation-cn",
+          "geosite:microsoft@cn",
+          "geosite:onedrive",
+          "geosite:steam@cn",
         ],
-        server: DNSServerTag.LOCAL,
+        server: DnsTag.LOCAL,
       },
       // TODO: sing-box 1.9.0-alpha.2+
       // {
@@ -100,16 +112,34 @@ export function defaultDNS(query: Query): DNS {
       //       rule_set: ["geoip:cn"],
       //     },
       //   ],
-      //   server: DNSServerTag.CLOUDFLARE,
+      //   server: DnsTag.CLOUDFLARE,
       //   client_subnet: "101.6.6.6", // any China client IP address
       // },
     ],
-    final: DNSServerTag.CLOUDFLARE,
+    final: DnsTag.CLOUDFLARE,
+    independent_cache: true,
   };
+  if (tun) {
+    dns.servers?.push({
+      tag: DnsTag.FAKEIP,
+      address: "fakeip",
+    });
+    dns.rules?.push({
+      query_type: ["A", "AAAA"],
+      server: DnsTag.FAKEIP,
+    });
+    dns.fakeip = {
+      enabled: true,
+      inet4_range: "198.18.0.0/15",
+      inet6_range: "fc00::/18",
+    };
+  }
+  return dns;
 }
 
-const DNSServerTag = {
+const DnsTag = {
   CLOUDFLARE: "dns:cloudflare",
   LOCAL: "dns:local",
   REJECT: "dns:reject",
+  FAKEIP: "dns:fakeip",
 };
