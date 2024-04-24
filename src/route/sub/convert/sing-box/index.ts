@@ -69,7 +69,7 @@ appSubConvertSingbox.openapi(
   async (c) => {
     const { uuid } = c.req.valid("param");
     if (uuid !== c.env?.MY_UUID) throw new HTTPException(403);
-    const urls: URL[] = (c.env?.MY_URLS as string)
+    const urls: URL[] = (c.env?.MY_SUB_URLS as string)
       .split("\n")
       .map((url) => new URL(url));
     const query: Query = c.req.valid("query");
