@@ -36,6 +36,7 @@ type GeoResponse = {
 export async function fetchGeo(ip: string): Promise<Geo> {
   const response = await fetchSafe(`https://api.ip.sb/geoip/${ip}`);
   const data = (await response.json()) as GeoResponse;
+  console.log(data);
   return {
     asn: data.asn,
     country: data.country,

@@ -25,14 +25,20 @@ const ResponseSchema = z.object({
 
 type Result = z.infer<typeof ResponseSchema>;
 
+type Env = {
+  PROXYCHECK_IO_KEY?: string;
+  IPAPI_IS_KEY?: string;
+};
+
 async function fetchResult(
   ip: string,
   { geo, risk, security }: Query,
+  env?: Env,
 ): Promise<Result> {
   const [geoData, riskData, securityData] = await Promise.all([
     geo ? fetchGeo(ip) : undefined,
-    risk ? fetchRisk(ip) : undefined,
-    security ? fetchSecurity(ip) : undefined,
+    risk ? fetchRisk(ip, env?.PROXYCHECK_IO_KEY) : undefined,
+    security ? fetchSecurity(ip, env?.IPAPI_IS_KEY) : undefined,
   ]);
   return {
     ip,
@@ -66,7 +72,7 @@ appIpInfo.openapi(
     const ip: string | undefined = c.req.header("X-Real-IP");
     if (!ip) throw new HTTPException(400, { message: "IP Not Found" });
     const query: Query = c.req.valid("query");
-    const result: Result = await fetchResult(ip, query);
+    const result: Result = await fetchResult(ip, query, c.env);
     return c.json(result);
   },
 );
@@ -97,7 +103,7 @@ appIpInfo.openapi(
   async (c) => {
     const { ip } = c.req.valid("param");
     const query: Query = c.req.valid("query");
-    const result: Result = await fetchResult(ip, query);
+    const result: Result = await fetchResult(ip, query, c.env);
     return c.json(result);
   },
 );

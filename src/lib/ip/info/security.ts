@@ -22,9 +22,16 @@ type SecurityResponse = {
   is_vpn: boolean;
 };
 
-export async function fetchSecurity(ip: string): Promise<Security> {
-  const response = await fetchSafe(`https://api.ipapi.is?q=${ip}`);
+export async function fetchSecurity(
+  ip: string,
+  key?: string,
+): Promise<Security> {
+  const url = new URL("https://api.ipapi.is");
+  url.searchParams.set("q", ip);
+  if (key) url.searchParams.set("key", key);
+  const response = await fetchSafe(url);
   const data = (await response.json()) as SecurityResponse;
+  console.log(data);
   return {
     abuser: data.is_abuser,
     crawler: data.is_crawler,
