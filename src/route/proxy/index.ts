@@ -1,5 +1,7 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 
+import { fetchSafe } from "@/lib/fetch";
+
 export const appProxy = new OpenAPIHono();
 
 appProxy.all("/:url{.+$}", async (c) => {
@@ -7,7 +9,7 @@ appProxy.all("/:url{.+$}", async (c) => {
   if (!(url.startsWith("http://") || url.startsWith("https://"))) {
     url = `https://${url}`;
   }
-  const origin: Response = await fetch(url, {
+  const origin: Response = await fetchSafe(url, {
     method: c.req.method,
     headers: c.req.raw.headers,
     body: c.req.raw.body,

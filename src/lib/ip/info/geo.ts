@@ -1,5 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
+import { fetchSafe } from "@/lib/fetch";
+
 export const GeoSchema = z.object({
   asn: z.number().positive().int().openapi({ example: 15169 }),
   country: z.string().optional().openapi({ example: "United States" }),
@@ -32,7 +34,7 @@ type GeoResponse = {
 };
 
 export async function fetchGeo(ip: string): Promise<Geo> {
-  const response = await fetch(`https://api.ip.sb/geoip/${ip}`);
+  const response = await fetchSafe(`https://api.ip.sb/geoip/${ip}`);
   const data = (await response.json()) as GeoResponse;
   return {
     asn: data.asn,

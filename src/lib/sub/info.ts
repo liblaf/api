@@ -1,7 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { HTTPException } from "hono/http-exception";
-import { StatusCode } from "hono/utils/http-status";
 
+import { fetchSafe } from "@/lib/fetch";
 import { makeProvider } from "./provider";
 
 export const UserInfoSchema = z.object({
@@ -53,12 +52,7 @@ export async function fetchInfo(
 
 export async function fetchInfoOnce(url: URL, backend: URL): Promise<UserInfo> {
   const provider = makeProvider(url, backend);
-  const response = await fetch(provider.userInfoUrl);
-  if (!response.ok) {
-    throw new HTTPException(response.status as StatusCode, {
-      message: await response.text(),
-    });
-  }
+  const response = await fetchSafe(provider.userInfoUrl);
   const info: UserInfo = {
     name: provider.name,
     url: provider.url.toString(),

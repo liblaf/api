@@ -1,9 +1,10 @@
 import { HTTPException } from "hono/http-exception";
 
+import { fetchSafe } from "@/lib/fetch";
 import { makeProvider } from "@/lib/sub/provider";
 import { toSimplified } from "@/lib/text";
-import { Query } from "./query";
 import { Outbound } from "./config/outbound";
+import { Query } from "./query";
 
 const EXCLUDE_OUTBOUND_TYPES = new Set([
   "direct",
@@ -19,12 +20,7 @@ export async function fetchOutbounds(
 ): Promise<Outbound[]> {
   try {
     const provider = makeProvider(sub, new URL(backend));
-    const response = await fetch(provider.singBoxUrl);
-    if (!response.ok) {
-      throw new HTTPException(response.status as any, {
-        message: await response.text(),
-      });
-    }
+    const response = await fetchSafe(provider.singBoxUrl);
     const data = (await response.json()) as any;
     let outbounds = data.outbounds as Outbound[];
     outbounds = outbounds.filter(

@@ -1,5 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
+import { fetchSafe } from "@/lib/fetch";
+
 export const SecuritySchema = z.object({
   abuser: z.boolean().openapi({ example: true }),
   crawler: z.boolean().openapi({ example: false }),
@@ -21,7 +23,7 @@ type SecurityResponse = {
 };
 
 export async function fetchSecurity(ip: string): Promise<Security> {
-  const response = await fetch(`https://api.ipapi.is?q=${ip}`);
+  const response = await fetchSafe(`https://api.ipapi.is?q=${ip}`);
   const data = (await response.json()) as SecurityResponse;
   return {
     abuser: data.is_abuser,

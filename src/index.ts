@@ -1,4 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
+import { HTTPException } from "hono/http-exception";
 
 import SWAGGER_UI from "@/lib/swagger-ui";
 import { appIp } from "@/route/ip";
@@ -16,5 +17,11 @@ app.doc("/openapi.json", {
 app.route("/ip", appIp);
 app.route("/proxy", appProxy);
 app.route("/sub", appSub);
+
+app.onError((err, c) => {
+  console.error(err);
+  if (err instanceof HTTPException) return err.getResponse();
+  return c.text(`${err}`, 500);
+});
 
 export default app;
