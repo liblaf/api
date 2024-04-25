@@ -45,7 +45,7 @@ type RuleSetRemote = RuleSetCommon & {
   download_detour?: string;
 };
 
-export function defaultRoute(query: Query): Route {
+export function defaultRoute({ ipv6 }: Query): Route {
   return {
     rules: [
       {
@@ -81,10 +81,14 @@ export function defaultRoute(query: Query): Route {
         ],
         outbound: OutboundTag.REJECT,
       },
-      {
-        domain_suffix: ["byr.pt"],
-        outbound: OutboundTag.IPv6,
-      },
+      ...(ipv6
+        ? [
+            {
+              domain_suffix: ["byr.pt"],
+              outbound: OutboundTag.IPv6,
+            },
+          ]
+        : []),
       {
         rule_set: [
           "geoip:cn",
