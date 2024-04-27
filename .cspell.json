@@ -1,6 +1,7 @@
 {
   "words": [
     "bidi",
+    "chatid",
     "commitizen",
     "dcba",
     "emby",
@@ -21,6 +22,6 @@
     "rcode",
     "rdrc"
   ],
-  "ignorePaths": ["**/*-lock.*", "**/*.lock", "**/.cspell.json"],
+  "ignorePaths": ["**/*-lock.*", "**/*.lock*", "**/.cspell.json"],
   "allowCompoundWords": true
 }
