@@ -39,6 +39,7 @@ export function newBot(env: Env) {
           const emoji = days < 7 ? "🔴" : days < 14 ? "🟡" : "🟢";
           message += ` expire at ${prettyDate(expire)} ${emoji}`;
         }
+        return message;
       })
       .join("\n");
     await ctx.reply(message, { parse_mode: "MarkdownV2" });
