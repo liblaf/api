@@ -43,7 +43,7 @@ appSubConvertSingbox.openapi(
 appSubConvertSingbox.openapi(
   createRoute({
     tags: ["Subscription"],
-    summary: "Download my sing-box config",
+    summary: "Get my sing-box config",
     method: "get",
     path: "/{uuid}",
     request: {

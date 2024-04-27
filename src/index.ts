@@ -5,6 +5,7 @@ import SWAGGER_UI from "@/lib/swagger-ui";
 import { appIp } from "@/route/ip";
 import { appProxy } from "@/route/proxy";
 import { appSub } from "@/route/sub";
+import { appBot } from "@/route/bot";
 
 const app = new OpenAPIHono();
 
@@ -14,6 +15,7 @@ app.doc("/openapi.json", {
   info: { title: "liblaf's API", version: "v0" },
   externalDocs: { description: "GitHub", url: "https://github.com/liblaf/api" },
 });
+app.route("/bot", appBot);
 app.route("/ip", appIp);
 app.route("/proxy", appProxy);
 app.route("/sub", appSub);
