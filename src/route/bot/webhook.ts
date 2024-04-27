@@ -9,32 +9,9 @@ export const appBotWebhook = new OpenAPIHono();
 appBotWebhook.openapi(
   createRoute({
     tags: ["Bot"],
-    summary: "Telegram Bot Webhook",
-    method: "post",
-    path: "/",
-    responses: {
-      200: {
-        description: "OK",
-      },
-    },
-  }),
-  (c) => {
-    const bot = newBot(c.env?.BOT_TOKEN as string);
-    bot.api.setWebhook(c.req.url);
-    const callback = webhookCallback(bot, "cloudflare-mod");
-    return callback(c.req);
-  },
-);
-
-appBotWebhook.openapi(
-  createRoute({
-    tags: ["Bot"],
     summary: "Set Telegram Bot Webhook",
     method: "get",
-    path: "/set/{uuid}",
-    request: {
-      params: z.object({ uuid: z.string().uuid() }),
-    },
+    path: "/",
     responses: {
       200: {
         description: "OK",
@@ -47,17 +24,33 @@ appBotWebhook.openapi(
           },
         },
       },
-      403: {
-        description: "Forbidden",
+    },
+  }),
+  // @ts-ignore
+  async (c) => {
+    const bot = newBot(c.env?.BOT_TOKEN as string);
+    const url = c.req.url;
+    await bot.api.setWebhook(c.req.url);
+    return c.text(url);
+  },
+);
+
+appBotWebhook.openapi(
+  createRoute({
+    tags: ["Bot"],
+    summary: "Telegram Bot Webhook",
+    method: "post",
+    path: "/",
+    responses: {
+      200: {
+        description: "OK",
       },
     },
   }),
   async (c) => {
-    const { uuid } = c.req.valid("param");
-    if (uuid !== c.env?.MY_UUID) throw new HTTPException(403);
     const bot = newBot(c.env?.BOT_TOKEN as string);
-    const url = c.req.url.replace(/\/set\/.+$/, "");
-    await bot.api.setWebhook(url);
-    return c.text(url);
+    const callback = webhookCallback(bot, "cloudflare-mod");
+    const response = callback(c.req.raw);
+    return response;
   },
 );
