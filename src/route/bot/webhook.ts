@@ -28,7 +28,7 @@ appBotWebhook.openapi(
   }),
   // @ts-ignore
   async (c) => {
-    const bot = newBot(c.env?.BOT_TOKEN as string);
+    const bot = newBot(c.env as any);
     const url = c.req.url;
     await bot.api.setWebhook(c.req.url);
     return c.text(url);
@@ -48,7 +48,7 @@ appBotWebhook.openapi(
     },
   }),
   async (c) => {
-    const bot = newBot(c.env?.BOT_TOKEN as string);
+    const bot = newBot(c.env as any);
     const callback = webhookCallback(bot, "cloudflare-mod");
     const response = callback(c.req.raw);
     return response;
