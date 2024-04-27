@@ -10,7 +10,9 @@ type Env = {
 export function newBot(env: Env) {
   const bot = new Bot(env.BOT_TOKEN);
   bot.command("getChatId", async (ctx) => {
-    await ctx.reply(`\`${ctx.chat.id.toString()}\``);
+    await ctx.reply(`\`${ctx.chat.id.toString()}\``, {
+      parse_mode: "MarkdownV2",
+    });
   });
   bot.command("subInfo", async (ctx) => {
     if (ctx.chat.id.toString() !== env.MY_CHAT_ID) {
@@ -56,5 +58,5 @@ function prettyBytes(bytes: number): string {
 }
 
 function prettyDate(date: Date): string {
-  return date.toISOString().slice(0, 10);
+  return date.toISOString().slice(0, 10).replace("-", "\\-");
 }
