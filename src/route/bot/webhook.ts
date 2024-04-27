@@ -9,7 +9,7 @@ export const appBotWebhook = new OpenAPIHono();
 appBotWebhook.openapi(
   createRoute({
     tags: ["Bot"],
-    summary: "Set Telegram Bot Webhook",
+    summary: "Set Telegram bot webhook",
     method: "get",
     path: "/",
     responses: {
@@ -38,7 +38,7 @@ appBotWebhook.openapi(
 appBotWebhook.openapi(
   createRoute({
     tags: ["Bot"],
-    summary: "Telegram Bot Webhook",
+    summary: "Telegram bot webhook",
     method: "post",
     path: "/",
     responses: {
