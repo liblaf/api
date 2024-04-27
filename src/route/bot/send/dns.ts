@@ -17,11 +17,7 @@ appBotSendDns.openapi(
     path: "/{chat_id}",
     request: {
       params: z.object({
-        chat_id: z.coerce
-          .number()
-          .positive()
-          .int()
-          .openapi({ example: 1111111111 }),
+        chat_id: z.string().openapi({ example: "1111111111" }),
       }),
       body: {
         content: {
