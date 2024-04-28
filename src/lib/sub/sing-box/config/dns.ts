@@ -94,7 +94,6 @@ export function defaultDNS({ tun }: Query): DNS {
           "geosite:cn",
           "geosite:geolocation-cn",
           "geosite:microsoft@cn",
-          "geosite:onedrive",
           "geosite:steam@cn",
         ],
         server: DnsTag.LOCAL,

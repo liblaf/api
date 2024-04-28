@@ -97,7 +97,6 @@ export function defaultRoute({ ipv6 }: Query): Route {
           "geosite:cn",
           "geosite:geolocation-cn",
           "geosite:microsoft@cn",
-          "geosite:onedrive",
           "geosite:steam@cn",
         ],
         outbound: OutboundTag.DIRECT,
