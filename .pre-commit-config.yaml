@@ -4,8 +4,15 @@ ci:
   skip:
     - cspell
 repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.1
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+      - id: ruff-format
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.22.0
+    rev: v3.24.0
     hooks:
       - id: commitizen
   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -19,7 +26,10 @@ repos:
     rev: v4.5.0
     hooks:
       - id: check-added-large-files
+      - id: check-ast
+      - id: check-builtin-literals
       - id: check-case-conflict
+      - id: check-docstring-first
       - id: check-json
         exclude: tsconfig\.json$
       - id: check-merge-conflict
@@ -28,6 +38,7 @@ repos:
       - id: check-yaml
         args:
           - --unsafe
+      - id: debug-statements
       - id: destroyed-symlinks
       - id: detect-private-key
       - id: end-of-file-fixer
