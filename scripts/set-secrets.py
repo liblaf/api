@@ -24,14 +24,10 @@ class Item(TypedDict):
     notes: str | None
 
 
-item: Item = bw("get", "item", "UUID")  # pyright: ignore[reportAssignmentType]
-uuid: str = item["notes"]  # pyright: ignore[reportAssignmentType]
 folder: Folder = bw("get", "folder", "the Great Wall")  # pyright: ignore[reportAssignmentType]
 items: list[Item] = bw("list", "items", "--folderid", folder["id"])  # pyright: ignore[reportAssignmentType]
 urls: list[str] = [item["notes"] for item in items if item["notes"]]
 
-print(uuid)
 pprint.pprint(urls)
 
-gh_secret_set("MY_UUID", uuid)
 gh_secret_set("MY_SUB_URLS", "\n".join(urls))
