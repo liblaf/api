@@ -23,7 +23,7 @@ export class Emby implements SmartGroup {
         continue;
       }
       const rate: number = inferRate(outbound.tag);
-      if (rate < 1) {
+      if (rate < 0.2) {
         this.outbounds.push(outbound.tag);
         continue;
       }
