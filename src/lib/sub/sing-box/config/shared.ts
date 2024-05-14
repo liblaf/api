@@ -6,6 +6,7 @@ export const OutboundTag = {
   EMBY: "🍟 Emby",
   GOOD: "⭐ Good",
   IPv6: "🌐 IPv6",
+  ONEDRIVE: "☁️ OneDrive",
   PROXY: "PROXY",
   REJECT: "REJECT",
 };

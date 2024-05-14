@@ -7,6 +7,7 @@ import { Auto } from "./group/auto";
 import { Country } from "./group/country";
 import { Emby } from "./group/emby";
 import { IPv6 } from "./group/ipv6";
+import { OneDrive } from "./group/onedrive";
 import { fetchOutbounds } from "./provider";
 import { Query } from "./query";
 
@@ -18,7 +19,12 @@ export async function convert(urls: URL[], query: Query): Promise<any> {
   const proxyGroup = config.outbounds?.find(
     (outbound) => outbound.tag === "PROXY",
   )! as OutboundSelector;
-  const groups: SmartGroup[] = [new AI(), new Auto(), new Emby()];
+  const groups: SmartGroup[] = [
+    new AI(),
+    new Auto(),
+    new Emby(),
+    new OneDrive(),
+  ];
   if (query.ipv6) groups.push(new IPv6());
   groups.push(
     ...Object.values(COUNTRIES).map((country) => new Country(country)),

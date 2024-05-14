@@ -110,10 +110,8 @@ export function defaultRoute({ ipv6 }: Query): Route {
         ],
         outbound: OutboundTag.AI,
       },
-      {
-        rule_set: ["ruleset:emby"],
-        outbound: OutboundTag.EMBY,
-      },
+      { rule_set: ["ruleset:emby"], outbound: OutboundTag.EMBY },
+      { rule_set: ["geosite:onedrive"], outbound: OutboundTag.ONEDRIVE },
     ],
     rule_set: [
       geoip("cn"),
