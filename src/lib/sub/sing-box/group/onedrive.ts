@@ -6,7 +6,7 @@ import { OutboundTag } from "../config/shared";
 
 export class OneDrive implements SmartGroup {
   tag: string = OutboundTag.ONEDRIVE;
-  outbounds: string[] = [OutboundTag.DIRECT];
+  outbounds: string[] = [];
 
   build(): OutboundURLTest {
     return {
