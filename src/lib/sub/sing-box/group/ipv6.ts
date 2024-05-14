@@ -1,7 +1,7 @@
-import { COUNTRIES, inferCountry } from "@/lib/sub/infer/country";
 import { SmartGroup } from ".";
 import { Outbound, OutboundURLTest } from "../config/outbound";
 import { OutboundTag } from "../config/shared";
+import { isEmby } from "@/lib/sub/infer/category";
 
 export class IPv6 implements SmartGroup {
   tag: string = OutboundTag.IPv6;
@@ -19,8 +19,7 @@ export class IPv6 implements SmartGroup {
   filter(outbounds: Outbound[]): Outbound[] {
     const outboundsIPv6: Outbound[] = [];
     for (const outbound of outbounds) {
-      const country: string = inferCountry(outbound.tag);
-      if (country === COUNTRIES.OT) continue;
+      if (isEmby(outbound.tag)) continue;
       const outboundIPv6: Outbound = structuredClone(outbound);
       outboundIPv6.tag += "[IPv6]";
       outboundsIPv6.push(outboundIPv6);

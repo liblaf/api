@@ -1,3 +1,4 @@
+import { isEmby } from "@/lib/sub/infer/category";
 import { inferRate } from "@/lib/sub/infer/rate";
 import { SmartGroup } from ".";
 import { Outbound, OutboundURLTest } from "../config/outbound";
@@ -18,7 +19,7 @@ export class Emby implements SmartGroup {
 
   filter(outbounds: Outbound[]): Outbound[] {
     for (const outbound of outbounds) {
-      if (/emby/i.test(outbound.tag)) {
+      if (isEmby(outbound.tag)) {
         this.outbounds.push(outbound.tag);
         continue;
       }

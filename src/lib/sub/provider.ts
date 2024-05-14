@@ -61,6 +61,10 @@ const PROVIDERS: ProviderFactory[] = [
     singBoxUrl: setSearchParams([["flag", "sing"]]),
   },
   {
+    pattern: /jmssub.net/,
+    name: constName("JMS"),
+  },
+  {
     pattern: /.*/,
   },
 ];
