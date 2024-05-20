@@ -1,7 +1,7 @@
 import { SmartGroup } from ".";
 import { Outbound, OutboundURLTest } from "../config/outbound";
 import { OutboundTag } from "../config/shared";
-import { isEmby } from "@/lib/sub/infer/category";
+import { isEmby } from "@lib/sub/infer/category";
 
 export class IPv6 implements SmartGroup {
   tag: string = OutboundTag.IPv6;

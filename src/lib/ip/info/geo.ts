@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi";
-
-import { fetchSafe } from "@/lib/fetch";
+import { fetchSafe } from "@lib/fetch";
 
 export const GeoSchema = z.object({
   asn: z.number().positive().int().openapi({ example: 15169 }),
@@ -52,7 +51,7 @@ export async function fetchGeo(ip: string): Promise<Geo> {
 
 function countryCode2FlagEmoji(countryCode: string): string {
   const codePoints: number[] = [...countryCode].map(
-    (char: string): number => 127397 + char.charCodeAt(0),
+    (char: string): number => 127397 + char.charCodeAt(0)
   );
   return String.fromCodePoint(...codePoints);
 }

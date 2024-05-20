@@ -2,7 +2,7 @@ import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
 import { webhookCallback } from "grammy";
 import { HTTPException } from "hono/http-exception";
 
-import { newBot } from "@/lib/bot";
+import { newBot } from "@lib/bot";
 
 export const appBotWebhook = new OpenAPIHono();
 
@@ -32,7 +32,7 @@ appBotWebhook.openapi(
     const url = c.req.url;
     await bot.api.setWebhook(c.req.url);
     return c.text(url);
-  },
+  }
 );
 
 appBotWebhook.openapi(
@@ -52,5 +52,5 @@ appBotWebhook.openapi(
     const callback = webhookCallback(bot, "cloudflare-mod");
     const response = callback(c.req.raw);
     return response;
-  },
+  }
 );

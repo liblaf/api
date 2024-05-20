@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
-import { BACKEND_URL } from "@/lib/sub/const";
-import { coerceBoolean } from "@/lib/zod";
+import { BACKEND_URL } from "@lib/sub/const";
+import { coerceBoolean } from "@lib/zod";
 
 export const QuerySchema = z.object({
   backend: z.string().url().default(BACKEND_URL.toString()),

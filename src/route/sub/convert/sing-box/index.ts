@@ -1,8 +1,8 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 
-import { convert } from "@/lib/sub/sing-box/convert";
-import { Query, QuerySchema } from "@/lib/sub/sing-box/query";
+import { convert } from "@lib/sub/sing-box/convert";
+import { Query, QuerySchema } from "@lib/sub/sing-box/query";
 
 export const appSubConvertSingbox = new OpenAPIHono();
 
@@ -34,10 +34,10 @@ appSubConvertSingbox.openapi(
     const { url, ...query } = c.req.valid("query");
     const config = await convert(
       url.map((url) => new URL(url)),
-      query,
+      query
     );
     return c.json(config);
-  },
+  }
 );
 
 appSubConvertSingbox.openapi(
@@ -75,5 +75,5 @@ appSubConvertSingbox.openapi(
     const query: Query = c.req.valid("query");
     const config = await convert(urls, query);
     return c.json(config);
-  },
+  }
 );

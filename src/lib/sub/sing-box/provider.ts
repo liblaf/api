@@ -1,8 +1,8 @@
 import { HTTPException } from "hono/http-exception";
 
-import { fetchSafe } from "@/lib/fetch";
-import { makeProvider } from "@/lib/sub/provider";
-import { toSimplified } from "@/lib/text";
+import { fetchSafe } from "@lib/fetch";
+import { makeProvider } from "@lib/sub/provider";
+import { toSimplified } from "@lib/text";
 import { Outbound } from "./config/outbound";
 import { Query } from "./query";
 
@@ -16,7 +16,7 @@ const EXCLUDE_OUTBOUND_TYPES = new Set([
 
 export async function fetchOutbounds(
   sub: URL,
-  { backend }: Query,
+  { backend }: Query
 ): Promise<Outbound[]> {
   try {
     const provider = makeProvider(sub, new URL(backend));
@@ -24,7 +24,7 @@ export async function fetchOutbounds(
     const data = (await response.json()) as any;
     let outbounds = data.outbounds as Outbound[];
     outbounds = outbounds.filter(
-      (outbound) => !EXCLUDE_OUTBOUND_TYPES.has(outbound.type),
+      (outbound) => !EXCLUDE_OUTBOUND_TYPES.has(outbound.type)
     );
     outbounds.forEach((outbound) => {
       const tag: string = toSimplified(outbound.tag);

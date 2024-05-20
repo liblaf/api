@@ -1,12 +1,12 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
+import { fetchGeo, GeoSchema } from "@lib/ip/info/geo";
+import { fetchRisk, RiskSchema } from "@lib/ip/info/risk";
+import { fetchSecurity, SecuritySchema } from "@lib/ip/info/security";
+import { coerceBoolean } from "@lib/zod-utils";
+import { Bindings } from "@lib/bindings";
 
-import { fetchGeo, GeoSchema } from "@/lib/ip/info/geo";
-import { fetchRisk, RiskSchema } from "@/lib/ip/info/risk";
-import { fetchSecurity, SecuritySchema } from "@/lib/ip/info/security";
-import { coerceBoolean } from "@/lib/zod";
-
-export const appIpInfo = new OpenAPIHono();
+export const appIpInfo = new OpenAPIHono<{ Bindings: Bindings }>();
 
 const QuerySchema = z.object({
   geo: coerceBoolean().default(true),
@@ -25,20 +25,15 @@ const ResponseSchema = z.object({
 
 type Result = z.infer<typeof ResponseSchema>;
 
-type Env = {
-  PROXYCHECK_IO_KEY?: string;
-  IPAPI_IS_KEY?: string;
-};
-
 async function fetchResult(
   ip: string,
   { geo, risk, security }: Query,
-  env?: Env,
+  env: Bindings
 ): Promise<Result> {
   const [geoData, riskData, securityData] = await Promise.all([
     geo ? fetchGeo(ip) : undefined,
-    risk ? fetchRisk(ip, env?.PROXYCHECK_IO_KEY) : undefined,
-    security ? fetchSecurity(ip, env?.IPAPI_IS_KEY) : undefined,
+    risk ? fetchRisk(ip, env.PROXYCHECK_IO_KEY) : undefined,
+    security ? fetchSecurity(ip, env.IPAPI_IS_KEY) : undefined,
   ]);
   return {
     ip,
@@ -69,12 +64,12 @@ appIpInfo.openapi(
     },
   }),
   async (c) => {
-    const ip: string | undefined = c.req.header("X-Real-IP");
+    const ip = c.req.header("X-Real-IP");
     if (!ip) throw new HTTPException(400, { message: "IP Not Found" });
-    const query: Query = c.req.valid("query");
-    const result: Result = await fetchResult(ip, query, c.env);
+    const query = c.req.valid("query");
+    const result = await fetchResult(ip, query, c.env);
     return c.json(result);
-  },
+  }
 );
 
 appIpInfo.openapi(
@@ -102,8 +97,8 @@ appIpInfo.openapi(
   }),
   async (c) => {
     const { ip } = c.req.valid("param");
-    const query: Query = c.req.valid("query");
-    const result: Result = await fetchResult(ip, query, c.env);
+    const query = c.req.valid("query");
+    const result = await fetchResult(ip, query, c.env);
     return c.json(result);
-  },
+  }
 );

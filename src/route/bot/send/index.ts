@@ -1,6 +1,6 @@
 import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
 
-import { newBot } from "@/lib/bot";
+import { newBot } from "@lib/bot";
 
 export const appBotSend = new OpenAPIHono();
 
@@ -39,7 +39,7 @@ appBotSend.openapi(
       parse_mode: parse_mode,
     });
     return c.json(response);
-  },
+  }
 );
 
 const DnsRecordSchema = z.object({
@@ -91,5 +91,5 @@ appBotSend.openapi(
       parse_mode: "HTML",
     });
     return c.json(response);
-  },
+  }
 );

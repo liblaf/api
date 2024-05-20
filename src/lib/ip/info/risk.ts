@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi";
-
-import { fetchSafe } from "@/lib/fetch";
+import { fetchSafe } from "@lib/fetch";
 
 export const RiskSchema = z.object({
   risk: z.number().positive().int().max(100).openapi({ example: 0 }),
@@ -16,7 +15,6 @@ export async function fetchRisk(ip: string, key?: string): Promise<Risk> {
   if (key) url.searchParams.set("key", key);
   const response = await fetchSafe(url);
   const data = (await response.json()) as RiskResponse;
-  console.log(data);
   return {
     risk: data[ip].risk,
   };

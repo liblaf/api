@@ -1,4 +1,4 @@
-import { isEmby } from "@/lib/sub/infer/category";
+import { isEmby } from "@lib/sub/infer/category";
 import { SmartGroup } from ".";
 import { Outbound, OutboundURLTest } from "../config/outbound";
 import { OutboundTag } from "../config/shared";

@@ -10,8 +10,12 @@ const HTML = html`
       <link
         id="swagger-theme"
         rel="stylesheet"
-        href="https://registry.npmmirror.com/swagger-ui-dist/latest/files/swagger-ui.css"
+        href="https://jcphlux.github.io/swagger-ui-themes/css/swagger-dark-modern-ui.css"
       />
+      <!-- <link
+        rel="stylesheet"
+        href="https://registry.npmmirror.com/swagger-ui-dist/latest/files/swagger-ui.css"
+      /> -->
     </head>
     <body>
       <div id="swagger-ui"></div>

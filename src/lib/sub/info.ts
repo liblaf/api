@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-import { fetchSafe } from "@/lib/fetch";
+import { fetchSafe } from "@lib/fetch";
 import { makeProvider } from "./provider";
 import { BACKEND_URL } from "./const";
 
@@ -46,14 +46,14 @@ export type UserInfo = z.infer<typeof UserInfoSchema>;
 
 export async function fetchInfo(
   urls: URL[],
-  backend: URL = BACKEND_URL,
+  backend: URL = BACKEND_URL
 ): Promise<UserInfo[]> {
   return await Promise.all(urls.map((url) => fetchInfoOnce(url, backend)));
 }
 
 export async function fetchInfoOnce(
   url: URL,
-  backend: URL = BACKEND_URL,
+  backend: URL = BACKEND_URL
 ): Promise<UserInfo> {
   const provider = makeProvider(url, backend);
   const response = await fetchSafe(provider.userInfoUrl);

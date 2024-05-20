@@ -1,4 +1,4 @@
-import { COUNTRIES, inferCountry } from "@/lib/sub/infer/country";
+import { COUNTRIES, inferCountry } from "@lib/sub/infer/country";
 import { SmartGroup } from ".";
 import {
   Outbound,

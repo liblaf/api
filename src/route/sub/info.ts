@@ -1,8 +1,8 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 
-import { BACKEND_URL } from "@/lib/sub/const";
-import { fetchInfo, UserInfo, UserInfoSchema } from "@/lib/sub/info";
+import { BACKEND_URL } from "@lib/sub/const";
+import { fetchInfo, UserInfo, UserInfoSchema } from "@lib/sub/info";
 
 export const appSubInfo = new OpenAPIHono();
 
@@ -43,10 +43,10 @@ appSubInfo.openapi(
     const { backend, url } = c.req.valid("query");
     const info: UserInfo[] = await fetchInfo(
       url.map((url: string) => new URL(url)),
-      new URL(backend),
+      new URL(backend)
     );
     return c.json({ info: info });
-  },
+  }
 );
 
 appSubInfo.openapi(
@@ -86,5 +86,5 @@ appSubInfo.openapi(
       .map((url: string) => new URL(url));
     const info: UserInfo[] = await fetchInfo(urls, new URL(backend));
     return c.json({ info: info });
-  },
+  }
 );
