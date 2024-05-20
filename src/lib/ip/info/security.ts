@@ -23,7 +23,7 @@ type SecurityResponse = {
 
 export async function fetchSecurity(
   ip: string,
-  key?: string
+  key?: string,
 ): Promise<Security> {
   const url = new URL("https://api.ipapi.is");
   url.searchParams.set("q", ip);

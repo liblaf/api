@@ -2,7 +2,7 @@ import { HTTPException } from "hono/http-exception";
 
 export async function fetchSafe(
   input: RequestInfo,
-  init?: RequestInit<RequestInitCfProperties>
+  init?: RequestInit<RequestInitCfProperties>,
 ): Promise<Response> {
   const response = await fetch(input, init);
   if (!response.ok) {

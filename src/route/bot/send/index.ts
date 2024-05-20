@@ -39,7 +39,7 @@ appBotSend.openapi(
       parse_mode: parse_mode,
     });
     return c.json(response);
-  }
+  },
 );
 
 const DnsRecordSchema = z.object({
@@ -91,5 +91,5 @@ appBotSend.openapi(
       parse_mode: "HTML",
     });
     return c.json(response);
-  }
+  },
 );

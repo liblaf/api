@@ -34,10 +34,10 @@ appSubConvertSingbox.openapi(
     const { url, ...query } = c.req.valid("query");
     const config = await convert(
       url.map((url) => new URL(url)),
-      query
+      query,
     );
     return c.json(config);
-  }
+  },
 );
 
 appSubConvertSingbox.openapi(
@@ -75,5 +75,5 @@ appSubConvertSingbox.openapi(
     const query: Query = c.req.valid("query");
     const config = await convert(urls, query);
     return c.json(config);
-  }
+  },
 );

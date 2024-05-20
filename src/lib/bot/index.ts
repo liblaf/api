@@ -15,7 +15,7 @@ export function newBot(env: Bindings) {
       return;
     }
     const urls: URL[] = env.MY_SUB_URLS.split("\n").map(
-      (url: string) => new URL(url)
+      (url: string) => new URL(url),
     );
     const info: UserInfo[] = await fetchInfo(urls);
     const message: string = prettySubInfo(info);

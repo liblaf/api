@@ -26,7 +26,7 @@ appIp.openapi(
     const ip = c.req.header("X-Real-IP");
     if (!ip) throw new HTTPException(400, { message: "IP Not Found" });
     return c.text(ip);
-  }
+  },
 );
 
 appIp.route("/info", appIpInfo);

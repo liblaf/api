@@ -20,7 +20,8 @@
     "nexitally",
     "nthu",
     "rcode",
-    "rdrc"
+    "rdrc",
+    "tseslint"
   ],
   "ignorePaths": ["**/*-lock.*", "**/*.lock*", "**/.cspell.json"],
   "allowCompoundWords": true
