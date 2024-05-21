@@ -1,5 +1,5 @@
 import { Bot } from "grammy";
-import { UserInfo, fetchInfo } from "@lib/sub/info";
+import { Info, fetchInfoSafe } from "@lib/sub/info";
 import { Bindings } from "@lib/bindings";
 
 export function newBot(env: Bindings) {
@@ -17,16 +17,16 @@ export function newBot(env: Bindings) {
     const urls: URL[] = env.MY_SUB_URLS.split("\n").map(
       (url: string) => new URL(url),
     );
-    const info: UserInfo[] = await fetchInfo(urls);
+    const info: Info[] = await fetchInfoSafe(urls);
     const message: string = prettySubInfo(info);
     await ctx.reply(message, { parse_mode: "HTML" });
   });
   return bot;
 }
 
-function prettySubInfo(info: UserInfo[]): string {
+function prettySubInfo(info: Info[]): string {
   const message: string = info
-    .map((i: UserInfo): string => {
+    .map((i: Info): string => {
       let item: string = `<a href="${i.url}"><b>${i.name}</b></a>:`;
       if (i.download && i.upload && i.total) {
         const usage: number = i.download + i.upload;
@@ -39,8 +39,9 @@ function prettySubInfo(info: UserInfo[]): string {
         const remain: number = i.expire * 1000 - Date.now();
         const days: number = Math.floor(remain / 1000 / 86400);
         const emoji = days < 7 ? "🔴" : days < 14 ? "🟡" : "🟢";
-        item += ` expire on ${emoji} ${prettyDate(expire)}`;
+        item += ` ${emoji} ${prettyDate(expire)}`;
       }
+      if (i.error) item += i.error;
       return item;
     })
     .join("\n");

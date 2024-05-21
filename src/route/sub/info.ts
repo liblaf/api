@@ -1,20 +1,9 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
-import { UserInfoSchema } from "@lib/sub/info";
+import { Info, InfoSchema, fetchInfoSafe } from "@lib/sub/info";
 import { newApp } from "@lib/bindings";
-import { newProvider } from "@lib/sub/provider/factory";
 
 export const appSubInfo = newApp();
-
-const InfoSchema = z
-  .object({
-    name: z.string(),
-    url: z.string().url(),
-    error: z.string().optional(),
-  })
-  .merge(UserInfoSchema);
-
-type Info = z.infer<typeof InfoSchema>;
 
 const responseSchema = z.object({
   info: z.array(InfoSchema),
@@ -46,7 +35,7 @@ appSubInfo.openapi(
   }),
   async (c) => {
     const { url } = c.req.valid("query");
-    const info: Info[] = await fetchInfo(
+    const info: Info[] = await fetchInfoSafe(
       url.map((url: string) => new URL(url)),
     );
     return c.json({ info: info });
@@ -84,23 +73,7 @@ appSubInfo.openapi(
     const urls: URL[] = c.env.MY_SUB_URLS.split("\n").map(
       (url: string) => new URL(url),
     );
-    const info: Info[] = await fetchInfo(urls);
+    const info: Info[] = await fetchInfoSafe(urls);
     return c.json({ info: info });
   },
 );
-
-async function fetchInfo(urls: URL[]): Promise<Info[]> {
-  return Promise.all(
-    urls.map(async (url: URL): Promise<Info> => {
-      const provider = newProvider(url);
-      try {
-        const info = await provider.fetchUserInfo();
-        return { name: provider.name, url: url.toString(), ...info };
-      } catch (e) {
-        if (e instanceof Error)
-          return { name: provider.name, url: url.toString(), error: e.message };
-        return { name: provider.name, url: url.toString(), error: String(e) };
-      }
-    }),
-  );
-}
