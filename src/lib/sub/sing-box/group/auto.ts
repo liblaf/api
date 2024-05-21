@@ -1,7 +1,7 @@
-import { isEmby } from "@lib/sub/infer/category";
-import { SmartGroup } from ".";
+import { SmartGroup } from "./abc";
 import { Outbound, OutboundURLTest } from "../config/outbound";
 import { OutboundTag } from "../config/shared";
+import { Provider } from "@lib/sub/provider/abc";
 
 export class Auto implements SmartGroup {
   tag: string = OutboundTag.AUTO;
@@ -16,9 +16,9 @@ export class Auto implements SmartGroup {
     };
   }
 
-  filter(outbounds: Outbound[]): Outbound[] {
+  extend(outbounds: Outbound[], provider: Provider): Outbound[] {
     for (const outbound of outbounds) {
-      if (isEmby(outbound.tag)) continue;
+      if (provider.isEmby(outbound.tag)) continue;
       this.outbounds.push(outbound.tag);
     }
     return [];

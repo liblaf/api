@@ -1,15 +1,15 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { HTTPException } from "hono/http-exception";
-
+import { createRoute, z } from "@hono/zod-openapi";
+import { newApp } from "@lib/bindings";
 import { convert } from "@lib/sub/sing-box/convert";
 import { Query, QuerySchema } from "@lib/sub/sing-box/query";
+import { HTTPException } from "hono/http-exception";
 
-export const appSubConvertSingbox = new OpenAPIHono();
+export const appSubConvertSingBox = newApp();
 
-appSubConvertSingbox.openapi(
+appSubConvertSingBox.openapi(
   createRoute({
     tags: ["Subscription"],
-    summary: "Convert subscription to sing-box",
+    summary: "Convert subscription to sing-box config",
     method: "get",
     path: "/",
     request: {
@@ -40,7 +40,7 @@ appSubConvertSingbox.openapi(
   },
 );
 
-appSubConvertSingbox.openapi(
+appSubConvertSingBox.openapi(
   createRoute({
     tags: ["Subscription"],
     summary: "Get my sing-box config",
@@ -68,8 +68,8 @@ appSubConvertSingbox.openapi(
   }),
   async (c) => {
     const { uuid } = c.req.valid("param");
-    if (uuid !== c.env?.MY_UUID) throw new HTTPException(403);
-    const urls: URL[] = (c.env?.MY_SUB_URLS as string)
+    if (uuid !== c.env.MY_UUID) throw new HTTPException(403);
+    const urls: URL[] = (c.env.MY_SUB_URLS as string)
       .split("\n")
       .map((url) => new URL(url));
     const query: Query = c.req.valid("query");

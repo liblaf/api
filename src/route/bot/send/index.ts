@@ -1,18 +1,18 @@
-import { OpenAPIHono, createRoute, z } from "@hono/zod-openapi";
-
+import { createRoute, z } from "@hono/zod-openapi";
+import { newApp } from "@lib/bindings";
 import { newBot } from "@lib/bot";
 
-export const appBotSend = new OpenAPIHono();
+export const appBotSend = newApp();
 
 appBotSend.openapi(
   createRoute({
     tags: ["Bot"],
     summary: "Send message to chat",
     method: "post",
-    path: "/{chat_id}",
+    path: "/{chatId}",
     request: {
       params: z.object({
-        chat_id: z.string().openapi({ example: "1111111111" }),
+        chatId: z.string().openapi({ example: "1111111111" }),
       }),
       body: {
         content: {
@@ -32,10 +32,10 @@ appBotSend.openapi(
     },
   }),
   async (c) => {
-    const { chat_id } = c.req.valid("param");
+    const { chatId } = c.req.valid("param");
     const { text, parse_mode } = c.req.valid("json");
-    const bot = newBot(c.env as any);
-    const response = await bot.api.sendMessage(chat_id, text, {
+    const bot = newBot(c.env);
+    const response = await bot.api.sendMessage(chatId, text, {
       parse_mode: parse_mode,
     });
     return c.json(response);
@@ -52,10 +52,10 @@ appBotSend.openapi(
     tags: ["Bot"],
     summary: "Send DNS update message to chat",
     method: "post",
-    path: "/{chat_id}/dns",
+    path: "/{chatId}/dns",
     request: {
       params: z.object({
-        chat_id: z.string().openapi({ example: "1111111111" }),
+        chatId: z.string().openapi({ example: "1111111111" }),
       }),
       body: {
         content: {
@@ -76,9 +76,9 @@ appBotSend.openapi(
     },
   }),
   async (c) => {
-    const { chat_id } = c.req.valid("param");
+    const { chatId } = c.req.valid("param");
     const { create, delete: del, keep } = c.req.valid("json");
-    const bot = newBot(c.env as any);
+    const bot = newBot(c.env);
     let message: string = "<b>🔵 Keep</b> <b>🔴 Delete</b> <b>🟢 Create</b>\n";
     for (const record of keep)
       message += `🔵 <code>${record.name}</code> => <code>${record.content}</code>\n`;
@@ -87,7 +87,7 @@ appBotSend.openapi(
     for (const record of create)
       message += `🟢 <code>${record.name}</code> => <code>${record.content}</code>\n`;
     message = message.trim();
-    const response = await bot.api.sendMessage(chat_id, message, {
+    const response = await bot.api.sendMessage(chatId, message, {
       parse_mode: "HTML",
     });
     return c.json(response);

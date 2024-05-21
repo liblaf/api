@@ -1,20 +1,14 @@
-import { OpenAPIHono } from "@hono/zod-openapi";
+import { newApp } from "@lib/bindings";
 import HTML from "@lib/swagger-ui";
 import { appBot } from "@route/bot";
 import { appIp } from "@route/ip";
 import { appProxy } from "@route/proxy";
 import { appSub } from "@route/sub";
-import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 
-const app = new OpenAPIHono();
+const app = newApp();
 
-app.use(cors());
-
-app.get("/", (c) => {
-  console.log(c.env?.MY_SUB_URLS);
-  return c.html(HTML);
-});
+app.get("/", (c) => c.html(HTML));
 app.route("/bot", appBot);
 app.route("/ip", appIp);
 app.route("/proxy", appProxy);

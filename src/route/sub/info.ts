@@ -1,17 +1,23 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
+import { UserInfoSchema } from "@lib/sub/info";
+import { newApp } from "@lib/bindings";
+import { newProvider } from "@lib/sub/provider/factory";
 
-import { BACKEND_URL } from "@lib/sub/const";
-import { fetchInfo, UserInfo, UserInfoSchema } from "@lib/sub/info";
+export const appSubInfo = newApp();
 
-export const appSubInfo = new OpenAPIHono();
+const InfoSchema = z
+  .object({
+    name: z.string(),
+    url: z.string().url(),
+    error: z.string().optional(),
+  })
+  .merge(UserInfoSchema);
 
-const querySchema = {
-  backend: z.string().url().default(BACKEND_URL.toString()),
-};
+type Info = z.infer<typeof InfoSchema>;
 
 const responseSchema = z.object({
-  info: z.array(UserInfoSchema),
+  info: z.array(InfoSchema),
 });
 
 appSubInfo.openapi(
@@ -22,7 +28,6 @@ appSubInfo.openapi(
     path: "/",
     request: {
       query: z.object({
-        ...querySchema,
         url: z.preprocess((val) => {
           return Array.isArray(val) ? val : [val];
         }, z.array(z.string().url())),
@@ -40,10 +45,9 @@ appSubInfo.openapi(
     },
   }),
   async (c) => {
-    const { backend, url } = c.req.valid("query");
-    const info: UserInfo[] = await fetchInfo(
+    const { url } = c.req.valid("query");
+    const info: Info[] = await fetchInfo(
       url.map((url: string) => new URL(url)),
-      new URL(backend),
     );
     return c.json({ info: info });
   },
@@ -58,9 +62,6 @@ appSubInfo.openapi(
     request: {
       params: z.object({
         uuid: z.string().uuid(),
-      }),
-      query: z.object({
-        ...querySchema,
       }),
     },
     responses: {
@@ -79,12 +80,27 @@ appSubInfo.openapi(
   }),
   async (c) => {
     const { uuid } = c.req.valid("param");
-    if (uuid !== c.env?.MY_UUID) throw new HTTPException(403);
-    const { backend } = c.req.valid("query");
-    const urls: URL[] = (c.env?.MY_URLS as string)
-      .split("\n")
-      .map((url: string) => new URL(url));
-    const info: UserInfo[] = await fetchInfo(urls, new URL(backend));
+    if (uuid !== c.env.MY_UUID) throw new HTTPException(403);
+    const urls: URL[] = c.env.MY_SUB_URLS.split("\n").map(
+      (url: string) => new URL(url),
+    );
+    const info: Info[] = await fetchInfo(urls);
     return c.json({ info: info });
   },
 );
+
+async function fetchInfo(urls: URL[]): Promise<Info[]> {
+  return Promise.all(
+    urls.map(async (url: URL): Promise<Info> => {
+      const provider = newProvider(url);
+      try {
+        const info = await provider.fetchUserInfo();
+        return { name: provider.name, url: url.toString(), ...info };
+      } catch (e) {
+        if (e instanceof Error)
+          return { name: provider.name, url: url.toString(), error: e.message };
+        return { name: provider.name, url: url.toString(), error: String(e) };
+      }
+    }),
+  );
+}

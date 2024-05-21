@@ -1,13 +1,10 @@
-import { COUNTRIES, inferCountry } from "@lib/sub/infer/country";
-import { SmartGroup } from ".";
+import { COUNTRIES } from "@lib/sub/infer/country";
+import { SmartGroup } from "./abc";
 import { Outbound, OutboundURLTest } from "../config/outbound";
 import { OutboundTag } from "../config/shared";
+import { Provider } from "@lib/sub/provider/abc";
 
-const AI_EXCLUDE_COUNTRIES = new Set([
-  COUNTRIES.HK,
-  COUNTRIES.MO,
-  COUNTRIES.OT,
-]);
+const COUNTRIES_EXCLUDE = new Set([COUNTRIES.HK, COUNTRIES.MO, COUNTRIES.OT]);
 
 export class AI implements SmartGroup {
   tag: string = OutboundTag.AI;
@@ -22,10 +19,11 @@ export class AI implements SmartGroup {
     };
   }
 
-  filter(outbounds: Outbound[]): Outbound[] {
+  extend(outbounds: Outbound[], provider: Provider): Outbound[] {
     for (const outbound of outbounds) {
-      const country: string = inferCountry(outbound.tag);
-      if (AI_EXCLUDE_COUNTRIES.has(country)) continue;
+      if (provider.isEmby(outbound.tag)) continue;
+      const country = provider.country(outbound.tag);
+      if (COUNTRIES_EXCLUDE.has(country)) continue;
       this.outbounds.push(outbound.tag);
     }
     return [];

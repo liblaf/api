@@ -1,3 +1,3 @@
-export function isEmby(tag: string): boolean {
+export function inferEmby(tag: string): boolean {
   return !!tag.match(/emby/i);
 }

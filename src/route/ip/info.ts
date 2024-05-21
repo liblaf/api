@@ -1,12 +1,12 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 import { fetchGeo, GeoSchema } from "@lib/ip/info/geo";
 import { fetchRisk, RiskSchema } from "@lib/ip/info/risk";
 import { fetchSecurity, SecuritySchema } from "@lib/ip/info/security";
 import { coerceBoolean } from "@lib/zod-utils";
-import { Bindings } from "@lib/bindings";
+import { Bindings, newApp } from "@lib/bindings";
 
-export const appIpInfo = new OpenAPIHono<{ Bindings: Bindings }>();
+export const appIpInfo = newApp();
 
 const QuerySchema = z.object({
   geo: coerceBoolean().default(true),

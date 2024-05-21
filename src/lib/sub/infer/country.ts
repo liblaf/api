@@ -1,4 +1,4 @@
-import { isEmby } from "./category";
+import { inferEmby } from "./category";
 
 export const COUNTRIES = {
   HK: "🇭🇰 Hong Kong (HK)",
@@ -76,7 +76,6 @@ const COUNTRY_PATTERNS: Record<string, RegExp> = {
 
 export function inferCountry(tag: string): string {
   if (tag.includes("📝")) return COUNTRIES.OT;
-  if (isEmby(tag)) return COUNTRIES.OT;
   tag = tag.replace(/ \[[^\]]+\]$/, "");
   for (const [key, pattern] of Object.entries(COUNTRY_PATTERNS)) {
     if (pattern.test(tag)) return key;

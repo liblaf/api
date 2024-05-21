@@ -1,10 +1,11 @@
 import { COUNTRIES, inferCountry } from "@lib/sub/infer/country";
-import { SmartGroup } from ".";
+import { SmartGroup } from "./abc";
 import {
   Outbound,
   OutboundSelector,
   OutboundURLTest,
 } from "../config/outbound";
+import { Provider } from "@lib/sub/provider/abc";
 
 export class Country implements SmartGroup {
   tag: string;
@@ -30,9 +31,10 @@ export class Country implements SmartGroup {
     };
   }
 
-  filter(outbounds: Outbound[]): Outbound[] {
+  extend(outbounds: Outbound[], provider: Provider): Outbound[] {
     for (const outbound of outbounds) {
-      const country: string = inferCountry(outbound.tag);
+      if (provider.isEmby(outbound.tag)) continue;
+      const country = provider.country(outbound.tag);
       if (country !== this.tag) continue;
       this.outbounds.push(outbound.tag);
     }

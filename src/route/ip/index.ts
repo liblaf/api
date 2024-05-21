@@ -1,9 +1,9 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
-
 import { appIpInfo } from "./info";
+import { newApp } from "@lib/bindings";
 
-export const appIp = new OpenAPIHono();
+export const appIp = newApp();
 
 appIp.openapi(
   createRoute({

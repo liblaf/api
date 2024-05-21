@@ -1,20 +1,7 @@
 import { z } from "@hono/zod-openapi";
-
 import { fetchSafe } from "@lib/fetch";
-import { makeProvider } from "./provider";
-import { BACKEND_URL } from "./const";
 
 export const UserInfoSchema = z.object({
-  name: z.string().openapi({ example: "Nexitally" }),
-  url: z.string().url().openapi({
-    example:
-      "https://sub.nexitally.com/api/v1/client/subscribe?token=5647ece2f4219be897d104764daa3afc",
-  }),
-  web_page_url: z
-    .string()
-    .url()
-    .optional()
-    .openapi({ example: "https://nexitally.com" }),
   upload: z
     .number()
     .positive()
@@ -44,28 +31,12 @@ export const UserInfoSchema = z.object({
 
 export type UserInfo = z.infer<typeof UserInfoSchema>;
 
-export async function fetchInfo(
-  urls: URL[],
-  backend: URL = BACKEND_URL,
-): Promise<UserInfo[]> {
-  return await Promise.all(urls.map((url) => fetchInfoOnce(url, backend)));
-}
-
-export async function fetchInfoOnce(
-  url: URL,
-  backend: URL = BACKEND_URL,
-): Promise<UserInfo> {
-  const provider = makeProvider(url, backend);
-  const response = await fetchSafe(provider.userInfoUrl);
-  const info: UserInfo = {
-    name: provider.name,
-    url: provider.url.toString(),
-  };
-  const webPageUrl = response.headers.get("profile-web-page-url");
-  if (webPageUrl) info.web_page_url = webPageUrl;
-  const subscriptionUserInfo = response.headers.get("subscription-userinfo");
-  if (subscriptionUserInfo) {
-    subscriptionUserInfo.split(";").forEach((item) => {
+export async function fetchInfo(url: URL): Promise<UserInfo> {
+  const response = await fetchSafe(url, { headers: { "User-Agent": "clash" } });
+  const info: UserInfo = {};
+  const header = response.headers.get("Subscription-UserInfo");
+  if (header) {
+    header.split(";").forEach((item) => {
       const [key, value] = item.split("=").map((s) => s.trim());
       switch (key) {
         case "upload":

@@ -1,3 +1,4 @@
+import { Provider } from "@lib/sub/provider/abc";
 import {
   Outbound,
   OutboundSelector,
@@ -8,5 +9,5 @@ export interface SmartGroup {
   tag: string;
   outbounds: string[];
   build(): OutboundSelector | OutboundURLTest;
-  filter(outbounds: Outbound[]): Outbound[];
+  extend(outbounds: Outbound[], provider: Provider): Outbound[];
 }

@@ -1,7 +1,6 @@
-import { OpenAPIHono } from "@hono/zod-openapi";
+import { appSubConvertSingBox } from "./sing-box";
+import { newApp } from "@lib/bindings";
 
-import { appSubConvertSingbox } from "./sing-box";
+export const appSubConvert = newApp();
 
-export const appSubConvert = new OpenAPIHono();
-
-appSubConvert.route("/sing-box", appSubConvertSingbox);
+appSubConvert.route("/sing-box", appSubConvertSingBox);

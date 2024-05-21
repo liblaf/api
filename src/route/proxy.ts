@@ -1,7 +1,7 @@
-import { OpenAPIHono } from "@hono/zod-openapi";
+import { newApp } from "@lib/bindings";
 import { fetchSafe } from "@lib/fetch";
 
-export const appProxy = new OpenAPIHono();
+export const appProxy = newApp();
 
 appProxy.all("/:url{.+}", async (c) => {
   let url = c.req.param("url");
