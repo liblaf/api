@@ -3,8 +3,8 @@ import { Outbound, OutboundURLTest } from "../config/outbound";
 import { OutboundTag } from "../config/shared";
 import { Provider } from "@lib/sub/provider/abc";
 
-export class Auto implements SmartGroup {
-  tag: string = OutboundTag.AUTO;
+export class Media implements SmartGroup {
+  tag: string = OutboundTag.MEDIA;
   outbounds: string[] = [];
 
   build(): OutboundURLTest {

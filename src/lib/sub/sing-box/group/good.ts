@@ -3,8 +3,8 @@ import { Outbound, OutboundURLTest } from "../config/outbound";
 import { OutboundTag } from "../config/shared";
 import { Provider } from "@lib/sub/provider/abc";
 
-export class Auto implements SmartGroup {
-  tag: string = OutboundTag.AUTO;
+export class Good implements SmartGroup {
+  tag: string = OutboundTag.GOOD;
   outbounds: string[] = [];
 
   build(): OutboundURLTest {
@@ -20,8 +20,8 @@ export class Auto implements SmartGroup {
     for (const outbound of outbounds) {
       const tag = outbound.tag;
       if (provider.isEmby(tag)) continue;
-      const rate = provider.rate(outbound.tag);
-      if (rate >= 2) continue;
+      const rate = provider.rate(tag);
+      if (rate < 2) continue;
       this.outbounds.push(tag);
     }
     return [];
