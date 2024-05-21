@@ -1,5 +1,3 @@
-import { inferEmby } from "./category";
-
 export const COUNTRIES = {
   HK: "🇭🇰 Hong Kong (HK)",
   US: "🇺🇲 United States (US)",

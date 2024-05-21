@@ -26,14 +26,14 @@ type InboundTun = {
   strict_route?: boolean;
 };
 
-export function defaultInbounds({ listen_port, mixed, tun }: Query): Inbound[] {
+export function defaultInbounds({ port, mixed, tun }: Query): Inbound[] {
   const inbounds: Inbound[] = [];
   if (mixed)
     inbounds.push({
       type: "mixed",
       tag: "in:mixed",
       listen: "0.0.0.0",
-      listen_port: listen_port,
+      listen_port: port,
       sniff: true,
     });
   if (tun)

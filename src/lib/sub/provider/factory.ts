@@ -68,7 +68,7 @@ const FACTORIES: Factory[] = [
         const config = await fetchSingBox(subConvert(url, "singbox"));
         config.outbounds?.forEach((outbound) => {
           const tag = outbound.tag;
-          const match = tag.match(/@(?<name>[\w\-]+)/);
+          const match = tag.match(/@(?<name>[\w-]+)/);
           const name = match?.groups?.name;
           outbound.tag = name ?? tag;
         });

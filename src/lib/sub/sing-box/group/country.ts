@@ -1,4 +1,4 @@
-import { COUNTRIES, inferCountry } from "@lib/sub/infer/country";
+import { COUNTRIES } from "@lib/sub/infer/country";
 import { SmartGroup } from "./abc";
 import {
   Outbound,
@@ -33,7 +33,10 @@ export class Country implements SmartGroup {
 
   extend(outbounds: Outbound[], provider: Provider): Outbound[] {
     for (const outbound of outbounds) {
-      if (provider.isEmby(outbound.tag)) continue;
+      if (provider.isEmby(outbound.tag)) {
+        if (this.tag == COUNTRIES.OT) this.outbounds.push(outbound.tag);
+        continue;
+      }
       const country = provider.country(outbound.tag);
       if (country !== this.tag) continue;
       this.outbounds.push(outbound.tag);

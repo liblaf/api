@@ -1,3 +1,5 @@
+import { COUNTRIES } from "@lib/sub/infer/country";
+
 export const OutboundTag = {
   AI: "💬 AI",
   AUTO: "🚀 Auto",
@@ -9,6 +11,7 @@ export const OutboundTag = {
   ONEDRIVE: "☁️ OneDrive",
   PROXY: "PROXY",
   REJECT: "REJECT",
+  ...COUNTRIES,
 };
 
 export type ClashMode = "rule" | "global" | "direct";

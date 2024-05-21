@@ -55,49 +55,36 @@ export function defaultDNS({ tun }: Query): DNS {
         address: "https://cloudflare-dns.com/dns-query",
         address_resolver: DnsTag.LOCAL,
       },
-      {
-        tag: DnsTag.LOCAL,
-        address: "local",
-        detour: OutboundTag.DIRECT,
-      },
-      {
-        tag: DnsTag.REJECT,
-        address: "rcode://success",
-      },
+      { tag: DnsTag.LOCAL, address: "local", detour: OutboundTag.DIRECT },
+      { tag: DnsTag.REJECT, address: "rcode://success" },
+      ...(tun ? [{ tag: DnsTag.FAKEIP, address: "fakeip" }] : []),
     ],
     rules: [
-      {
-        rule_set: ["geosite:private"],
-        server: DnsTag.LOCAL,
-      },
-      {
-        outbound: "any",
-        server: DnsTag.LOCAL,
-      },
+      { rule_set: ["geosite:private"], server: DnsTag.LOCAL },
+      { outbound: "any", server: DnsTag.LOCAL },
       {
         rule_set: ["geosite:category-ads-all"],
         server: DnsTag.REJECT,
         disable_cache: true,
       },
-      {
-        clash_mode: "direct",
-        server: DnsTag.LOCAL,
-      },
-      {
-        clash_mode: "global",
-        server: DnsTag.CLOUDFLARE,
-      },
+      { clash_mode: "direct", server: DnsTag.LOCAL },
+      { clash_mode: "global", server: DnsTag.CLOUDFLARE },
+      ...(tun ? [{ query_type: ["A", "AAAA"], server: DnsTag.FAKEIP }] : []),
+      { rule_set: ["geosite:category-ntp"], server: DnsTag.LOCAL },
+      { rule_set: ["geosite-lite:cn"], server: DnsTag.LOCAL },
+      { rule_set: ["geosite-lite:proxy"], server: DnsTag.CLOUDFLARE },
       {
         rule_set: [
           "geosite:apple-cn",
+          "geosite:apple@cn",
           "geosite:category-games@cn",
           "geosite:cn",
-          "geosite:geolocation-cn",
           "geosite:microsoft@cn",
           "geosite:steam@cn",
         ],
         server: DnsTag.LOCAL,
       },
+      { rule_set: ["geosite:geolocation-!cn"], server: DnsTag.CLOUDFLARE },
       // TODO: sing-box 1.9.0-alpha.2+
       // {
       //   type: "logical",
@@ -117,22 +104,14 @@ export function defaultDNS({ tun }: Query): DNS {
     ],
     final: DnsTag.CLOUDFLARE,
     independent_cache: true,
+    fakeip: tun
+      ? {
+          enabled: true,
+          inet4_range: "198.18.0.0/15",
+          inet6_range: "fc00::/18",
+        }
+      : undefined,
   };
-  if (tun) {
-    dns.servers?.push({
-      tag: DnsTag.FAKEIP,
-      address: "fakeip",
-    });
-    dns.rules?.push({
-      query_type: ["A", "AAAA"],
-      server: DnsTag.FAKEIP,
-    });
-    dns.fakeip = {
-      enabled: true,
-      inet4_range: "198.18.0.0/15",
-      inet6_range: "fc00::/18",
-    };
-  }
   return dns;
 }
 

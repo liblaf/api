@@ -59,18 +59,9 @@ export function defaultRoute({ ipv6 }: Query): Route {
         ip_is_private: true,
         outbound: OutboundTag.DIRECT,
       },
-      {
-        rule_set: ["geosite:category-ads-all"],
-        outbound: OutboundTag.REJECT,
-      },
-      {
-        clash_mode: "direct",
-        outbound: OutboundTag.DIRECT,
-      },
-      {
-        clash_mode: "global",
-        outbound: OutboundTag.PROXY,
-      },
+      { rule_set: ["geosite:category-ads-all"], outbound: OutboundTag.REJECT },
+      { clash_mode: "direct", outbound: OutboundTag.DIRECT },
+      { clash_mode: "global", outbound: OutboundTag.PROXY },
       {
         type: "logical",
         mode: "or",
@@ -81,18 +72,28 @@ export function defaultRoute({ ipv6 }: Query): Route {
         ],
         outbound: OutboundTag.REJECT,
       },
+      { rule_set: ["geosite:category-ntp"], outbound: OutboundTag.DIRECT },
       ...(ipv6
-        ? [
-            {
-              domain_suffix: ["byr.pt"],
-              outbound: OutboundTag.IPv6,
-            },
-          ]
+        ? [{ domain_suffix: ["byr.pt"], outbound: OutboundTag.IPv6 }]
         : []),
       {
+        rule_set: ["geoip:cn", "geosite-lite:cn"],
+        outbound: OutboundTag.DIRECT,
+      },
+      { rule_set: ["geoip:jp"], outbound: OutboundTag.JP },
+      {
         rule_set: [
-          "geoip:cn",
+          "geosite-lite:github",
+          "geosite-lite:telegram",
+          "geosite-lite:youtube",
+        ],
+        outbound: OutboundTag.PROXY,
+      },
+      { rule_set: ["geosite-lite:onedrive"], outbound: OutboundTag.ONEDRIVE },
+      {
+        rule_set: [
           "geosite:apple-cn",
+          "geosite:apple@cn",
           "geosite:category-games@cn",
           "geosite:cn",
           "geosite:geolocation-cn",
@@ -115,11 +116,14 @@ export function defaultRoute({ ipv6 }: Query): Route {
     ],
     rule_set: [
       geoip("cn"),
+      geoip("jp"),
       geoip("private"),
       geosite("apple-cn"),
+      geosite("apple@cn"),
       geosite("bing"),
       geosite("category-ads-all"),
       geosite("category-games@cn"),
+      geosite("category-ntp"),
       geosite("cn"),
       geosite("geolocation-!cn"),
       geosite("geolocation-cn"),
@@ -128,6 +132,12 @@ export function defaultRoute({ ipv6 }: Query): Route {
       geosite("openai"),
       geosite("private"),
       geosite("steam@cn"),
+      geositeLite("cn"),
+      geositeLite("github"),
+      geositeLite("onedrive"),
+      geositeLite("proxy"),
+      geositeLite("telegram"),
+      geositeLite("youtube"),
       remoteBinary(
         "ruleset:claude",
         "https://raw.githubusercontent.com/NotSFC/for-sing-box-and-surge/master/sing-box/Claude/Claude.srs",
@@ -157,6 +167,13 @@ function geosite(tag: string): RuleSet {
   return remoteBinary(
     `geosite:${tag}`,
     `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/${tag}.srs`,
+  );
+}
+
+function geositeLite(tag: string): RuleSet {
+  return remoteBinary(
+    `geosite-lite:${tag}`,
+    `https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo-lite/geosite/${tag}.srs`,
   );
 }
 

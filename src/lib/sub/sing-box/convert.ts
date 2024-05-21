@@ -1,6 +1,6 @@
 import { COUNTRIES } from "../infer/country";
 import { newProvider } from "../provider/factory";
-import { defaultConfig } from "./config";
+import { Config, defaultConfig } from "./config";
 import { Outbound, OutboundSelector } from "./config/outbound";
 import { SmartGroup } from "./group/abc";
 import { AI } from "./group/ai";
@@ -11,7 +11,7 @@ import { IPv6 } from "./group/ipv6";
 import { OneDrive } from "./group/onedrive";
 import { Query } from "./query";
 
-export async function convert(urls: URL[], query: Query): Promise<any> {
+export async function convert(urls: URL[], query: Query): Promise<Config> {
   const config = defaultConfig(query);
   config.outbounds ??= [];
   const providers = urls.map((url: URL) => newProvider(url));
