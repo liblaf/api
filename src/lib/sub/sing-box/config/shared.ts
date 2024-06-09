@@ -1,22 +1,17 @@
-import { COUNTRIES } from "@lib/sub/infer/country";
+import { GROUPS } from "@lib/sub/group/shared";
+import { COUNTRIES } from "@lib/sub/provider/infer/country";
 
 export const OutboundTag = {
-  AI: "💬 AI",
-  AUTO: "🚀 Auto",
-  DIRECT: "DIRECT",
-  DNS: "DNS",
-  EMBY: "🍟 Emby",
-  GOOD: "⭐ Good",
-  IPv6: "🌐 IPv6",
-  MEDIA: "📺 Media",
-  ONEDRIVE: "☁️ OneDrive",
-  PROXY: "PROXY",
-  REJECT: "REJECT",
-  ...COUNTRIES,
+	...COUNTRIES,
+	...GROUPS,
+	DIRECT: "DIRECT",
+	DNS: "DNS",
+	PROXY: "PROXY",
+	REJECT: "REJECT",
 };
 
 export type ClashMode = "rule" | "global" | "direct";
 
 export function proxy(url: string): string {
-  return `https://api.liblaf.me/proxy/${url}`;
+	return `https://api.liblaf.me/proxy/${url}`;
 }

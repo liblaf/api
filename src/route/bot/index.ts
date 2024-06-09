@@ -1,6 +1,6 @@
-import { appBotWebhook } from "./webhook";
-import { appBotSend } from "./send";
 import { newApp } from "@lib/bindings";
+import { appBotSend } from "./send";
+import { appBotWebhook } from "./webhook";
 
 export const appBot = newApp();
 

@@ -15,15 +15,15 @@ app.route("/proxy", appProxy);
 app.route("/sub", appSub);
 
 app.doc("/openapi.json", {
-  openapi: "3.1.0",
-  info: { title: "liblaf's API", version: "v0" },
-  externalDocs: { description: "GitHub", url: "https://github.com/liblaf/api" },
+	openapi: "3.1.0",
+	info: { title: "liblaf's API", version: "v0" },
+	externalDocs: { description: "GitHub", url: "https://github.com/liblaf/api" },
 });
 
 app.onError((err, c) => {
-  console.error(err);
-  if (err instanceof HTTPException) return err.getResponse();
-  return c.text(`${err}`, 500);
+	console.error(err);
+	if (err instanceof HTTPException) return err.getResponse();
+	return c.text(`${err}`, 500);
 });
 
 export default app;
