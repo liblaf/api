@@ -48,7 +48,7 @@ const COUNTRY_PATTERNS: Record<string, RegExp> = {
 
 	"🇦🇶 Antarctica (AQ)": /🇦🇶|AQ|Antarctica|南极/,
 	"🇦🇷 Argentina (AR)": /🇦🇷|AR|Argentina|阿根廷/,
-	"🇦🇺 Australia (AU)": /🇦🇺|AU|Australia|澳/,
+	"🇦🇺 Australia (AU)": /🇦🇺|AU|Australia|澳大利亚/,
 	"🇧🇷 Brazil (BR)": /🇧🇷|BR|Brazil|巴西/,
 	"🇨🇦 Canada (CA)": /🇨🇦|CA|Canada|加拿大/,
 	"🇨🇭 Switzerland (CH)": /🇨🇭|CH|Switzerland|瑞士/,
@@ -60,7 +60,7 @@ const COUNTRY_PATTERNS: Record<string, RegExp> = {
 	"🇮🇹 Italy (IT)": /🇮🇹|\bIT\b|Italy|意大利/,
 	"🇰🇵 North Korea (KP)": /🇰🇵|KP|North Korea|朝鲜/,
 	"🇱🇺 Luxembourg (LU)": /🇱🇺|LU|Luxembourg|卢森堡/,
-	"🇲🇴 Macau (MO)": /🇲🇴|MO|Macau|Macao|澳/,
+	"🇲🇴 Macau (MO)": /🇲🇴|MO|Macau|Macao|澳门/,
 	"🇲🇾 Malaysia (MY)": /🇲🇾|MY|Malaysia|马来/,
 	"🇳🇬 Nigeria (NG)": /🇳🇬|NG|Nigeria|尼日利亚/,
 	"🇳🇱 Netherlands (NL)": /🇳🇱|NL|Netherlands|荷/,

@@ -15,7 +15,7 @@ export const QuerySchema = z.object({
 					...Object.keys(COUNTRIES).map((k) => k.toLowerCase()),
 				]),
 			)
-			.default(["ai", "auto", "emby", "onedrive", "countries"]),
+			.default(["ai", "auto", "emby", "media", "onedrive", "countries"]),
 	),
 	mixed: coerceBoolean().default(true),
 	port: z.coerce.number().int().min(0).max(65535).default(64393),

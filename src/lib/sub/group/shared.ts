@@ -1,8 +1,8 @@
 export const GROUPS = {
 	AI: "💬 AI",
 	AUTO: "🚀 Auto",
+	BALANCE: "⭐ Balance",
 	EMBY: "🍟 Emby",
-	GOOD: "⭐ Good",
 	IPv6: "🌐 IPv6",
 	MEDIA: "📺 Media",
 	ONEDRIVE: "☁️ OneDrive",
