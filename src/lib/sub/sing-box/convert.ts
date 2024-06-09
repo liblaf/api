@@ -24,6 +24,7 @@ export async function convert(urls: URL[], query: Query): Promise<Config> {
 		try {
 			const outbounds = (await provider.fetchSingBox()).outbounds ?? [];
 			for (const outbound of outbounds) {
+				outbound.tag += ` [${provider.name}]`;
 				config.outbounds.push(outbound);
 				for (const g of groups) {
 					g.process(config, provider, outbound);
