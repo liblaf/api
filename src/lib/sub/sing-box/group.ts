@@ -5,7 +5,7 @@ import { GROUPS } from "../group/shared";
 import type { Provider } from "../provider/abc";
 import type { Config } from "./config";
 import type { Outbound, OutboundSelector } from "./config/outbound";
-import { OutboundTag } from "./config/shared";
+import { OUTBOUND_TAG } from "./config/shared";
 
 interface SingBoxGroup {
 	init(config: Config): void;
@@ -27,7 +27,7 @@ export function makeSingBoxGroup(name: string): SingBoxGroup {
 						url: "https://cp.cloudflare.com",
 					});
 					const proxy = config.outbounds?.find(
-						(o) => o.tag === OutboundTag.PROXY,
+						(o) => o.tag === OUTBOUND_TAG.PROXY,
 					) as OutboundSelector;
 					proxy.outbounds.push(smart.name);
 				},

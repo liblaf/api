@@ -1,5 +1,5 @@
 import type { Query } from "../query";
-import { type ClashMode, OutboundTag, proxy } from "./shared";
+import { type ClashMode, OUTBOUND_TAG, proxy } from "./shared";
 
 export type Route = {
 	rules?: RouteRule[];
@@ -52,16 +52,16 @@ export function defaultRoute({ group }: Query): Route {
 				type: "logical",
 				mode: "or",
 				rules: [{ protocol: ["dns"] }, { port: [53] }],
-				outbound: OutboundTag.DNS,
+				outbound: OUTBOUND_TAG.DNS,
 			},
 			{
 				rule_set: ["geoip:private", "geosite:private"],
 				ip_is_private: true,
-				outbound: OutboundTag.DIRECT,
+				outbound: OUTBOUND_TAG.DIRECT,
 			},
-			{ rule_set: ["geosite:category-ads-all"], outbound: OutboundTag.REJECT },
-			{ clash_mode: "direct", outbound: OutboundTag.DIRECT },
-			{ clash_mode: "global", outbound: OutboundTag.PROXY },
+			{ rule_set: ["geosite:category-ads-all"], outbound: OUTBOUND_TAG.REJECT },
+			{ clash_mode: "direct", outbound: OUTBOUND_TAG.DIRECT },
+			{ clash_mode: "global", outbound: OUTBOUND_TAG.PROXY },
 			{
 				type: "logical",
 				mode: "or",
@@ -70,16 +70,16 @@ export function defaultRoute({ group }: Query): Route {
 					{ network: ["udp"], port: [443] },
 					{ protocol: ["stun"] },
 				],
-				outbound: OutboundTag.REJECT,
+				outbound: OUTBOUND_TAG.REJECT,
 			},
-			{ rule_set: ["geosite:category-ntp"], outbound: OutboundTag.DIRECT },
-			{ domain_suffix: ["byr.pt"], outbound: OutboundTag.IPv6 },
-			{ rule_set: ["geosite:ai"], outbound: OutboundTag.AI },
-			{ rule_set: ["geosite:emby"], outbound: OutboundTag.EMBY },
-			{ rule_set: ["geosite:onedrive"], outbound: OutboundTag.ONEDRIVE },
-			{ rule_set: ["geoip:jp"], outbound: OutboundTag.JP },
-			{ rule_set: ["geosite:proxy"], outbound: OutboundTag.PROXY },
-			{ rule_set: ["geoip:cn", "geosite:cn"], outbound: OutboundTag.DIRECT },
+			{ rule_set: ["geosite:category-ntp"], outbound: OUTBOUND_TAG.DIRECT },
+			{ domain_suffix: ["byr.pt"], outbound: OUTBOUND_TAG.IPv6 },
+			{ rule_set: ["geosite:ai"], outbound: OUTBOUND_TAG.AI },
+			{ rule_set: ["geosite:emby"], outbound: OUTBOUND_TAG.EMBY },
+			{ rule_set: ["geosite:onedrive"], outbound: OUTBOUND_TAG.ONEDRIVE },
+			{ rule_set: ["geoip:jp"], outbound: OUTBOUND_TAG.JP },
+			{ rule_set: ["geosite:proxy"], outbound: OUTBOUND_TAG.PROXY },
+			{ rule_set: ["geoip:cn", "geosite:cn"], outbound: OUTBOUND_TAG.DIRECT },
 		],
 		rule_set: [
 			geoip("cn"),
@@ -109,7 +109,7 @@ export function defaultRoute({ group }: Query): Route {
 				"https://github.com/liblaf/sing-box-rules/raw/rule-sets/proxy.srs",
 			),
 		],
-		final: OutboundTag.PROXY,
+		final: OUTBOUND_TAG.PROXY,
 		auto_detect_interface: true,
 	};
 }
@@ -141,6 +141,6 @@ function remoteBinary(tag: string, url: string): RuleSet {
 		tag: tag,
 		format: "binary",
 		url: proxy(url),
-		download_detour: OutboundTag.DIRECT,
+		download_detour: OUTBOUND_TAG.DIRECT,
 	};
 }

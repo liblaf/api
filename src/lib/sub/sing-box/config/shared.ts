@@ -1,7 +1,7 @@
 import { GROUPS } from "@lib/sub/group/shared";
 import { COUNTRIES } from "@lib/sub/provider/infer/country";
 
-export const OutboundTag = {
+export const OUTBOUND_TAG = {
 	...COUNTRIES,
 	...GROUPS,
 	DIRECT: "DIRECT",

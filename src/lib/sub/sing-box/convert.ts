@@ -2,7 +2,7 @@ import { newProvider } from "../provider/factory";
 import { COUNTRIES } from "../provider/infer/country";
 import { type Config, defaultConfig } from "./config";
 import type { OutboundSelector } from "./config/outbound";
-import { OutboundTag } from "./config/shared";
+import { OUTBOUND_TAG } from "./config/shared";
 import { makeSingBoxGroup } from "./group";
 import type { Query } from "./query";
 
@@ -38,7 +38,7 @@ export async function convert(urls: URL[], query: Query): Promise<Config> {
 		return true;
 	});
 	const proxy = config.outbounds.find(
-		(outbound) => outbound.tag === OutboundTag.PROXY,
+		(outbound) => outbound.tag === OUTBOUND_TAG.PROXY,
 	) as OutboundSelector;
 	proxy.outbounds = proxy.outbounds.filter((o) => {
 		return (

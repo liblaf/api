@@ -1,5 +1,5 @@
 import type { Query } from "../query";
-import { type ClashMode, OutboundTag, proxy } from "./shared";
+import { type ClashMode, OUTBOUND_TAG, proxy } from "./shared";
 
 export type Experimental = {
 	cache_file?: CacheFile;
@@ -32,7 +32,7 @@ export function defaultExperimental(query: Query): Experimental {
 			external_ui_download_url: proxy(
 				"https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
 			),
-			external_ui_download_detour: OutboundTag.DIRECT,
+			external_ui_download_detour: OUTBOUND_TAG.DIRECT,
 			default_mode: "rule",
 		},
 	};

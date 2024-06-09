@@ -1,5 +1,5 @@
 import type { Query } from "../query";
-import { type ClashMode, OutboundTag } from "./shared";
+import { type ClashMode, OUTBOUND_TAG } from "./shared";
 
 export type DNS = {
 	servers?: DNSServer[];
@@ -52,28 +52,34 @@ export function defaultDNS({ tun }: Query): DNS {
 	const dns: DNS = {
 		servers: [
 			{
-				tag: DnsTag.CLOUDFLARE,
+				tag: DNS_TAG.CLOUDFLARE,
 				address: "https://cloudflare-dns.com/dns-query",
-				address_resolver: DnsTag.LOCAL,
+				address_resolver: DNS_TAG.LOCAL,
 			},
-			{ tag: DnsTag.LOCAL, address: "local", detour: OutboundTag.DIRECT },
-			{ tag: DnsTag.REJECT, address: "rcode://success" },
-			...(tun ? [{ tag: DnsTag.FAKEIP, address: "fakeip" }] : []),
+			{ tag: DNS_TAG.LOCAL, address: "local", detour: OUTBOUND_TAG.DIRECT },
+			{ tag: DNS_TAG.REJECT, address: "rcode://success" },
+			...(tun ? [{ tag: DNS_TAG.FAKEIP, address: "fakeip" }] : []),
 		],
 		rules: [
-			{ rule_set: ["geosite:private"], server: DnsTag.LOCAL },
-			{ outbound: "any", server: DnsTag.LOCAL },
+			{ rule_set: ["geosite:private"], server: DNS_TAG.LOCAL },
+			{ outbound: "any", server: DNS_TAG.LOCAL },
 			{
 				rule_set: ["geosite:category-ads-all"],
-				server: DnsTag.REJECT,
+				server: DNS_TAG.REJECT,
 				disable_cache: true,
 			},
-			{ clash_mode: "direct", server: DnsTag.LOCAL },
-			{ clash_mode: "global", server: DnsTag.CLOUDFLARE },
+			{ clash_mode: "direct", server: DNS_TAG.LOCAL },
+			{ clash_mode: "global", server: DNS_TAG.CLOUDFLARE },
 			...(tun
-				? [{ query_type: ["A", "AAAA"], server: DnsTag.FAKEIP, rewrite_ttl: 1 }]
+				? [
+						{
+							query_type: ["A", "AAAA"],
+							server: DNS_TAG.FAKEIP,
+							rewrite_ttl: 1,
+						},
+					]
 				: []),
-			{ rule_set: ["geosite:category-ntp"], server: DnsTag.LOCAL },
+			{ rule_set: ["geosite:category-ntp"], server: DNS_TAG.LOCAL },
 			{
 				type: "logical",
 				mode: "and",
@@ -81,13 +87,13 @@ export function defaultDNS({ tun }: Query): DNS {
 					{ rule_set: ["geosite:proxy"], invert: true },
 					{ rule_set: ["geoip:cn"] },
 				],
-				server: DnsTag.CLOUDFLARE,
+				server: DNS_TAG.CLOUDFLARE,
 				client_subnet: "101.6.6.6",
 			},
-			{ rule_set: ["geosite:proxy"], server: DnsTag.CLOUDFLARE },
-			{ rule_set: ["geosite:cn"], server: DnsTag.LOCAL },
+			{ rule_set: ["geosite:proxy"], server: DNS_TAG.CLOUDFLARE },
+			{ rule_set: ["geosite:cn"], server: DNS_TAG.LOCAL },
 		],
-		final: DnsTag.CLOUDFLARE,
+		final: DNS_TAG.CLOUDFLARE,
 		independent_cache: true,
 		...(tun
 			? {
@@ -102,7 +108,7 @@ export function defaultDNS({ tun }: Query): DNS {
 	return dns;
 }
 
-const DnsTag = {
+const DNS_TAG = {
 	CLOUDFLARE: "dns:cloudflare",
 	LOCAL: "dns:local",
 	REJECT: "dns:reject",

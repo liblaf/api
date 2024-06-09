@@ -1,5 +1,5 @@
 import type { Query } from "../query";
-import { OutboundTag } from "./shared";
+import { OUTBOUND_TAG } from "./shared";
 
 export type Outbound =
 	| OutboundDirect
@@ -32,11 +32,11 @@ export function defaultOutbounds(query: Query): Outbound[] {
 	return [
 		{
 			type: "selector",
-			tag: OutboundTag.PROXY,
+			tag: OUTBOUND_TAG.PROXY,
 			outbounds: [],
 		},
-		{ type: "dns", tag: OutboundTag.DNS },
-		{ type: "direct", tag: OutboundTag.DIRECT },
-		{ type: "block", tag: OutboundTag.REJECT },
+		{ type: "dns", tag: OUTBOUND_TAG.DNS },
+		{ type: "direct", tag: OUTBOUND_TAG.DIRECT },
+		{ type: "block", tag: OUTBOUND_TAG.REJECT },
 	];
 }
