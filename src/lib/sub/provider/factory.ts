@@ -81,6 +81,10 @@ const FACTORIES: Factory[] = [
 			rate: (name: string) => 0,
 		}),
 	},
+	{
+		pattern: /niceduck/,
+		make: (url: URL) => ({ name: "NiceDuck" }),
+	},
 ];
 
 export function makeProvider(url: URL): Provider {
