@@ -9,7 +9,7 @@ export function newOnedrive(): SmartGroup {
 			if (provider.isEmby(outbound)) return false;
 			const rate: number = provider.rate(outbound);
 			if (rate > 1) return false;
-			return false;
+			return true;
 		},
 	};
 }

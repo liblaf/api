@@ -10,7 +10,7 @@ export function newEmby(): SmartGroup {
 			if (provider.isLimit(outbound)) return false;
 			const rate: number = provider.rate(outbound);
 			if (rate > 1) return false;
-			return false;
+			return true;
 		},
 	};
 }
