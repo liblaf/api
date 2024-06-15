@@ -64,7 +64,7 @@ export function defaultDNS({ tun }: Query): DNS {
 			{ rule_set: ["geosite:private"], server: DNS_TAG.LOCAL },
 			{ outbound: "any", server: DNS_TAG.LOCAL },
 			{
-				rule_set: ["geosite:category-ads-all"],
+				rule_set: ["category:ads-all"],
 				server: DNS_TAG.REJECT,
 				disable_cache: true,
 			},
@@ -79,19 +79,18 @@ export function defaultDNS({ tun }: Query): DNS {
 						},
 					]
 				: []),
-			{ rule_set: ["geosite:category-ntp"], server: DNS_TAG.LOCAL },
+			{ rule_set: ["category:ntp"], server: DNS_TAG.LOCAL },
+			{ rule_set: ["geosite:geolocation-cn"], server: DNS_TAG.LOCAL },
 			{
 				type: "logical",
 				mode: "and",
 				rules: [
-					{ rule_set: ["geosite:proxy"], invert: true },
+					{ rule_set: ["geosite:geolocation-!cn"], invert: true },
 					{ rule_set: ["geoip:cn"] },
 				],
 				server: DNS_TAG.CLOUDFLARE,
 				client_subnet: "101.6.6.6",
 			},
-			{ rule_set: ["geosite:proxy"], server: DNS_TAG.CLOUDFLARE },
-			{ rule_set: ["geosite:cn"], server: DNS_TAG.LOCAL },
 		],
 		final: DNS_TAG.CLOUDFLARE,
 		independent_cache: true,

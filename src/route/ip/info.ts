@@ -1,29 +1,29 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { type Bindings, newApp } from "@lib/bindings";
-import { GeoSchema, fetchGeo } from "@lib/ip/info/geo";
-import { RiskSchema, fetchRisk } from "@lib/ip/info/risk";
-import { SecuritySchema, fetchSecurity } from "@lib/ip/info/security";
+import { GEO_SCHEMA, fetchGeo } from "@lib/ip/info/geo";
+import { RISK_SCHEMA, fetchRisk } from "@lib/ip/info/risk";
+import { SECURITY_SCHEMA, fetchSecurity } from "@lib/ip/info/security";
 import { coerceBoolean } from "@lib/zod-utils";
 import { HTTPException } from "hono/http-exception";
 
 export const appIpInfo = newApp();
 
-const QuerySchema = z.object({
+const QUERY_SCHEMA = z.object({
 	geo: coerceBoolean().default(true),
 	risk: coerceBoolean().default(true),
 	security: coerceBoolean().default(true),
 });
 
-type Query = z.infer<typeof QuerySchema>;
+type Query = z.infer<typeof QUERY_SCHEMA>;
 
-const ResponseSchema = z.object({
+const RESPONSE_SCHEMA = z.object({
 	ip: z.string().ip().openapi({ example: "8.8.8.8" }),
-	geo: GeoSchema.optional(),
-	risk: RiskSchema.optional(),
-	security: SecuritySchema.optional(),
+	geo: GEO_SCHEMA.optional(),
+	risk: RISK_SCHEMA.optional(),
+	security: SECURITY_SCHEMA.optional(),
 });
 
-type Result = z.infer<typeof ResponseSchema>;
+type Result = z.infer<typeof RESPONSE_SCHEMA>;
 
 async function fetchResult(
 	ip: string,
@@ -50,14 +50,14 @@ appIpInfo.openapi(
 		method: "get",
 		path: "/",
 		request: {
-			query: QuerySchema,
+			query: QUERY_SCHEMA,
 		},
 		responses: {
 			200: {
 				description: "OK",
 				content: {
 					"application/json": {
-						schema: ResponseSchema,
+						schema: RESPONSE_SCHEMA,
 					},
 				},
 			},
@@ -82,14 +82,14 @@ appIpInfo.openapi(
 			params: z.object({
 				ip: z.string().ip().openapi({ example: "8.8.8.8" }),
 			}),
-			query: QuerySchema,
+			query: QUERY_SCHEMA,
 		},
 		responses: {
 			200: {
 				description: "OK",
 				content: {
 					"application/json": {
-						schema: ResponseSchema,
+						schema: RESPONSE_SCHEMA,
 					},
 				},
 			},

@@ -5,7 +5,7 @@ import { GROUPS } from "./shared";
 
 const COUNTRIES_EXCLUDE = new Set([COUNTRIES.HK, COUNTRIES.MO, COUNTRIES.OT]);
 
-export function ai(): SmartGroup {
+export function newAi(): SmartGroup {
 	return {
 		name: GROUPS.AI,
 		filter: (outbound: string, provider: Provider): boolean => {

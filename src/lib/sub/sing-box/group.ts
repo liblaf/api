@@ -1,15 +1,12 @@
-import type { SmartGroup } from "../group/abc";
-import { ai } from "../group/ai";
 import { makeSmartGroup } from "../group/factory";
-import { GROUPS } from "../group/shared";
 import type { Provider } from "../provider/abc";
 import type { Config } from "./config";
 import type { Outbound, OutboundSelector } from "./config/outbound";
 import { OUTBOUND_TAG } from "./config/shared";
 
 interface SingBoxGroup {
-	init(config: Config): void;
-	process(config: Config, provider: Provider, outbound: Outbound): void;
+	init: (config: Config) => void;
+	process: (config: Config, provider: Provider, outbound: Outbound) => void;
 }
 
 export function makeSingBoxGroup(name: string): SingBoxGroup {
@@ -39,7 +36,7 @@ export function makeSingBoxGroup(name: string): SingBoxGroup {
 					if (smart.filter(outbound.tag, provider)) {
 						const group = config.outbounds?.find((o) => o.tag === smart.name);
 						if (group?.type === "selector" || group?.type === "urltest")
-							group.outbounds.push(outbound.tag);
+							group.outbounds.push(provider.rename(outbound.tag));
 					}
 				},
 			};

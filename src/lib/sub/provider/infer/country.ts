@@ -34,49 +34,50 @@ export const COUNTRIES = {
 	OT: "🏳️‍🌈 Other",
 };
 
-const COUNTRY_PATTERNS: Record<string, RegExp> = {
+export type CountryCode = keyof typeof COUNTRIES;
+
+const COUNTRY_PATTERNS: Record<CountryCode, RegExp> = {
 	// https://github.com/ACL4SSR/ACL4SSR/blob/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini
 	// https://github.com/NotSFC/subconverter-config/blob/main/external-config/sfc.ini
-	"🇭🇰 Hong Kong (HK)": /港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰/,
-	"🇺🇲 United States (US)":
-		/美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|🇺🇲/,
-	"🇯🇵 Japan (JP)":
-		/日本|川日|东京|大阪|泉日|埼玉|沪日|深日|\b日\b|JP|Japan|🇯🇵|广日/,
-	"🇸🇬 Singapore (SG)": /新加坡|坡|狮城|SG|Singapore|🇸🇬|新/,
-	"🇹🇼 Taiwan (TW)": /台|新北|彰化|TW|Taiwan|🇹🇼/,
-	"🇰🇷 South Korea (KR)": /KR|(?<!North )Korea|KOR|首尔|韩|韓|🇰🇷/,
+	HK: /港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰/,
+	US: /美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|🇺🇲/,
+	JP: /日本|川日|东京|大阪|泉日|埼玉|沪日|深日|\b日\b|JP|Japan|🇯🇵|广日/,
+	SG: /新加坡|坡|狮城|SG|Singapore|🇸🇬|新/,
+	TW: /台|新北|彰化|TW|Taiwan|🇹🇼/,
+	KR: /KR|(?<!North )Korea|KOR|首尔|韩|韓|🇰🇷/,
 
-	"🇦🇶 Antarctica (AQ)": /🇦🇶|AQ|Antarctica|南极/,
-	"🇦🇷 Argentina (AR)": /🇦🇷|AR|Argentina|阿根廷/,
-	"🇦🇺 Australia (AU)": /🇦🇺|AU|Australia|澳大利亚/,
-	"🇧🇷 Brazil (BR)": /🇧🇷|BR|Brazil|巴西/,
-	"🇨🇦 Canada (CA)": /🇨🇦|CA|Canada|加拿大/,
-	"🇨🇭 Switzerland (CH)": /🇨🇭|CH|Switzerland|瑞士/,
-	"🇩🇪 Germany (DE)": /🇩🇪|DE|Germany|德/,
-	"🇫🇷 France (FR)": /🇫🇷|FR|France|法/,
-	"🇬🇧 United Kingdom (UK)": /🇬🇧|UK|United Kingdom|英/,
-	"🇮🇳 India (IN)": /🇮🇳|IN|India|印/,
-	"🇮🇸 Iceland (IS)": /🇮🇸|IS|Iceland|冰岛/,
-	"🇮🇹 Italy (IT)": /🇮🇹|\bIT\b|Italy|意大利/,
-	"🇰🇵 North Korea (KP)": /🇰🇵|KP|North Korea|朝鲜/,
-	"🇱🇺 Luxembourg (LU)": /🇱🇺|LU|Luxembourg|卢森堡/,
-	"🇲🇴 Macau (MO)": /🇲🇴|MO|Macau|Macao|澳门/,
-	"🇲🇾 Malaysia (MY)": /🇲🇾|MY|Malaysia|马来/,
-	"🇳🇬 Nigeria (NG)": /🇳🇬|NG|Nigeria|尼日利亚/,
-	"🇳🇱 Netherlands (NL)": /🇳🇱|NL|Netherlands|荷/,
-	"🇳🇵 Nepal (NP)": /🇳🇵|NP|Nepal|尼泊尔/,
-	"🇳🇿 New Zealand (NZ)": /🇳🇿|NZ|New Zealand|新西兰/,
-	"🇵🇰 Pakistan (PK)": /🇵🇰|PK|Pakistan|巴基斯坦/,
-	"🇷🇺 Russia (RU)": /🇷🇺|RU|Russia|俄/,
-	"🇹🇭 Thailand (TH)": /🇹🇭|TH|Thailand|泰/,
-	"🇹🇷 Turkey (TR)": /🇹🇷|TR|Turkey|土耳其/,
+	AQ: /🇦🇶|AQ|Antarctica|南极/,
+	AR: /🇦🇷|AR|Argentina|阿根廷/,
+	AU: /🇦🇺|AU|Australia|澳大利亚/,
+	BR: /🇧🇷|BR|Brazil|巴西/,
+	CA: /🇨🇦|CA|Canada|加拿大/,
+	CH: /🇨🇭|CH|Switzerland|瑞士/,
+	DE: /🇩🇪|DE|Germany|德/,
+	FR: /🇫🇷|FR|France|法/,
+	UK: /🇬🇧|UK|United Kingdom|英/,
+	IN: /🇮🇳|IN|India|印/,
+	IS: /🇮🇸|IS|Iceland|冰岛/,
+	IT: /🇮🇹|\bIT\b|Italy|意大利/,
+	KP: /🇰🇵|KP|North Korea|朝鲜/,
+	LU: /🇱🇺|LU|Luxembourg|卢森堡/,
+	MO: /🇲🇴|MO|Macau|Macao|澳门/,
+	MY: /🇲🇾|MY|Malaysia|马来/,
+	NG: /🇳🇬|NG|Nigeria|尼日利亚/,
+	NL: /🇳🇱|NL|Netherlands|荷/,
+	NP: /🇳🇵|NP|Nepal|尼泊尔/,
+	NZ: /🇳🇿|NZ|New Zealand|新西兰/,
+	PK: /🇵🇰|PK|Pakistan|巴基斯坦/,
+	RU: /🇷🇺|RU|Russia|俄/,
+	TH: /🇹🇭|TH|Thailand|泰/,
+	TR: /🇹🇷|TR|Turkey|土耳其/,
+
+	OT: /.*/,
 };
 
-export function inferCountry(tag: string): string {
-	if (tag.includes("📝")) return COUNTRIES.OT;
-	const name = tag.replace(/ \[[^\]]+\]$/, "");
+export function inferCountry(name: string): CountryCode {
+	if (name.includes("📝")) return "OT";
 	for (const [key, pattern] of Object.entries(COUNTRY_PATTERNS)) {
-		if (pattern.test(name)) return key;
+		if (pattern.test(name)) return key as CountryCode;
 	}
-	return COUNTRIES.OT;
+	return "OT";
 }

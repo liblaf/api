@@ -1,15 +1,16 @@
 import type { Provider } from "@lib/sub/provider/abc";
-import { COUNTRIES } from "../provider/infer/country";
+import { COUNTRIES, type CountryCode } from "../provider/infer/country";
 import type { SmartGroup } from "./abc";
 
-export function country(name: string): SmartGroup {
-	const prettyName = COUNTRIES[name] as string;
+export function newCountry(code: string): SmartGroup {
+	const countryCode = code.toUpperCase() as CountryCode;
+	const name = COUNTRIES[countryCode];
 	return {
-		name: prettyName,
+		name: name,
 		filter: (outbound: string, provider: Provider): boolean => {
 			if (provider.isEmby(outbound)) return false;
 			const country = provider.country(outbound);
-			if (country !== prettyName) return false;
+			if (country !== countryCode) return false;
 			return true;
 		},
 	};

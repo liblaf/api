@@ -26,7 +26,7 @@ type InboundTun = {
 	strict_route?: boolean;
 };
 
-export function defaultInbounds({ port, mixed, tun }: Query): Inbound[] {
+export function defaultInbounds({ mixed, port, tun }: Query): Inbound[] {
 	const inbounds: Inbound[] = [];
 	if (mixed)
 		inbounds.push({

@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { fetchSafe } from "@lib/fetch";
 
-export const SecuritySchema = z.object({
+export const SECURITY_SCHEMA = z.object({
 	abuser: z.boolean().openapi({ example: true }),
 	crawler: z.boolean().openapi({ example: false }),
 	data_center: z.boolean().openapi({ example: true }),
@@ -10,9 +10,9 @@ export const SecuritySchema = z.object({
 	vpn: z.boolean().openapi({ example: true }),
 });
 
-export type Security = z.infer<typeof SecuritySchema>;
+export type Security = z.infer<typeof SECURITY_SCHEMA>;
 
-type SecurityResponse = {
+type SecurityRaw = {
 	is_abuser: boolean;
 	is_crawler: boolean;
 	is_datacenter: boolean;
@@ -29,8 +29,7 @@ export async function fetchSecurity(
 	url.searchParams.set("q", ip);
 	if (key) url.searchParams.set("key", key);
 	const response = await fetchSafe(url);
-	const data = (await response.json()) as SecurityResponse;
-	console.log(data);
+	const data = (await response.json()) as SecurityRaw;
 	return {
 		abuser: data.is_abuser,
 		crawler: data.is_crawler,

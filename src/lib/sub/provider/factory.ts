@@ -1,21 +1,18 @@
-import { fetchInfo } from "../info";
 import { fetchSingBox } from "../sing-box/fetch";
-import type { Provider } from "./abc";
-import { common, subConvert, withSearchParams } from "./common";
+import {
+	type Provider,
+	type ProviderOptions,
+	fetchInfoWithSearchParams,
+	fetchSingBoxWithSearchParams,
+	newProvider,
+	subConvert,
+} from "./abc";
 import { COUNTRIES } from "./infer/country";
 
 type Factory = {
 	pattern: RegExp;
-	make: (url: URL) => Partial<Provider>;
+	make: (url: URL) => Omit<ProviderOptions, "url">;
 };
-
-function fetchInfoWithSearchParams(url: URL, params: [string, string][]) {
-	return async () => await fetchInfo(withSearchParams(url, params));
-}
-
-function fetchSingBoxWithSearchParams(url: URL, params: [string, string][]) {
-	return async () => await fetchSingBox(withSearchParams(url, params));
-}
 
 const FACTORIES: Factory[] = [
 	{
@@ -67,28 +64,29 @@ const FACTORIES: Factory[] = [
 			fetchSingBox: async () => {
 				const config = await fetchSingBox(subConvert(url, "singbox"));
 				for (const outbound of config.outbounds ?? []) {
-					const tag = outbound.tag;
-					const match = tag.match(/@(?<name>[\w-]+)/);
+					const origin = outbound.tag;
+					const match = origin.match(/@(?<name>[\w-]+)/);
 					const name = match?.groups?.name;
-					outbound.tag = name ?? tag;
+					outbound.tag = origin ?? origin;
 				}
 				return config;
 			},
-			country: (tag: string) => {
-				if (tag.match(/s1|s2|s3/)) return COUNTRIES.US;
-				if (tag.match(/s4/)) return COUNTRIES.JP;
-				if (tag.match(/s5/)) return COUNTRIES.NL;
-				if (tag.match(/s801/)) return COUNTRIES.OT;
+			country: (name: string) => {
+				if (name.match(/s1|s2|s3/)) return COUNTRIES.US;
+				if (name.match(/s4/)) return COUNTRIES.JP;
+				if (name.match(/s5/)) return COUNTRIES.NL;
+				if (name.match(/s801/)) return COUNTRIES.OT;
 				return COUNTRIES.OT;
 			},
-			rate: (tag: string) => 0,
+			rate: (name: string) => 0,
 		}),
 	},
 ];
 
-export function newProvider(url: URL): Provider {
+export function makeProvider(url: URL): Provider {
 	for (const { pattern, make } of FACTORIES) {
-		if (pattern.test(url.hostname)) return { ...common(url), ...make(url) };
+		if (pattern.test(url.hostname))
+			return newProvider({ url: url, ...make(url) });
 	}
-	return common(url);
+	return newProvider({ url: url });
 }

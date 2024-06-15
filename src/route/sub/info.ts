@@ -1,13 +1,13 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { newApp } from "@lib/bindings";
-import { type Info, InfoSchema, fetchInfoSafe } from "@lib/sub/info";
+import { INFO_SCHEMA, type Info, fetchInfoUrls } from "@lib/sub/info";
 import { preprocessArray } from "@lib/zod-utils";
 import { HTTPException } from "hono/http-exception";
 
 export const appSubInfo = newApp();
 
 const responseSchema = z.object({
-	info: z.array(InfoSchema),
+	info: z.array(INFO_SCHEMA),
 });
 
 appSubInfo.openapi(
@@ -34,7 +34,7 @@ appSubInfo.openapi(
 	}),
 	async (c) => {
 		const { url } = c.req.valid("query");
-		const info: Info[] = await fetchInfoSafe(
+		const info: Info[] = await fetchInfoUrls(
 			url.map((url: string) => new URL(url)),
 		);
 		return c.json({ info: info });
@@ -72,7 +72,7 @@ appSubInfo.openapi(
 		const urls: URL[] = c.env.MY_SUB_URLS.split("\n").map(
 			(url: string) => new URL(url),
 		);
-		const info: Info[] = await fetchInfoSafe(urls);
+		const info: Info[] = await fetchInfoUrls(urls);
 		return c.json({ info: info });
 	},
 );

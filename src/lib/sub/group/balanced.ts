@@ -5,7 +5,7 @@ import { GROUPS } from "./shared";
 
 const COUNTRIES_EXCLUDE = new Set([COUNTRIES.HK, COUNTRIES.MO, COUNTRIES.OT]);
 
-export function balance(): SmartGroup {
+export function newBalanced(): SmartGroup {
 	return {
 		name: GROUPS.BALANCE,
 		filter: (outbound: string, provider: Provider): boolean => {

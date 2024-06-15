@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { fetchSafe } from "@lib/fetch";
 
-export const GeoSchema = z.object({
+export const GEO_SCHEMA = z.object({
 	asn: z.number().positive().int().openapi({ example: 15169 }),
 	country: z.string().optional().openapi({ example: "United States" }),
 	country_code: z.string().optional().openapi({ example: "US" }),
@@ -21,9 +21,9 @@ export const GeoSchema = z.object({
 	organization: z.string().openapi({ example: "Google" }),
 });
 
-export type Geo = z.infer<typeof GeoSchema>;
+export type Geo = z.infer<typeof GEO_SCHEMA>;
 
-type GeoResponse = {
+type GeoRaw = {
 	asn: number;
 	country?: string;
 	country_code?: string;
@@ -34,8 +34,7 @@ type GeoResponse = {
 
 export async function fetchGeo(ip: string): Promise<Geo> {
 	const response = await fetchSafe(`https://api.ip.sb/geoip/${ip}`);
-	const data = (await response.json()) as GeoResponse;
-	console.log(data);
+	const data = (await response.json()) as GeoRaw;
 	return {
 		asn: data.asn,
 		country: data.country,
@@ -50,8 +49,10 @@ export async function fetchGeo(ip: string): Promise<Geo> {
 }
 
 function countryCode2FlagEmoji(countryCode: string): string {
-	const codePoints: number[] = [...countryCode].map(
-		(char: string): number => 127397 + char.charCodeAt(0),
-	);
+	// https://stackoverflow.com/a/70738479
+	const codePoints: number[] = countryCode
+		.toUpperCase()
+		.split("")
+		.map((char) => 127397 + char.charCodeAt(0));
 	return String.fromCodePoint(...codePoints);
 }

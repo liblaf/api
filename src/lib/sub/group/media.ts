@@ -2,7 +2,7 @@ import type { Provider } from "@lib/sub/provider/abc";
 import type { SmartGroup } from "./abc";
 import { GROUPS } from "./shared";
 
-export function media(): SmartGroup {
+export function newMedia(): SmartGroup {
 	return {
 		name: GROUPS.MEDIA,
 		filter: (outbound: string, provider: Provider): boolean => {
