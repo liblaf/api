@@ -109,28 +109,28 @@ export function defaultRoute({ group }: Query): Route {
 function geoip(tag: string): RuleSet {
 	return remoteBinary(
 		`geoip:${tag}`,
-		`https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/${tag}.json`,
+		`https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/${tag}.srs`,
 	);
 }
 
 function geosite(tag: string): RuleSet {
 	return remoteBinary(
 		`geosite:${tag}`,
-		`https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/${tag}.json`,
+		`https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/${tag}.srs`,
 	);
 }
 
 function category(tag: string): RuleSet {
 	return remoteBinary(
 		`category:${tag}`,
-		`https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-${tag}.json`,
+		`https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-${tag}.srs`,
 	);
 }
 
 function ruleSet(tag: string): RuleSet {
 	return remoteBinary(
 		`rule-set:${tag}`,
-		`https://github.com/liblaf/sing-box-rules/raw/rule-sets/${tag}.json`,
+		`https://github.com/liblaf/sing-box-rules/raw/rule-sets/${tag}.srs`,
 	);
 }
 
