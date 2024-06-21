@@ -1,9 +1,9 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 
 export type Bindings = {
-	[key in keyof CloudflareBindings]: CloudflareBindings[key];
+  [key in keyof CloudflareBindings]: CloudflareBindings[key];
 };
 
 export function newApp() {
-	return new OpenAPIHono<{ Bindings: Bindings }>();
+  return new OpenAPIHono<{ Bindings: Bindings }>();
 }

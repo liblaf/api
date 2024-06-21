@@ -10,7 +10,7 @@
     }
   },
   "formatter": {
-    "indentStyle": "tab"
+    "indentStyle": "space"
   },
   "organizeImports": {
     "enabled": true

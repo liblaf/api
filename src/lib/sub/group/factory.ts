@@ -8,22 +8,22 @@ import { Media } from "./media";
 import { OneDrive } from "./onedrive";
 
 export function makeSmartGroup(name: string): SmartGroup {
-	switch (name) {
-		case "ai":
-			return new Ai();
-		case "auto":
-			return new Auto();
-		case "balance":
-			return new Balance();
-		case "emby":
-			return new Emby();
-		case "ipv6": // TODO
-			throw new Error("Not implemented");
-		case "media":
-			return new Media();
-		case "onedrive":
-			return new OneDrive();
-		default:
-			return new Country(name);
-	}
+  switch (name) {
+    case "ai":
+      return new Ai();
+    case "auto":
+      return new Auto();
+    case "balance":
+      return new Balance();
+    case "emby":
+      return new Emby();
+    case "ipv6": // TODO
+      throw new Error("Not implemented");
+    case "media":
+      return new Media();
+    case "onedrive":
+      return new OneDrive();
+    default:
+      return new Country(name);
+  }
 }
