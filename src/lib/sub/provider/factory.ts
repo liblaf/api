@@ -67,7 +67,7 @@ const FACTORIES: Factory[] = [
           const origin = outbound.tag;
           const match = origin.match(/@(?<name>[\w-]+)/);
           const name = match?.groups?.name;
-          outbound.tag = origin ?? origin;
+          outbound.tag = name ?? origin;
         }
         return config;
       },
