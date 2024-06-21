@@ -1,6 +1,6 @@
 import type { Provider } from "@lib/sub/provider/abc";
 
-export interface SmartGroup {
-	name: string;
-	filter: (outbound: string, provider: Provider) => boolean;
+export abstract class SmartGroup {
+	abstract name: string;
+	abstract filter(name: string, provider: Provider): boolean;
 }

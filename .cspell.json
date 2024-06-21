@@ -1,6 +1,9 @@
 {
   "words": [
+    "bidi",
+    "biomejs",
     "chatid",
+    "commitizen",
     "dcba",
     "emby",
     "fakeip",
@@ -16,11 +19,10 @@
     "liblaf",
     "liblaf's",
     "lockb",
-    "mtls",
+    "nexitally",
     "nthu",
     "rcode",
-    "rdrc",
-    "tseslint"
+    "rdrc"
   ],
   "ignorePaths": ["**/*-lock.*", "**/*.lock*", "**/.cspell.json"],
   "allowCompoundWords": true

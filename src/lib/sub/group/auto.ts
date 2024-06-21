@@ -1,13 +1,12 @@
 import type { Provider } from "@lib/sub/provider/abc";
-import type { SmartGroup } from "./abc";
+import { SmartGroup } from "./abc";
 import { GROUPS } from "./shared";
 
-export function newAuto(): SmartGroup {
-	return {
-		name: GROUPS.AUTO,
-		filter: (outbound: string, provider: Provider): boolean => {
-			if (provider.isEmby(outbound)) return false;
-			return true;
-		},
-	};
+export class Auto extends SmartGroup {
+	name: string = GROUPS.AUTO;
+
+	filter(name: string, provider: Provider): boolean {
+		if (provider.isEmby(name)) return false;
+		return true;
+	}
 }

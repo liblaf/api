@@ -1,29 +1,29 @@
 import type { SmartGroup } from "./abc";
-import { newAi } from "./ai";
-import { newAuto } from "./auto";
-import { newBalanced } from "./balanced";
-import { newCountry } from "./country";
-import { newEmby } from "./emby";
-import { newMedia } from "./media";
-import { newOnedrive } from "./onedrive";
+import { Ai } from "./ai";
+import { Auto } from "./auto";
+import { Balance } from "./balance";
+import { Country } from "./country";
+import { Emby } from "./emby";
+import { Media } from "./media";
+import { OneDrive } from "./onedrive";
 
 export function makeSmartGroup(name: string): SmartGroup {
 	switch (name) {
 		case "ai":
-			return newAi();
+			return new Ai();
 		case "auto":
-			return newAuto();
+			return new Auto();
 		case "balance":
-			return newBalanced();
+			return new Balance();
 		case "emby":
-			return newEmby();
+			return new Emby();
 		case "ipv6": // TODO
 			throw new Error("Not implemented");
 		case "media":
-			return newMedia();
+			return new Media();
 		case "onedrive":
-			return newOnedrive();
+			return new OneDrive();
 		default:
-			return newCountry(name);
+			return new Country(name);
 	}
 }

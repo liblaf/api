@@ -7,3 +7,5 @@ export const GROUPS = {
 	MEDIA: "📺 Media",
 	ONEDRIVE: "☁️ OneDrive",
 };
+
+export const AI_COUNTRIES_EXCLUDE = new Set(["HK", "MO", "OT"]);
