@@ -9,7 +9,7 @@
     "dev": "wrangler dev"
   },
   "dependencies": {
-    "@hono/zod-openapi": "^0.14.0",
+    "@hono/zod-openapi": "^0.15.0",
     "grammy": "^1.23.0",
     "hono": "^4.3.8",
     "zod": "^3.23.8"
