@@ -1,1 +1,1 @@
-export const BACKEND_URL = new URL("https://api.v1.mk/sub");
+export const BACKEND_URL = new URL("https://url.v1.mk/sub");
