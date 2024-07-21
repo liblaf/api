@@ -85,6 +85,13 @@ const FACTORIES: Factory[] = [
     pattern: /niceduck/,
     make: (url: URL) => ({ name: "NiceDuck" }),
   },
+  {
+    pattern: /wogame.dev/,
+    make: (url: URL) => ({
+      name: "CitrusLab",
+      fetchSingBox: async () => fetchSingBox(url),
+    }),
+  },
 ];
 
 export function makeProvider(url: URL): Provider {
