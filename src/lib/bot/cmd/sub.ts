@@ -45,7 +45,7 @@ function prettyInfo(info: Info[]): string {
       if (i.expire) {
         const expire = new Date(i.expire * 1000);
         const remain: number = i.expire * 1000 - Date.now();
-        const days: number = Math.floor(remain / 1000 / 86400);
+        const days: number = Math.floor(remain / 86400000);
         const emoji = days < 7 ? "🔴" : days < 14 ? "🟡" : "🟢";
         item += ` ${emoji} ${format(expire, "yyyy-MM-dd")}`;
       }
@@ -58,20 +58,20 @@ function prettyInfo(info: Info[]): string {
   return message;
 }
 
-function prettyBytes(bytes: number, precision = 3): string {
-  if (!+bytes) return "0 Bytes";
-  const K = 1024;
-  const SIZES = [
-    "Bytes",
-    "KiB",
-    "MiB",
-    "GiB",
-    "TiB",
-    "PiB",
-    "EiB",
-    "ZiB",
-    "YiB",
-  ];
-  const i = Math.floor(Math.log(bytes) / Math.log(K));
-  return `${(bytes / K ** i).toPrecision(precision)} ${SIZES[i]}`;
+function prettyBytes(bytes: number, dp = 1): string {
+  const THRESH = 1024;
+  if (Math.abs(bytes) < THRESH) return `${bytes} B`;
+  const UNITS = ["KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
+  let u = -1;
+  const r = 10 ** dp;
+  let size = bytes;
+  do {
+    size /= THRESH;
+    ++u;
+  } while (
+    Math.round(Math.abs(size) * r) / r >= THRESH &&
+    u < UNITS.length - 1
+  );
+
+  return `${size.toFixed(dp)} ${UNITS[u]}`;
 }

@@ -1,5 +1,5 @@
 export function isExcluded(name: string): boolean {
-  return false;
+  return !!name.match(/距离下次重置剩余/);
 }
 
 export function isEmby(name: string): boolean {
