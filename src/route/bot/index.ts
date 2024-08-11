@@ -1,8 +1,10 @@
-import { newApp } from "@lib/bindings";
-import { appBotSend } from "./send";
-import { appBotWebhook } from "./webhook";
+import { createApp } from "@lib/app";
+import appSend from "./send";
+import appWebhook from "./webhook";
 
-export const appBot = newApp();
+const app = createApp();
 
-appBot.route("/send", appBotSend);
-appBot.route("/webhook", appBotWebhook);
+app.route("/send", appSend);
+app.route("/webhook", appWebhook);
+
+export default app;

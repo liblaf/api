@@ -1,11 +1,12 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { newApp } from "@lib/bindings";
+import { createRoute } from "@hono/zod-openapi";
+import { createApp } from "@lib/app";
 import { newBot } from "@lib/bot";
 import { webhookCallback } from "grammy";
+import { z } from "zod";
 
-export const appBotWebhook = newApp();
+const app = createApp();
 
-appBotWebhook.openapi(
+app.openapi(
   createRoute({
     tags: ["Bot"],
     summary: "Set Telegram bot webhook",
@@ -33,7 +34,7 @@ appBotWebhook.openapi(
   },
 );
 
-appBotWebhook.openapi(
+app.openapi(
   createRoute({
     tags: ["Bot"],
     summary: "Telegram bot webhook",
@@ -52,3 +53,5 @@ appBotWebhook.openapi(
     return response;
   },
 );
+
+export default app;

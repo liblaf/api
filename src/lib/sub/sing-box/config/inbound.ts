@@ -1,49 +1,48 @@
-import type { Query } from "../query";
+import { arrayIf } from "@lib/utils";
+import type { Params } from "../types";
+import type { ListenFields } from "./shared";
 
-export type Inbound = InboundMixed | InboundTun;
+export type Inbound = InboundBase | InboundMixed | InboundTUN;
 
-type ListenFields = {
-  listen: string;
-  listen_port?: number;
-  sniff?: boolean;
+type InboundBase = {
+  type: string;
+  tag: string;
 };
 
-type InboundMixed = {
-  type: "mixed";
-  tag: string;
-  users?: {
-    username: string;
-    password: string;
-  }[];
-} & ListenFields;
+// TODO: Add more fields
 
-type InboundTun = {
-  type: "tun";
-  tag: string;
-  inet4_address: string;
-  inet6_address?: string;
-  auto_route?: boolean;
-  strict_route?: boolean;
-};
+type InboundMixed = InboundBase &
+  ListenFields & {
+    type: "mixed";
+    listen: string;
+  };
 
-export function defaultInbounds({ mixed, port, tun }: Query): Inbound[] {
-  const inbounds: Inbound[] = [];
-  if (mixed)
-    inbounds.push({
-      type: "mixed",
-      tag: "in:mixed",
-      listen: "0.0.0.0",
-      listen_port: port,
-      sniff: true,
-    });
-  if (tun)
-    inbounds.push({
+type InboundTUN = InboundBase &
+  ListenFields & {
+    type: "tun";
+    inet4_address?: string | string[];
+    inet6_address?: string | string[];
+    auto_route?: boolean;
+    strict_route?: boolean;
+  };
+
+export function createConfigInbounds({ tun, mixed, port }: Params): Inbound[] {
+  return [
+    ...arrayIf(tun, {
       type: "tun",
       tag: "in:tun",
       inet4_address: "172.19.0.1/30",
       inet6_address: "fdfe:dcba:9876::1/126",
       auto_route: true,
       strict_route: true,
-    });
-  return inbounds;
+      sniff: true,
+    } satisfies InboundTUN),
+    ...arrayIf(mixed, {
+      type: "mixed",
+      tag: "in:mixed",
+      listen: "0.0.0.0",
+      listen_port: port,
+      sniff: true,
+    } satisfies InboundMixed),
+  ];
 }

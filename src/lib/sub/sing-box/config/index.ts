@@ -1,27 +1,28 @@
-import type { Query } from "../query";
-import { type DNS, defaultDNS } from "./dns";
-import { type Experimental, defaultExperimental } from "./experimental";
-import { type Inbound, defaultInbounds } from "./inbound";
-import { type Log, defaultLog } from "./log";
-import { type Outbound, defaultOutbounds } from "./outbound";
-import { type Route, defaultRoute } from "./route";
+import type { Params } from "../types";
+import { type DNS, createConfigDNS } from "./dns";
+import { type Experimental, createConfigExperimental } from "./experimental";
+import { type Inbound, createConfigInbounds } from "./inbound";
+import { type Log, createConfigLog } from "./log";
+import { type Outbound, createConfigOutbounds } from "./outbound";
+import { type Route, createConfigRoute } from "./route";
 
-export type Config = {
+export type SingBoxConfig = {
   log?: Log;
   dns?: DNS;
-  inbounds?: Inbound[];
-  outbounds?: Outbound[];
-  route?: Route;
+  // TODO: Add NTP fields
+  inbounds: Inbound[];
+  outbounds: Outbound[];
+  route: Route;
   experimental?: Experimental;
 };
 
-export function defaultConfig(query: Query): Required<Config> {
+export function createConfig(params: Params): SingBoxConfig {
   return {
-    log: defaultLog(query),
-    dns: defaultDNS(query),
-    inbounds: defaultInbounds(query),
-    outbounds: defaultOutbounds(query),
-    route: defaultRoute(query),
-    experimental: defaultExperimental(query),
+    log: createConfigLog(params),
+    dns: createConfigDNS(params),
+    inbounds: createConfigInbounds(params),
+    outbounds: createConfigOutbounds(params),
+    route: createConfigRoute(params),
+    experimental: createConfigExperimental(params),
   };
 }

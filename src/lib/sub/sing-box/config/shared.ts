@@ -1,17 +1,14 @@
-import { GROUPS } from "@lib/sub/group/shared";
-import { COUNTRIES } from "@lib/sub/provider/infer/country";
-
-export const OUTBOUND_TAG = {
-  ...COUNTRIES,
-  ...GROUPS,
-  DIRECT: "DIRECT",
-  DNS: "DNS",
-  PROXY: "PROXY",
-  REJECT: "REJECT",
+export type ListenFields = {
+  // TODO: Add more fields
+  listen?: string;
+  listen_port?: number;
+  tcp_fast_open?: boolean;
+  tcp_multi_path?: boolean;
+  sniff?: boolean;
 };
 
-export type ClashMode = "rule" | "global" | "direct";
-
-export function proxy(url: string): string {
-  return `https://api.liblaf.me/proxy/${url}`;
-}
+export type DialFields = {
+  // TODO: Add more fields
+  tcp_fast_open?: boolean;
+  tcp_multi_path?: boolean;
+};

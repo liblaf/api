@@ -1,145 +1,108 @@
-import type { Query } from "../query";
-import { type ClashMode, OUTBOUND_TAG, proxy } from "./shared";
+import { proxyURL } from "@lib/utils";
+import type { Params } from "../types";
+import {
+  ClashMode,
+  GeoIPTag,
+  GeoSiteTag,
+  OutboundTag,
+  RuleSetTag,
+} from "./const";
 
 export type Route = {
-  rules?: RouteRule[];
-  rule_set?: RuleSet[];
+  // TODO: Add more fields
+  rules: RouteRule[];
+  rule_set: RuleSet[];
   final?: string;
   auto_detect_interface?: boolean;
 };
 
-type RouteRule = _RouteRule & {
-  outbound: string;
-};
-
-type _RouteRule = RouteRuleDefault | RouteRuleLogical;
-
-type RouteRuleDefault = {
-  network?: ("tcp" | "udp")[];
-  auth_user?: string[];
-  protocol?: string[];
-  domain_suffix?: string[];
+type RouteRule = {
+  // TODO: Add more fields
+  protocol?: string | string[];
+  network?: "tcp" | "udp";
   ip_is_private?: boolean;
-  port?: number[];
-  clash_mode?: ClashMode;
-  rule_set?: string[];
+  port?: number | number[];
+  clash_mode?: string;
+  rule_set?: string | string[];
+  invert?: boolean;
+  outbound: string;
+  // logical fields
+  type?: "logical";
+  mode?: "and" | "or";
+  rules?: Omit<RouteRule, "outbound">[];
 };
 
-type RouteRuleLogical = {
-  type: "logical";
-  mode: "and" | "or";
-  rules: _RouteRule[];
-};
-
+// TODO: Add more fields
 type RuleSet = RuleSetRemote;
 
-type RuleSetCommon = {
-  type: string;
+type RuleSetRemote = {
+  type: "remote";
   tag: string;
   format: "source" | "binary";
-};
-
-type RuleSetRemote = RuleSetCommon & {
-  type: "remote";
   url: string;
   download_detour?: string;
+  update_interval?: string;
 };
 
-export function defaultRoute({ group }: Query): Route {
+export function createConfigRoute(params: Params): Route {
   return {
     rules: [
       {
         type: "logical",
         mode: "or",
-        rules: [{ protocol: ["dns"] }, { port: [53] }],
-        outbound: OUTBOUND_TAG.DNS,
+        rules: [{ protocol: "dns" }, { port: 53 }],
+        outbound: OutboundTag.DNS,
       },
+      { rule_set: RuleSetTag.ADS, outbound: OutboundTag.REJECT },
       {
-        rule_set: ["geoip:private", "geosite:private"],
         ip_is_private: true,
-        outbound: OUTBOUND_TAG.DIRECT,
+        rule_set: RuleSetTag.PRIVATE,
+        outbound: OutboundTag.DIRECT,
       },
-      { rule_set: ["category:ads-all"], outbound: OUTBOUND_TAG.REJECT },
-      { clash_mode: "direct", outbound: OUTBOUND_TAG.DIRECT },
-      { clash_mode: "global", outbound: OUTBOUND_TAG.PROXY },
+      { clash_mode: ClashMode.DIRECT, outbound: OutboundTag.DIRECT },
+      { clash_mode: ClashMode.GLOBAL, outbound: OutboundTag.PROXY },
       {
         type: "logical",
         mode: "or",
         rules: [
-          { port: [853] },
-          { network: ["udp"], port: [443] },
-          { protocol: ["stun"] },
+          { port: 853 },
+          { network: "udp", port: 443 },
+          { protocol: "stun" },
         ],
-        outbound: OUTBOUND_TAG.REJECT,
+        outbound: OutboundTag.REJECT,
       },
-      { rule_set: ["category:ntp"], outbound: OUTBOUND_TAG.DIRECT },
-      { domain_suffix: ["byr.pt"], outbound: OUTBOUND_TAG.IPv6 },
-      { rule_set: ["geoip:cn", "geosite:cn"], outbound: OUTBOUND_TAG.DIRECT },
-      { rule_set: ["rule-set:ai"], outbound: OUTBOUND_TAG.AI },
-      { rule_set: ["rule-set:emby"], outbound: OUTBOUND_TAG.EMBY },
-      { rule_set: ["rule-set:media"], outbound: OUTBOUND_TAG.MEDIA },
-      {
-        rule_set: ["category:container", "geosite:onedrive"],
-        outbound: OUTBOUND_TAG.ONEDRIVE,
-      },
-      { rule_set: ["geoip:jp"], outbound: OUTBOUND_TAG.JP },
+      { rule_set: RuleSetTag.CN, outbound: OutboundTag.DIRECT },
+      { rule_set: RuleSetTag.AI, outbound: OutboundTag.AI },
+      { rule_set: RuleSetTag.EMBY, outbound: OutboundTag.EMBY },
+      { rule_set: RuleSetTag.DOWNLOAD, outbound: OutboundTag.DOWNLOAD },
+      { rule_set: RuleSetTag.MEDIA, outbound: OutboundTag.MEDIA },
     ],
-    rule_set: [
-      category("ads-all"),
-      category("container"),
-      category("ntp"),
-      geoip("cn"),
-      geoip("jp"),
-      geoip("private"),
-      geoip("telegram"),
-      geosite("cn"),
-      geosite("geolocation-!cn"),
-      geosite("geolocation-cn"),
-      geosite("onedrive"),
-      geosite("private"),
-      ruleSet("ai"),
-      ruleSet("emby"),
-      ruleSet("media"),
-    ],
-    final: OUTBOUND_TAG.PROXY,
+    rule_set: ruleSets(),
+    final: OutboundTag.PROXY,
     auto_detect_interface: true,
   };
 }
 
-function geoip(tag: string): RuleSet {
-  return remoteBinary(
-    `geoip:${tag}`,
-    `https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/${tag}.srs`,
-  );
+function ruleSets(): RuleSet[] {
+  const ruleSets: RuleSet[] = [];
+  for (const E of [GeoIPTag, GeoSiteTag, RuleSetTag]) {
+    let k: keyof typeof E;
+    for (k in E) {
+      const tag = E[k];
+      ruleSets.push(ruleSetRemote(tag));
+    }
+  }
+  return ruleSets;
 }
 
-function geosite(tag: string): RuleSet {
-  return remoteBinary(
-    `geosite:${tag}`,
-    `https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/${tag}.srs`,
-  );
-}
-
-function category(tag: string): RuleSet {
-  return remoteBinary(
-    `category:${tag}`,
-    `https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/category-${tag}.srs`,
-  );
-}
-
-function ruleSet(tag: string): RuleSet {
-  return remoteBinary(
-    `rule-set:${tag}`,
-    `https://github.com/liblaf/sing-box-rules/raw/rule-sets/${tag}.srs`,
-  );
-}
-
-function remoteBinary(tag: string, url: string): RuleSet {
+function ruleSetRemote(tag: string): RuleSet {
   return {
     type: "remote",
-    tag: tag,
+    tag,
     format: "binary",
-    url: proxy(url),
-    download_detour: OUTBOUND_TAG.DIRECT,
+    url: proxyURL(
+      `https://github.com/liblaf/sing-box-rules/raw/rule-sets/${tag.replace(":", "/")}.srs`,
+    ),
+    download_detour: OutboundTag.DIRECT,
   };
 }

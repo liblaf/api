@@ -6,10 +6,13 @@
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "check": "biome check --write src/",
     "deploy": "wrangler deploy --minify",
-    "dev": "wrangler dev"
+    "dev": "wrangler dev",
+    "tail": "wrangler tail",
+    "vars": "chezmoi execute-template < .dev.vars.tmpl > .dev.vars"
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.15.0",
+    "date-fns": "^3.6.0",
     "grammy": "^1.23.0",
     "hono": "^4.3.8",
     "zod": "^3.23.8"

@@ -1,45 +1,47 @@
-import type { Query } from "../query";
-import { type ClashMode, OUTBOUND_TAG } from "./shared";
+import { arrayIf, objectIf } from "@lib/utils";
+import type { Params } from "../types";
+import { ClashMode, DnsTag, GeoIPTag, GeoSiteTag, OutboundTag } from "./const";
 
 export type DNS = {
-  servers?: DNSServer[];
+  servers?: DNSSever[];
   rules?: DNSRule[];
   final?: string;
+  strategy?: DNSStrategy;
+  disable_cache?: boolean;
+  disable_expire?: boolean;
   independent_cache?: boolean;
+  reverse_mapping?: boolean;
   client_subnet?: string;
   fakeip?: FakeIP;
 };
 
-export type DNSServer = {
+type DNSSever = {
   tag: string;
   address: string;
   address_resolver?: string;
-  address_strategy?: string;
+  address_strategy?: DNSStrategy;
+  strategy?: DNSStrategy;
   detour?: string;
   client_subnet?: string;
 };
 
-export type DNSRule = _DNSRule & {
+type DNSStrategy = "prefer_ipv4" | "prefer_ipv6" | "ipv4_only" | "ipv6_only";
+
+type DNSRule = {
+  // TODO: Add more fields
+  query_type?: string | string[];
+  clash_mode?: string;
+  rule_set?: string | string[];
+  invert?: boolean;
+  outbound?: string | string[];
   server: string;
   disable_cache?: boolean;
   rewrite_ttl?: number;
   client_subnet?: string;
-};
-
-type _DNSRule = DNSRuleDefault | DNSRuleLogical;
-
-type DNSRuleDefault = {
-  query_type?: (number | string)[];
-  clash_mode?: ClashMode;
-  rule_set?: string[];
-  invert?: boolean;
-  outbound?: "any" | string[];
-};
-
-type DNSRuleLogical = {
-  type: "logical";
-  mode: "and" | "or";
-  rules: _DNSRule[];
+  //  logical fields
+  type?: "logical";
+  mode?: "and" | "or";
+  rules?: Omit<DNSRule, "server">[];
 };
 
 type FakeIP = {
@@ -48,68 +50,49 @@ type FakeIP = {
   inet6_range?: string;
 };
 
-export function defaultDNS({ tun }: Query): DNS {
-  const dns: DNS = {
+export function createConfigDNS({ tun }: Params): DNS {
+  return {
     servers: [
       {
-        tag: DNS_TAG.CLOUDFLARE,
+        tag: DnsTag.CLOUDFLARE,
         address: "https://cloudflare-dns.com/dns-query",
-        address_resolver: DNS_TAG.LOCAL,
+        address_resolver: DnsTag.LOCAL,
       },
-      { tag: DNS_TAG.LOCAL, address: "local", detour: OUTBOUND_TAG.DIRECT },
-      { tag: DNS_TAG.REJECT, address: "rcode://success" },
-      ...(tun ? [{ tag: DNS_TAG.FAKEIP, address: "fakeip" }] : []),
+      { tag: DnsTag.LOCAL, address: "local", detour: OutboundTag.DIRECT },
+      { tag: DnsTag.REJECT, address: "rcode://success" },
+      ...arrayIf(tun, { tag: DnsTag.FAKEIP, address: "fakeip" }),
     ],
     rules: [
-      { rule_set: ["geosite:private"], server: DNS_TAG.LOCAL },
-      { outbound: "any", server: DNS_TAG.LOCAL },
-      {
-        rule_set: ["category:ads-all"],
-        server: DNS_TAG.REJECT,
-        disable_cache: true,
-      },
-      { clash_mode: "direct", server: DNS_TAG.LOCAL },
-      { clash_mode: "global", server: DNS_TAG.CLOUDFLARE },
-      ...(tun
-        ? [
-            {
-              query_type: ["A", "AAAA"],
-              server: DNS_TAG.FAKEIP,
-              rewrite_ttl: 1,
-            },
-          ]
-        : []),
-      { rule_set: ["category:ntp"], server: DNS_TAG.LOCAL },
-      { rule_set: ["geosite:geolocation-cn"], server: DNS_TAG.LOCAL },
+      { outbound: "any", server: DnsTag.LOCAL },
+      { rule_set: GeoSiteTag.ADS, server: DnsTag.REJECT, disable_cache: true },
+      { rule_set: GeoSiteTag.PRIVATE, server: DnsTag.LOCAL },
+      ...arrayIf(tun, {
+        query_type: ["A", "AAAA"],
+        server: DnsTag.FAKEIP,
+        rewrite_ttl: 1,
+      }),
+      { clash_mode: ClashMode.DIRECT, server: DnsTag.LOCAL },
+      { clash_mode: ClashMode.GLOBAL, server: DnsTag.CLOUDFLARE },
+      { rule_set: GeoSiteTag.CN, server: DnsTag.LOCAL },
       {
         type: "logical",
         mode: "and",
         rules: [
-          { rule_set: ["geosite:geolocation-!cn"], invert: true },
-          { rule_set: ["geoip:cn"] },
+          { rule_set: GeoSiteTag.PROXY, invert: true },
+          { rule_set: GeoIPTag.CN },
         ],
-        server: DNS_TAG.CLOUDFLARE,
+        server: DnsTag.CLOUDFLARE,
         client_subnet: "101.6.6.6",
       },
     ],
-    final: DNS_TAG.CLOUDFLARE,
+    final: DnsTag.CLOUDFLARE,
     independent_cache: true,
-    ...(tun
-      ? {
-          fakeip: {
-            enabled: true,
-            inet4_range: "198.18.0.0/15",
-            inet6_range: "fc00::/18",
-          },
-        }
-      : {}),
+    ...objectIf(tun, {
+      fakeip: {
+        enabled: true,
+        inet4_range: "198.18.0.0/15",
+        inet6_range: "fc00::/18",
+      },
+    }),
   };
-  return dns;
 }
-
-const DNS_TAG = {
-  CLOUDFLARE: "dns:cloudflare",
-  LOCAL: "dns:local",
-  REJECT: "dns:reject",
-  FAKEIP: "dns:fakeip",
-};
