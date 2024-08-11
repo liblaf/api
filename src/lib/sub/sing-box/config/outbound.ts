@@ -45,8 +45,8 @@ export function createConfigOutbounds(params: Params): Outbound[] {
     {
       type: "direct",
       tag: OutboundTag.DIRECT,
-      tcp_fast_open: true,
-      tcp_multi_path: true,
+      // tcp_fast_open: true,
+      // tcp_multi_path: true,
     },
     { type: "block", tag: OutboundTag.REJECT },
     { type: "dns", tag: OutboundTag.DNS },
