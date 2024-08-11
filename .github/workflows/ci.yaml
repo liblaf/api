@@ -19,17 +19,3 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          secrets: |-
-            BOT_TOKEN
-            IPAPI_IS_KEY
-            MY_CHAT_ID
-            MY_SUB_URLS
-            MY_UUID
-            PROXYCHECK_IO_KEY
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          IPAPI_IS_KEY: ${{ secrets.IPAPI_IS_KEY }}
-          MY_CHAT_ID: ${{ secrets.MY_CHAT_ID }}
-          MY_SUB_URLS: ${{ secrets.MY_SUB_URLS }}
-          MY_UUID: ${{ secrets.MY_UUID }}
-          PROXYCHECK_IO_KEY: ${{ secrets.PROXYCHECK_IO_KEY }}
