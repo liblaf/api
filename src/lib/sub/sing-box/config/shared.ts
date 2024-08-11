@@ -5,6 +5,7 @@ export type ListenFields = {
   tcp_fast_open?: boolean;
   tcp_multi_path?: boolean;
   sniff?: boolean;
+  domain_strategy?: DomainStrategy;
 };
 
 export type DialFields = {
@@ -12,3 +13,9 @@ export type DialFields = {
   tcp_fast_open?: boolean;
   tcp_multi_path?: boolean;
 };
+
+export type DomainStrategy =
+  | "prefer_ipv4"
+  | "prefer_ipv6"
+  | "ipv4_only"
+  | "ipv6_only";

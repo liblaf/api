@@ -11,20 +11,18 @@ type InboundBase = {
 
 // TODO: Add more fields
 
-type InboundMixed = InboundBase &
-  ListenFields & {
-    type: "mixed";
-    listen: string;
-  };
+type InboundMixed = InboundBase & {
+  type: "mixed";
+  listen: string;
+} & ListenFields;
 
-type InboundTUN = InboundBase &
-  ListenFields & {
-    type: "tun";
-    inet4_address?: string | string[];
-    inet6_address?: string | string[];
-    auto_route?: boolean;
-    strict_route?: boolean;
-  };
+type InboundTUN = InboundBase & {
+  type: "tun";
+  inet4_address?: string | string[];
+  inet6_address?: string | string[];
+  auto_route?: boolean;
+  strict_route?: boolean;
+} & ListenFields;
 
 export function createConfigInbounds({ tun, mixed, port }: Params): Inbound[] {
   return [
@@ -36,6 +34,7 @@ export function createConfigInbounds({ tun, mixed, port }: Params): Inbound[] {
       auto_route: true,
       strict_route: true,
       sniff: true,
+      domain_strategy: "prefer_ipv4",
     } satisfies InboundTUN),
     ...arrayIf(mixed, {
       type: "mixed",
@@ -43,6 +42,7 @@ export function createConfigInbounds({ tun, mixed, port }: Params): Inbound[] {
       listen: "0.0.0.0",
       listen_port: port,
       sniff: true,
+      domain_strategy: "prefer_ipv4",
     } satisfies InboundMixed),
   ];
 }

@@ -1,12 +1,13 @@
 import { arrayIf, objectIf } from "@lib/utils";
 import type { Params } from "../types";
 import { ClashMode, DnsTag, GeoIPTag, GeoSiteTag, OutboundTag } from "./const";
+import type { DomainStrategy } from "./shared";
 
 export type DNS = {
   servers?: DNSSever[];
   rules?: DNSRule[];
   final?: string;
-  strategy?: DNSStrategy;
+  strategy?: DomainStrategy;
   disable_cache?: boolean;
   disable_expire?: boolean;
   independent_cache?: boolean;
@@ -19,13 +20,11 @@ type DNSSever = {
   tag: string;
   address: string;
   address_resolver?: string;
-  address_strategy?: DNSStrategy;
-  strategy?: DNSStrategy;
+  address_strategy?: DomainStrategy;
+  strategy?: DomainStrategy;
   detour?: string;
   client_subnet?: string;
 };
-
-type DNSStrategy = "prefer_ipv4" | "prefer_ipv6" | "ipv4_only" | "ipv6_only";
 
 type DNSRule = {
   // TODO: Add more fields
