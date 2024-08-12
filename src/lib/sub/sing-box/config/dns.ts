@@ -100,7 +100,15 @@ function createRules({ tun }: Query): DNSRule[] {
     }),
     { clash_mode: ClashMode.DIRECT, server: DnsTag.CN },
     { clash_mode: ClashMode.GLOBAL, server: DnsTag.PROXY },
-    { rule_set: GeoSiteTag.CN, server: DnsTag.CN },
+    {
+      type: "logical",
+      mode: "and",
+      rules: [
+        { rule_set: GeoSiteTag.PROXY, invert: true },
+        { rule_set: GeoSiteTag.CN },
+      ],
+      server: DnsTag.CN,
+    },
     {
       type: "logical",
       mode: "and",
