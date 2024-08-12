@@ -72,9 +72,9 @@ function createServers({
   tun,
 }: Query): DNSSever[] {
   // ref: <https://thu.services/services/#dns>
-  if (!bootstrap) bootstrap = "123.125.81.6"; // 360
-  if (!cn) cn = "https://dns.alidns.com/dns-query";
-  if (!proxy) proxy = "https://cloudflare-dns.com/dns-query";
+  bootstrap ||= "123.125.81.6"; // 360
+  cn ||= "https://dns.alidns.com/dns-query";
+  proxy ||= "https://cloudflare-dns.com/dns-query";
   const servers: DNSSever[] = [
     { tag: DnsTag.PROXY, address: proxy, address_resolver: DnsTag.BOOTSTRAP },
     { tag: DnsTag.CN, address: cn, address_resolver: DnsTag.BOOTSTRAP },
