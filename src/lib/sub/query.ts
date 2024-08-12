@@ -1,6 +1,6 @@
 import { coerceBoolean, preprocessArray } from "@lib/zod";
 import { z } from "zod";
-import { FLAGS } from "../filter/infer/country";
+import { FLAGS } from "./filter/infer/country";
 import {
   aiFilter,
   autoFilter,
@@ -8,9 +8,9 @@ import {
   downloadFilter,
   embyFilter,
   mediaFilter,
-} from "../filter/smart";
-import type { Filter } from "../filter/types";
-import { OutboundTag } from "./config/const";
+} from "./filter/smart";
+import type { Filter } from "./filter/types";
+import { OutboundTag } from "./sing-box/config/const";
 
 export type Group = {
   name: string;
@@ -26,7 +26,16 @@ export const GROUPS: Record<string, Group> = {
   media: { name: OutboundTag.MEDIA, filter: mediaFilter },
 };
 
-export const PARAMS_SCHEMA = z.object({
+export const QUERY_SCHEMA = z.object({
+  "dns-bootstrap": z.string().optional().openapi({ example: "223.5.5.5" }),
+  "dns-cn": z
+    .string()
+    .optional()
+    .openapi({ example: "https://dns.alidns.com/dns-query" }),
+  "dns-proxy": z
+    .string()
+    .optional()
+    .openapi({ example: "https://cloudflare-dns.com/dns-query" }),
   group: z.preprocess(
     preprocessArray,
     z
@@ -44,4 +53,4 @@ export const PARAMS_SCHEMA = z.object({
   tun: coerceBoolean().default(false),
 });
 
-export type Params = z.infer<typeof PARAMS_SCHEMA>;
+export type Query = z.infer<typeof QUERY_SCHEMA>;

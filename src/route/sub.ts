@@ -1,9 +1,9 @@
 import { createRoute } from "@hono/zod-openapi";
 import { createApp } from "@lib/app";
-import { getProviders } from "@lib/sub/kv";
+import { getConfig, getProviders } from "@lib/sub/kv";
 import { SUBSCRIPTION_USER_INFO_SCHEMA } from "@lib/sub/provider/types";
+import { QUERY_SCHEMA } from "@lib/sub/query";
 import { generate } from "@lib/sub/sing-box/gen";
-import { PARAMS_SCHEMA } from "@lib/sub/sing-box/types";
 import { z } from "zod";
 
 const app = createApp();
@@ -54,7 +54,7 @@ app.openapi(
     path: "/{id}/sing-box",
     request: {
       params: z.object({ id: z.string() }),
-      query: PARAMS_SCHEMA,
+      query: QUERY_SCHEMA,
     },
     responses: {
       200: {
@@ -68,8 +68,8 @@ app.openapi(
   }),
   async (c) => {
     const { id } = c.req.valid("param");
-    const query = c.req.valid("query");
-    const providers = await getProviders(c.env, id);
+    const queryRaw = c.req.valid("query");
+    const { providers, query } = await getConfig(c.env, id, queryRaw);
     if (!providers) return c.notFound();
     const config = await generate(providers, query);
     return c.json(config);

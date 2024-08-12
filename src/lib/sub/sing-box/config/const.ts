@@ -5,9 +5,11 @@ export enum ClashMode {
 }
 
 export enum DnsTag {
-  CLOUDFLARE = "dns:cloudflare",
+  BOOTSTRAP = "dns:bootstrap",
+  CN = "dns:cn",
   FAKEIP = "dns:fakeip",
   LOCAL = "dns:local",
+  PROXY = "dns:proxy",
   REJECT = "dns:reject",
 }
 

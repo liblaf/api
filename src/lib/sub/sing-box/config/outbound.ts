@@ -1,4 +1,4 @@
-import type { Params } from "../types";
+import type { Query } from "../../query";
 import { OutboundTag } from "./const";
 import type { DialFields } from "./shared";
 
@@ -40,14 +40,9 @@ export type OutboundURLTest = OutboundBase & {
   interrupt_exist_connections?: boolean;
 };
 
-export function createConfigOutbounds(params: Params): Outbound[] {
+export function createConfigOutbounds(query: Query): Outbound[] {
   return [
-    {
-      type: "direct",
-      tag: OutboundTag.DIRECT,
-      // tcp_fast_open: true,
-      // tcp_multi_path: true,
-    },
+    { type: "direct", tag: OutboundTag.DIRECT },
     { type: "block", tag: OutboundTag.REJECT },
     { type: "dns", tag: OutboundTag.DNS },
   ];

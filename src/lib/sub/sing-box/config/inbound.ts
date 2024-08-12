@@ -1,5 +1,5 @@
 import { arrayIf } from "@lib/utils";
-import type { Params } from "../types";
+import type { Query } from "../../query";
 import type { ListenFields } from "./shared";
 
 export type Inbound = InboundBase | InboundMixed | InboundTUN;
@@ -24,7 +24,7 @@ type InboundTUN = InboundBase & {
   strict_route?: boolean;
 } & ListenFields;
 
-export function createConfigInbounds({ tun, mixed, port }: Params): Inbound[] {
+export function createConfigInbounds({ tun, mixed, port }: Query): Inbound[] {
   return [
     ...arrayIf(tun, {
       type: "tun",

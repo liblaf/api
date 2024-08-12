@@ -1,5 +1,5 @@
 import { proxyURL } from "@lib/utils";
-import type { Params } from "../types";
+import type { Query } from "../../query";
 import {
   ClashMode,
   GeoIPTag,
@@ -44,7 +44,7 @@ type RuleSetRemote = {
   update_interval?: string;
 };
 
-export function createConfigRoute(params: Params): Route {
+export function createConfigRoute(query: Query): Route {
   return {
     rules: [
       {

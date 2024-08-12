@@ -1,18 +1,18 @@
 import { FLAGS } from "../filter/infer/country";
 import { createCountryFilter } from "../filter/smart";
 import type { Provider } from "../provider/provider";
+import { GROUPS, type Group, type Query } from "../query";
 import { type SingBoxConfig, createConfig } from "./config";
 import { OutboundTag } from "./config/const";
 import type { OutboundSelector, OutboundURLTest } from "./config/outbound";
-import { GROUPS, type Group, type Params } from "./types";
 
 export async function generate(
   providers: Provider[],
-  params: Params,
+  query: Query,
 ): Promise<SingBoxConfig> {
-  const config = createConfig(params);
+  const config = createConfig(query);
   const groups: Group[] = [];
-  for (const g of params.group) {
+  for (const g of query.group) {
     switch (g) {
       case "countries":
         for (const c in FLAGS)

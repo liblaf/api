@@ -1,5 +1,5 @@
 import { proxyURL } from "@lib/utils";
-import type { Params } from "../types";
+import type { Query } from "../../query";
 import { ClashMode, OutboundTag } from "./const";
 
 export type Experimental = {
@@ -25,7 +25,7 @@ type ClashAPI = {
   default_mode?: string;
 };
 
-export function createConfigExperimental({ tun }: Params): Experimental {
+export function createConfigExperimental({ tun }: Query): Experimental {
   return {
     cache_file: {
       enabled: true,

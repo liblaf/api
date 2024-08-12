@@ -1,4 +1,4 @@
-import type { Params } from "../types";
+import type { Query } from "../../query";
 
 export type Log = {
   disabled?: boolean;
@@ -7,7 +7,7 @@ export type Log = {
   timestamp?: boolean;
 };
 
-export function createConfigLog(params: Params): Log {
+export function createConfigLog(query: Query): Log {
   return {
     disabled: false,
     level: "warn",

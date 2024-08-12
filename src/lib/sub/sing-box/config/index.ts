@@ -1,4 +1,4 @@
-import type { Params } from "../types";
+import type { Query } from "../../query";
 import { type DNS, createConfigDNS } from "./dns";
 import { type Experimental, createConfigExperimental } from "./experimental";
 import { type Inbound, createConfigInbounds } from "./inbound";
@@ -16,13 +16,13 @@ export type SingBoxConfig = {
   experimental?: Experimental;
 };
 
-export function createConfig(params: Params): SingBoxConfig {
+export function createConfig(query: Query): SingBoxConfig {
   return {
-    log: createConfigLog(params),
-    dns: createConfigDNS(params),
-    inbounds: createConfigInbounds(params),
-    outbounds: createConfigOutbounds(params),
-    route: createConfigRoute(params),
-    experimental: createConfigExperimental(params),
+    log: createConfigLog(query),
+    dns: createConfigDNS(query),
+    inbounds: createConfigInbounds(query),
+    outbounds: createConfigOutbounds(query),
+    route: createConfigRoute(query),
+    experimental: createConfigExperimental(query),
   };
 }

@@ -1,5 +1,5 @@
 import { arrayIf, objectIf } from "@lib/utils";
-import type { Params } from "../types";
+import type { Query } from "../../query";
 import { ClashMode, DnsTag, GeoIPTag, GeoSiteTag, OutboundTag } from "./const";
 import type { DomainStrategy } from "./shared";
 
@@ -49,44 +49,13 @@ type FakeIP = {
   inet6_range?: string;
 };
 
-export function createConfigDNS({ tun }: Params): DNS {
+export function createConfigDNS(query: Query): DNS {
   return {
-    servers: [
-      {
-        tag: DnsTag.CLOUDFLARE,
-        address: "https://cloudflare-dns.com/dns-query",
-        address_resolver: DnsTag.LOCAL,
-      },
-      { tag: DnsTag.LOCAL, address: "local", detour: OutboundTag.DIRECT },
-      { tag: DnsTag.REJECT, address: "rcode://success" },
-      ...arrayIf(tun, { tag: DnsTag.FAKEIP, address: "fakeip" }),
-    ],
-    rules: [
-      { outbound: "any", server: DnsTag.LOCAL },
-      { rule_set: GeoSiteTag.ADS, server: DnsTag.REJECT, disable_cache: true },
-      { rule_set: GeoSiteTag.PRIVATE, server: DnsTag.LOCAL },
-      ...arrayIf(tun, {
-        query_type: ["A", "AAAA"],
-        server: DnsTag.FAKEIP,
-        rewrite_ttl: 1,
-      }),
-      { clash_mode: ClashMode.DIRECT, server: DnsTag.LOCAL },
-      { clash_mode: ClashMode.GLOBAL, server: DnsTag.CLOUDFLARE },
-      { rule_set: GeoSiteTag.CN, server: DnsTag.LOCAL },
-      {
-        type: "logical",
-        mode: "and",
-        rules: [
-          { rule_set: GeoSiteTag.PROXY, invert: true },
-          { rule_set: GeoIPTag.CN },
-        ],
-        server: DnsTag.CLOUDFLARE,
-        client_subnet: "101.6.6.6",
-      },
-    ],
-    final: DnsTag.CLOUDFLARE,
+    servers: createServers(query),
+    rules: createRules(query),
+    final: DnsTag.PROXY,
     independent_cache: true,
-    ...objectIf(tun, {
+    ...objectIf(query.tun, {
       fakeip: {
         enabled: true,
         inet4_range: "198.18.0.0/15",
@@ -94,4 +63,54 @@ export function createConfigDNS({ tun }: Params): DNS {
       },
     }),
   };
+}
+
+function createServers({
+  "dns-bootstrap": bootstrap,
+  "dns-cn": cn,
+  "dns-proxy": proxy,
+  tun,
+}: Query): DNSSever[] {
+  // ref: <https://thu.services/services/#dns>
+  if (!bootstrap) bootstrap = "123.125.81.6"; // 360
+  if (!cn) cn = "https://dns.alidns.com/dns-query";
+  if (!proxy) proxy = "https://cloudflare-dns.com/dns-query";
+  const servers: DNSSever[] = [
+    { tag: DnsTag.PROXY, address: proxy, address_resolver: DnsTag.BOOTSTRAP },
+    { tag: DnsTag.CN, address: cn, address_resolver: DnsTag.BOOTSTRAP },
+    { tag: DnsTag.BOOTSTRAP, address: bootstrap, detour: OutboundTag.DIRECT },
+  ];
+  servers.push(
+    { tag: DnsTag.LOCAL, address: "local" },
+    { tag: DnsTag.REJECT, address: "rcode://refused" },
+  );
+  if (tun) servers.push({ tag: DnsTag.FAKEIP, address: "fakeip" });
+  return servers;
+}
+
+function createRules({ tun }: Query): DNSRule[] {
+  const rules: DNSRule[] = [
+    { outbound: "any", server: DnsTag.BOOTSTRAP },
+    { rule_set: GeoSiteTag.ADS, server: DnsTag.REJECT, disable_cache: true },
+    { rule_set: GeoSiteTag.PRIVATE, server: DnsTag.LOCAL },
+    ...arrayIf(tun, {
+      query_type: ["A", "AAAA"],
+      server: DnsTag.FAKEIP,
+      rewrite_ttl: 1,
+    }),
+    { clash_mode: ClashMode.DIRECT, server: DnsTag.CN },
+    { clash_mode: ClashMode.GLOBAL, server: DnsTag.PROXY },
+    { rule_set: GeoSiteTag.CN, server: DnsTag.CN },
+    {
+      type: "logical",
+      mode: "and",
+      rules: [
+        { rule_set: GeoSiteTag.PROXY, invert: true },
+        { rule_set: GeoIPTag.CN },
+      ],
+      server: DnsTag.PROXY,
+      client_subnet: "101.6.6.6",
+    },
+  ];
+  return rules;
 }
