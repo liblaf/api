@@ -71,7 +71,15 @@ export function createConfigRoute(query: Query): Route {
         ],
         outbound: OutboundTag.REJECT,
       },
-      { rule_set: RuleSetTag.CN, outbound: OutboundTag.DIRECT },
+      {
+        type: "logical",
+        mode: "and",
+        rules: [
+          { rule_set: RuleSetTag.PROXY, invert: true },
+          { rule_set: RuleSetTag.CN },
+        ],
+        outbound: OutboundTag.DIRECT,
+      },
       { rule_set: RuleSetTag.AI, outbound: OutboundTag.AI },
       { rule_set: RuleSetTag.EMBY, outbound: OutboundTag.EMBY },
       { rule_set: RuleSetTag.DOWNLOAD, outbound: OutboundTag.DOWNLOAD },
