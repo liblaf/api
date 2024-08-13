@@ -104,13 +104,21 @@ function ruleSets(): RuleSet[] {
 }
 
 function ruleSetRemote(tag: string): RuleSet {
+  switch (tag) {
+    default:
+      return ruleSetRemoteBinary(
+        tag,
+        `https://github.com/liblaf/sing-box-rules/raw/rule-sets/${tag.replace(":", "/")}.srs`,
+      );
+  }
+}
+
+function ruleSetRemoteBinary(tag: string, url: string): RuleSet {
   return {
     type: "remote",
     tag,
     format: "binary",
-    url: proxyURL(
-      `https://github.com/liblaf/sing-box-rules/raw/rule-sets/${tag.replace(":", "/")}.srs`,
-    ),
+    url: proxyURL(url),
     download_detour: OutboundTag.DIRECT,
   };
 }

@@ -27,12 +27,12 @@ export const GROUPS: Record<string, Group> = {
 };
 
 export const QUERY_SCHEMA = z.object({
-  "dns-bootstrap": z.string().optional().openapi({ example: "223.5.5.5" }),
-  "dns-cn": z
+  "dns.bootstrap": z.string().optional().openapi({ example: "223.5.5.5" }),
+  "dns.cn": z
     .string()
     .optional()
     .openapi({ example: "https://dns.alidns.com/dns-query" }),
-  "dns-proxy": z
+  "dns.proxy": z
     .string()
     .optional()
     .openapi({ example: "https://cloudflare-dns.com/dns-query" }),
@@ -49,6 +49,7 @@ export const QUERY_SCHEMA = z.object({
       .default(["auto", "ai", "download", "emby", "media", "countries"]),
   ),
   mixed: coerceBoolean().default(true),
+  platform: z.enum(["linux", "ios"]).default("linux"),
   port: z.coerce.number().int().min(0).max(65535).default(44393),
   tun: coerceBoolean().default(false),
 });

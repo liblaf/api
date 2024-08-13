@@ -5,6 +5,7 @@ export type ListenFields = {
   tcp_fast_open?: boolean;
   tcp_multi_path?: boolean;
   sniff?: boolean;
+  sniff_override_destination?: boolean;
   domain_strategy?: DomainStrategy;
 };
 

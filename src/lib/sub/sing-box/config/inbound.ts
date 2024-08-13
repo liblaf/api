@@ -34,15 +34,13 @@ export function createConfigInbounds({ tun, mixed, port }: Query): Inbound[] {
       auto_route: true,
       strict_route: true,
       sniff: true,
-      domain_strategy: "prefer_ipv4",
+      sniff_override_destination: true,
     } satisfies InboundTUN),
     ...arrayIf(mixed, {
       type: "mixed",
       tag: "in:mixed",
       listen: "0.0.0.0",
       listen_port: port,
-      sniff: true,
-      domain_strategy: "prefer_ipv4",
     } satisfies InboundMixed),
   ];
 }

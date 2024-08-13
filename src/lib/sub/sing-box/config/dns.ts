@@ -66,13 +66,14 @@ export function createConfigDNS(query: Query): DNS {
 }
 
 function createServers({
-  "dns-bootstrap": bootstrap,
-  "dns-cn": cn,
-  "dns-proxy": proxy,
+  "dns.bootstrap": bootstrap,
+  "dns.cn": cn,
+  "dns.proxy": proxy,
+  platform,
   tun,
 }: Query): DNSSever[] {
   // ref: <https://thu.services/services/#dns>
-  bootstrap ||= "123.125.81.6"; // 360
+  bootstrap ||= "223.5.5.5";
   cn ||= "https://dns.alidns.com/dns-query";
   proxy ||= "https://cloudflare-dns.com/dns-query";
   const servers: DNSSever[] = [
@@ -81,16 +82,24 @@ function createServers({
     { tag: DnsTag.BOOTSTRAP, address: bootstrap, detour: OutboundTag.DIRECT },
   ];
   servers.push(
-    { tag: DnsTag.LOCAL, address: "local" },
+    {
+      tag: DnsTag.LOCAL,
+      address: platform === "ios" ? "local" : "dhcp://auto",
+    },
     { tag: DnsTag.REJECT, address: "rcode://refused" },
   );
   if (tun) servers.push({ tag: DnsTag.FAKEIP, address: "fakeip" });
   return servers;
 }
 
-function createRules({ tun }: Query): DNSRule[] {
+function createRules({ platform, tun }: Query): DNSRule[] {
   const rules: DNSRule[] = [
-    { outbound: "any", server: DnsTag.BOOTSTRAP },
+    ...arrayIf(platform === "ios", {
+      query_type: ["A", "AAAA"],
+      invert: true,
+      server: DnsTag.BOOTSTRAP,
+    }),
+    { outbound: "any", server: DnsTag.LOCAL },
     { rule_set: GeoSiteTag.ADS, server: DnsTag.REJECT, disable_cache: true },
     { rule_set: GeoSiteTag.PRIVATE, server: DnsTag.LOCAL },
     ...arrayIf(tun, {
@@ -98,7 +107,7 @@ function createRules({ tun }: Query): DNSRule[] {
       server: DnsTag.FAKEIP,
       rewrite_ttl: 1,
     }),
-    { clash_mode: ClashMode.DIRECT, server: DnsTag.CN },
+    { clash_mode: ClashMode.DIRECT, server: DnsTag.LOCAL },
     { clash_mode: ClashMode.GLOBAL, server: DnsTag.PROXY },
     {
       type: "logical",
@@ -107,7 +116,7 @@ function createRules({ tun }: Query): DNSRule[] {
         { rule_set: GeoSiteTag.PROXY, invert: true },
         { rule_set: GeoSiteTag.CN },
       ],
-      server: DnsTag.CN,
+      server: DnsTag.LOCAL,
     },
     {
       type: "logical",
