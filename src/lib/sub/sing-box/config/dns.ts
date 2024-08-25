@@ -1,6 +1,6 @@
 import { arrayIf, objectIf } from "@lib/utils";
 import type { Query } from "../../query";
-import { ClashMode, DnsTag, GeoIPTag, GeoSiteTag, OutboundTag } from "./const";
+import { ClashMode, DnsTag, GeoIPTag, GeoSiteTag } from "./const";
 import type { DomainStrategy } from "./shared";
 
 export type DNS = {
@@ -77,9 +77,7 @@ function createServers({
   cn ||= "https://dns.alidns.com/dns-query";
   proxy ||= "https://cloudflare-dns.com/dns-query";
   const servers: DNSSever[] = [
-    { tag: DnsTag.PROXY, address: proxy, address_resolver: DnsTag.BOOTSTRAP },
-    { tag: DnsTag.CN, address: cn, address_resolver: DnsTag.BOOTSTRAP },
-    { tag: DnsTag.BOOTSTRAP, address: bootstrap, detour: OutboundTag.DIRECT },
+    { tag: DnsTag.PROXY, address: proxy, address_resolver: DnsTag.LOCAL },
   ];
   servers.push(
     {
@@ -109,15 +107,7 @@ function createRules({ platform, tun }: Query): DNSRule[] {
     }),
     { clash_mode: ClashMode.DIRECT, server: DnsTag.LOCAL },
     { clash_mode: ClashMode.GLOBAL, server: DnsTag.PROXY },
-    {
-      type: "logical",
-      mode: "and",
-      rules: [
-        { rule_set: GeoSiteTag.PROXY, invert: true },
-        { rule_set: GeoSiteTag.CN },
-      ],
-      server: DnsTag.LOCAL,
-    },
+    { rule_set: GeoSiteTag.CN, server: DnsTag.LOCAL },
     {
       type: "logical",
       mode: "and",

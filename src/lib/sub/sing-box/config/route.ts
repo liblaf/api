@@ -1,4 +1,3 @@
-import { proxyURL } from "@lib/utils";
 import type { Query } from "../../query";
 import {
   ClashMode,
@@ -71,15 +70,7 @@ export function createConfigRoute(query: Query): Route {
         ],
         outbound: OutboundTag.REJECT,
       },
-      {
-        type: "logical",
-        mode: "and",
-        rules: [
-          { rule_set: RuleSetTag.PROXY, invert: true },
-          { rule_set: RuleSetTag.CN },
-        ],
-        outbound: OutboundTag.DIRECT,
-      },
+      { rule_set: RuleSetTag.CN, outbound: OutboundTag.DIRECT },
       { rule_set: RuleSetTag.AI, outbound: OutboundTag.AI },
       { rule_set: RuleSetTag.EMBY, outbound: OutboundTag.EMBY },
       { rule_set: RuleSetTag.DOWNLOAD, outbound: OutboundTag.DOWNLOAD },
@@ -108,7 +99,7 @@ function ruleSetRemote(tag: string): RuleSet {
     default:
       return ruleSetRemoteBinary(
         tag,
-        `https://github.com/liblaf/sing-box-rules/raw/rule-sets/${tag.replace(":", "/")}.srs`,
+        `https://api.liblaf.me/rule-set/${tag.replace(":", "/")}.srs`,
       );
   }
 }
@@ -118,7 +109,7 @@ function ruleSetRemoteBinary(tag: string, url: string): RuleSet {
     type: "remote",
     tag,
     format: "binary",
-    url: proxyURL(url),
+    url: url,
     download_detour: OutboundTag.DIRECT,
   };
 }
