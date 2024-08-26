@@ -23,7 +23,7 @@ app.doc("/openapi.json", {
 app.onError((err, c) => {
   console.error(err);
   if (err instanceof HTTPException) return err.getResponse();
-  return c.text(err.message, 500);
+  return c.text(`${err}`, 500, { error: `${err}` });
 });
 
 export default app;
