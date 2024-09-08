@@ -1,1 +1,4 @@
+*.js
+*.json
+*.jsonc
 *.ts

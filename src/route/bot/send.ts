@@ -1,19 +1,18 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { createApp } from "@lib/app";
-import { newBot } from "@lib/bot";
+import { createBot } from "@bot/index";
+import { createRoute } from "@hono/zod-openapi";
+import { createApp } from "@utils/app";
+import { z } from "zod";
 
 const app = createApp();
 
 app.openapi(
   createRoute({
     tags: ["Bot"],
-    summary: "Send message to chat",
     method: "post",
-    path: "/{chatId}",
+    path: "/{id}",
+    summary: "Send a message to a chat",
     request: {
-      params: z.object({
-        chatId: z.string().openapi({ example: "1111111111" }),
-      }),
+      params: z.object({ id: z.string().openapi({ example: "1111111111" }) }),
       body: {
         content: {
           "application/json": {
@@ -25,69 +24,63 @@ app.openapi(
         },
       },
     },
-    responses: {
-      200: {
-        description: "OK",
-      },
-    },
+    responses: { 200: { description: "OK" } },
   }),
   async (c) => {
-    const { chatId } = c.req.valid("param");
+    const { id } = c.req.valid("param");
     const { text, parse_mode } = c.req.valid("json");
-    const bot = newBot(c.env);
-    const response = await bot.api.sendMessage(chatId, text, {
+    const bot = createBot(c.env);
+    const response = await bot.api.sendMessage(id, text, {
       parse_mode: parse_mode,
     });
     return c.json(response);
   },
 );
 
-const DNS_RECORD_SCHEMA = z.object({
-  name: z.string().openapi({ example: "example.com" }),
-  content: z.string().openapi({ example: "8.8.8.8" }),
-});
+const DNS_RECORD_ARRAY_SCHEMA = z
+  .array(
+    z.object({
+      name: z.string().openapi({ example: "example.com" }),
+      content: z.string().openapi({ example: "1.1.1.1" }),
+    }),
+  )
+  .default([]);
 
 app.openapi(
   createRoute({
     tags: ["Bot"],
-    summary: "Send DNS update message to chat",
     method: "post",
-    path: "/{chatId}/dns",
+    path: "/{id}/dns",
+    summary: "Send a DNS update message to chat",
     request: {
-      params: z.object({
-        chatId: z.string().openapi({ example: "1111111111" }),
-      }),
+      params: z.object({ id: z.string().openapi({ example: "1111111111" }) }),
       body: {
         content: {
           "application/json": {
             schema: z.object({
-              create: z.array(DNS_RECORD_SCHEMA).default([]),
-              delete: z.array(DNS_RECORD_SCHEMA).default([]),
-              keep: z.array(DNS_RECORD_SCHEMA).default([]),
+              create: DNS_RECORD_ARRAY_SCHEMA,
+              delete: DNS_RECORD_ARRAY_SCHEMA,
+              keep: DNS_RECORD_ARRAY_SCHEMA,
             }),
           },
         },
       },
     },
-    responses: {
-      200: {
-        description: "OK",
-      },
-    },
+    responses: { 200: { description: "OK" } },
   }),
   async (c) => {
-    const { chatId } = c.req.valid("param");
+    const { id } = c.req.valid("param");
     const { create, delete: del, keep } = c.req.valid("json");
-    const bot = newBot(c.env);
-    let message = "<b>🔵 Keep</b> <b>🔴 Delete</b> <b>🟢 Create</b>\n";
+    const bot = createBot(c.env);
+    let text = "";
     for (const record of keep)
-      message += `🔵 <code>${record.name}</code> => <code>${record.content}</code>\n`;
+      text += `📌 <code>${record.name}</code> => <code>${record.content}</code>\n`;
     for (const record of del)
-      message += `🔴 <code>${record.name}</code> => <code>${record.content}</code>\n`;
+      text += `🗑️ <code>${record.name}</code> => <code>${record.content}</code>\n`;
     for (const record of create)
-      message += `🟢 <code>${record.name}</code> => <code>${record.content}</code>\n`;
-    message = message.trim();
-    const response = await bot.api.sendMessage(chatId, message, {
+      text += `🎉 <code>${record.name}</code> => <code>${record.content}</code>\n`;
+    text = text.trim();
+    const response = await bot.api.sendMessage(id, text, {
       parse_mode: "HTML",
     });
     return c.json(response);

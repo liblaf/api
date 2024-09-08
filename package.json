@@ -1,27 +1,26 @@
 {
-  "name": "api",
-  "version": "0.0.0",
-  "type": "module",
+  "name": "hello-cf",
   "scripts": {
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
-    "check": "biome check --write src/",
+    "check": "biome check --write",
     "deploy": "wrangler deploy --minify",
     "dev": "wrangler dev",
-    "tail": "wrangler tail",
-    "vars": "chezmoi execute-template < .dev.vars.tmpl > .dev.vars"
+    "test": "vitest"
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.16.0",
     "date-fns": "^3.6.0",
-    "grammy": "^1.23.0",
-    "hono": "^4.3.8",
-    "zod": "^3.23.8"
+    "grammy": "^1.30.0",
+    "hono": "^4.5.11",
+    "zod": "^3.23.8",
+    "zod_utilz": "^0.8.3"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
-    "@cloudflare/workers-types": "^4.20240512.0",
-    "@eslint/js": "^9.3.0",
-    "globals": "^15.3.0",
-    "wrangler": "^3.47.0"
+    "@cloudflare/vitest-pool-workers": "^0.4.29",
+    "@cloudflare/workers-types": "^4.20240903.0",
+    "vite-tsconfig-paths": "^5.0.1",
+    "vitest": "^2.0.5",
+    "wrangler": "^3.57.2"
   }
 }

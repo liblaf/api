@@ -6,14 +6,16 @@
     "strict": true,
     "skipLibCheck": true,
     "lib": ["ESNext"],
-    "types": ["@cloudflare/workers-types"],
+    "types": ["@cloudflare/workers-types/2023-07-01"],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
 
     "baseUrl": "src",
     "paths": {
-      "@lib/*": ["lib/*"],
-      "@route/*": ["route/*"]
+      "@bot/*": ["bot/*"],
+      "@route/*": ["route/*"],
+      "@sub/*": ["sub/*"],
+      "@utils/*": ["utils/*"]
     }
   }
 }

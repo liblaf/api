@@ -1,6 +1,6 @@
+import { createBot } from "@bot/index";
 import { createRoute } from "@hono/zod-openapi";
-import { createApp } from "@lib/app";
-import { newBot } from "@lib/bot";
+import { createApp } from "@utils/app";
 import { webhookCallback } from "grammy";
 import { z } from "zod";
 
@@ -9,9 +9,9 @@ const app = createApp();
 app.openapi(
   createRoute({
     tags: ["Bot"],
-    summary: "Set Telegram bot webhook",
     method: "get",
     path: "/",
+    summary: "Set Telegram bot webhook",
     responses: {
       200: {
         description: "OK",
@@ -27,9 +27,9 @@ app.openapi(
     },
   }),
   async (c) => {
-    const bot = newBot(c.env);
+    const bot = createBot(c.env);
     const url = c.req.url;
-    await bot.api.setWebhook(c.req.url);
+    await bot.api.setWebhook(url);
     return c.text(url);
   },
 );
@@ -37,9 +37,9 @@ app.openapi(
 app.openapi(
   createRoute({
     tags: ["Bot"],
-    summary: "Telegram bot webhook",
     method: "post",
     path: "/",
+    summary: "Telegram bot webhook",
     responses: {
       200: {
         description: "OK",
@@ -47,10 +47,10 @@ app.openapi(
     },
   }),
   async (c) => {
-    const bot = newBot(c.env);
+    const bot = createBot(c.env);
     const callback = webhookCallback(bot, "cloudflare-mod");
-    const response = callback(c.req.raw);
-    return response;
+    const resp = await callback(c.req.raw);
+    return resp;
   },
 );
 
