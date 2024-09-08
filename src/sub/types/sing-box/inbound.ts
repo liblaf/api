@@ -26,9 +26,9 @@ type InboundTun = InboundBase &
   };
 
 export function configInbounds({
-  "inbound.mixed": mixed,
-  "inbound.mixed.port": port,
-  "inbound.tun": tun,
+  "in.mixed": mixed,
+  "in.mixed.port": port,
+  "in.tun": tun,
 }: SingboxQuery): Inbound[] {
   const inbounds: Inbound[] = [];
   if (mixed) {

@@ -57,7 +57,7 @@ type FakeIP = {
   inet6_range?: string;
 };
 
-export function configDNS({ "inbound.tun": tun }: SingboxQuery): DNS {
+export function configDNS({ "in.tun": tun }: SingboxQuery): DNS {
   const dns: DNS = {
     servers: [
       {

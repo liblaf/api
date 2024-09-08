@@ -7,13 +7,15 @@ import type {
   OutboundURLTest,
 } from "@sub/types/sing-box/outbound";
 import type { SingboxQuery } from "@sub/types/sing-box/query";
+import { applyPreset } from "./preset";
 
 export function genSingbox(
   providers: SingboxProvider[],
   query: SingboxQuery,
 ): Singbox {
-  const config = configSingbox(query);
-  const groups = createGroups(query.group);
+  const q: SingboxQuery = applyPreset(query);
+  const config = configSingbox(q);
+  const groups = createGroups(q.group);
   const proxy: OutboundSelector = {
     type: "selector",
     tag: OutboundTag.PROXY,
