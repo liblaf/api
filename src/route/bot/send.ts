@@ -74,11 +74,11 @@ app.openapi(
     const bot = createBot(c.env);
     let text = "";
     for (const record of keep)
-      text += `📌 <code>${record.name}</code> => <code>${record.content}</code>\n`;
+      text += `🔵 <code>${record.name}</code> => <code>${record.content}</code>\n`;
     for (const record of del)
-      text += `🗑️ <code>${record.name}</code> => <code>${record.content}</code>\n`;
+      text += `🔴 <code>${record.name}</code> => <code>${record.content}</code>\n`;
     for (const record of create)
-      text += `🎉 <code>${record.name}</code> => <code>${record.content}</code>\n`;
+      text += `🟢 <code>${record.name}</code> => <code>${record.content}</code>\n`;
     text = text.trim();
     const response = await bot.api.sendMessage(id, text, {
       parse_mode: "HTML",
