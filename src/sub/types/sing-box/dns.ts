@@ -1,4 +1,3 @@
-import { arrayIf } from "@utils/if";
 import { ClashMode, DnsTag, GeoIPTag, GeoSiteTag, OutboundTag } from "../const";
 import type { SingboxQuery } from "./query";
 import type { DNSStrategy } from "./shared";
@@ -57,14 +56,10 @@ type FakeIP = {
   inet6_range?: string;
 };
 
-export function configDNS({ "in.tun": tun }: SingboxQuery): DNS {
+export function configDNS(query: SingboxQuery): DNS {
   const dns: DNS = {
     servers: [
-      {
-        tag: DnsTag.PROXY,
-        address: "https://cloudflare-dns.com/dns-query",
-        address_resolver: DnsTag.LOCAL,
-      },
+      { tag: DnsTag.PROXY, address: "https://8.8.8.8/dns-query" },
       { tag: DnsTag.LOCAL, address: "local", detour: OutboundTag.DIRECT },
       { tag: DnsTag.REJECT, address: "rcode://refused" },
     ],
@@ -76,7 +71,6 @@ export function configDNS({ "in.tun": tun }: SingboxQuery): DNS {
         disable_cache: true,
       },
       { rule_set: [GeoSiteTag.PRIVATE], server: DnsTag.LOCAL },
-      ...arrayIf(tun, { query_type: ["A", "AAAA"], server: DnsTag.FAKEIP }),
       { clash_mode: ClashMode.DIRECT, server: DnsTag.LOCAL },
       { clash_mode: ClashMode.GLOBAL, server: DnsTag.PROXY },
       { rule_set: [GeoSiteTag.CN], server: DnsTag.LOCAL },
@@ -94,13 +88,5 @@ export function configDNS({ "in.tun": tun }: SingboxQuery): DNS {
     final: DnsTag.PROXY,
     independent_cache: true,
   };
-  if (tun) {
-    dns.servers?.push({ tag: DnsTag.FAKEIP, address: "fakeip" });
-    dns.fakeip = {
-      enabled: true,
-      inet4_range: "198.18.0.0/15",
-      inet6_range: "fc00::/18",
-    };
-  }
   return dns;
 }

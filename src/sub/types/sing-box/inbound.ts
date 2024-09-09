@@ -21,6 +21,7 @@ type InboundTun = InboundBase &
     type: "tun";
     inet4_address?: string; // TODO: deprecated in sing-box 1.10.0
     inet6_address?: string; // TODO: deprecated in sing-box 1.10.0
+    gso?: boolean;
     auto_route?: boolean;
     strict_route?: boolean;
   };
@@ -37,6 +38,8 @@ export function configInbounds({
       tag: "in:mixed",
       listen: "0.0.0.0",
       listen_port: port,
+      sniff: true,
+      sniff_override_destination: true,
     } satisfies InboundMixed);
   }
   if (tun) {
@@ -45,8 +48,11 @@ export function configInbounds({
       tag: "in:tun",
       inet4_address: "172.19.0.1/30",
       inet6_address: "fdfe:dcba:9876::1/126",
+      gso: true,
       auto_route: true,
       strict_route: true,
+      sniff: true,
+      sniff_override_destination: true,
     } satisfies InboundTun);
   }
   return inbounds;
