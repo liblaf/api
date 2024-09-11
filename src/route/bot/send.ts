@@ -10,7 +10,7 @@ app.openapi(
     tags: ["Bot"],
     method: "post",
     path: "/{id}",
-    summary: "Send a message to a chat",
+    summary: "Send a message to chat",
     request: {
       params: z.object({ id: z.string().openapi({ example: "1111111111" }) }),
       body: {
