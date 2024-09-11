@@ -32,21 +32,22 @@ function prettyInfo(info: Info[]): string {
   const message: string = info
     .map((i: Info): string => {
       let item = `<a href="${i.url}"><b>${i.name}</b></a>:`;
-      if (i.info.download !== undefined && i.info.total !== undefined) {
-        const usage: number = i.info.download + (i.info.upload || 0);
-        const ratio: number = usage / i.info.total;
+      const ii: SubscriptionUserinfo = i.info;
+      if (ii.download !== undefined && ii.total !== undefined) {
+        const usage: number = ii.download + (ii.upload || 0);
+        const ratio: number = usage / ii.total;
         const emoji = ratio < 0.6 ? "🟢" : ratio < 0.8 ? "🟡" : "🔴";
-        item += ` ${emoji} ${prettyBytes(usage)} / ${prettyBytes(i.info.total)}`;
+        item += ` ${emoji} ${prettyBytes(usage)} / ${prettyBytes(ii.total)}`;
       }
-      if (i.info.expire) {
-        const expire = new Date(i.info.expire * 1000);
-        const remain: number = i.info.expire * 1000 - Date.now();
+      if (ii.expire) {
+        const expire = new Date(ii.expire * 1000);
+        const remain: number = ii.expire * 1000 - Date.now();
         const days: number = Math.floor(remain / 86400000);
         const emoji = days < 7 ? "🔴" : days < 14 ? "🟡" : "🟢";
         item += ` ${emoji} ${format(expire, "yyyy-MM-dd")}`;
       }
-      if (i.info.reset_day_of_month) item += ` 🔄 ${i.info.reset_day_of_month}`;
-      if (i.info.reset_date) item += ` 🔄 ${i.info.reset_date}`;
+      if (ii.reset_day_of_month) item += ` 🔄 ${ii.reset_day_of_month}`;
+      if (ii.reset_date) item += ` 🔄 ${ii.reset_date}`;
       if (i.error) item += i.error;
       return item;
     })

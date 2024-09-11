@@ -5,8 +5,11 @@ import { SUBSCRIPTION_USERINFO_SCHEMA } from "@sub/types/info";
 import { SINGBOX_QUERY_SCHEMA } from "@sub/types/sing-box/query";
 import { createApp } from "@utils/app";
 import { z } from "zod";
+import appDummy from "./dummy";
 
 const app = createApp();
+
+app.route("/dummy", appDummy);
 
 app.openapi(
   createRoute({
