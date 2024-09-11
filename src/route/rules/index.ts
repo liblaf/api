@@ -24,7 +24,7 @@ app.openapi(
     const { client, type, filename } = c.req.valid("param");
     const url = `https://github.com/liblaf/sing-box-rules/raw/${client}/${type}/${filename}`;
     const origin = await fetchUnsafe(url);
-    return c.body(origin.body);
+    return origin;
   },
 );
 
