@@ -5,6 +5,8 @@
 
 ## Endpoints
 
+Detailed API documentation can be found [here](https://api.liblaf.me).
+
 ### Bot
 
 - `POST /bot/send/{id}`: send a message to chat
