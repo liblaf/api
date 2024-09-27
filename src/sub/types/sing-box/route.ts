@@ -50,16 +50,16 @@ export function configRoute(query: SingboxQuery): Route {
         rules: [{ protocol: ["dns"] }, { port: [53] }],
         outbound: OutboundTag.DNS,
       },
-      {
-        type: "logical",
-        mode: "or",
-        rules: [
-          { port: [853] },
-          { network: "udp", port: [443] },
-          { protocol: ["stun"] },
-        ],
-        outbound: OutboundTag.REJECT,
-      },
+      // {
+      //   type: "logical",
+      //   mode: "or",
+      //   rules: [
+      //     { port: [853] },
+      //     { network: "udp", port: [443] },
+      //     { protocol: ["stun"] },
+      //   ],
+      //   outbound: OutboundTag.REJECT,
+      // },
       { rule_set: [RuleSetTag.ADS], outbound: OutboundTag.REJECT },
       {
         ip_is_private: true,
