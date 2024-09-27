@@ -60,7 +60,11 @@ export function configDNS(query: SingboxQuery): DNS {
   const dns: DNS = {
     servers: [
       { tag: DnsTag.PROXY, address: "https://8.8.8.8/dns-query" },
-      { tag: DnsTag.LOCAL, address: "local", detour: OutboundTag.DIRECT },
+      {
+        tag: DnsTag.LOCAL,
+        address: query.preset?.includes("ios") ? "8.8.8.8" : "local",
+        detour: OutboundTag.DIRECT,
+      },
       { tag: DnsTag.REJECT, address: "rcode://refused" },
     ],
     rules: [
