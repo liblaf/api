@@ -3,31 +3,24 @@ ci:
   autoupdate_commit_msg: "ci(pre-commit): update pre-commit hooks"
   skip:
     - cspell
+    - shellcheck
 repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.6
-    hooks:
-      - id: ruff
-        args:
-          - --fix
-      - id: ruff-format
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.28.0
+    rev: v3.29.0
     hooks:
       - id: commitizen
-  - repo: https://github.com/liblaf/pre-commit-hooks
-    rev: dev
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.10.0
     hooks:
-      - id: prettier
-        exclude: (.*-lock\..*)|(.*\.lock)$
+      - id: shellcheck
+        files: \.(bash|sh|zsh)(\.tmpl)?$
+        types:
+          - text
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
       - id: check-added-large-files
-      - id: check-ast
-      - id: check-builtin-literals
       - id: check-case-conflict
-      - id: check-docstring-first
       - id: check-json
         exclude: tsconfig\.json$
       - id: check-merge-conflict
@@ -36,7 +29,6 @@ repos:
       - id: check-yaml
         args:
           - --unsafe
-      - id: debug-statements
       - id: destroyed-symlinks
       - id: detect-private-key
       - id: end-of-file-fixer
@@ -44,16 +36,29 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.1
+    rev: 0.29.2
     hooks:
       - id: check-github-workflows
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.9.0-1
+    hooks:
+      - id: shfmt
+        files: \.(bash|sh|zsh)(\.tmpl)?$
+        types:
+          - text
+        args:
+          - --write
+          - --simplify
+          - --indent=2
+          - --case-indent
+          - --space-redirects
   - repo: https://github.com/sirosen/texthooks
-    rev: 0.6.6
+    rev: 0.6.7
     hooks:
       - id: fix-ligatures
       - id: fix-spaces
       - id: forbid-bidi-controls
   - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v8.13.1
+    rev: v8.13.3
     hooks:
       - id: cspell
