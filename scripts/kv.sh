@@ -4,7 +4,7 @@ set -o nounset
 set -o pipefail
 
 action="$1"
-id=$(bw get item 'Telegram' | jq --raw-output '.fields.[] | select(.name == "chat_id").value')
+id=$(rbw get --raw Telegram | jq --raw-output '.fields.[] | select(.name == "chat_id").value')
 case "$action" in
   get)
     mkdir --parents --verbose kv

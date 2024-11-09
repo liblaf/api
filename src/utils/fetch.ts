@@ -7,9 +7,9 @@ export async function fetchUnsafe(
 ): Promise<Response> {
   const resp = await fetch(input, { redirect: "follow", ...init });
   if (!resp.ok) {
-    console.error(`Failed to fetch: ${resp.url}`);
+    console.error(`Failed to fetch: ${input}`);
     const res = new Response(resp.body, resp);
-    res.headers.set("X-Error-Url", resp.url);
+    res.headers.set("X-Error-Url", `${input}`);
     throw new HTTPException(resp.status as StatusCode, { res: res });
   }
   return resp;
