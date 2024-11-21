@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.16.0",
+    "@scalar/hono-api-reference": "^0.5.160",
     "date-fns": "^4.0.0",
     "grammy": "^1.30.0",
     "hono": "^4.5.11",
+    "ua-parser-js": "^2.0.0",
     "zod": "^3.23.8",
     "zod_utilz": "^0.8.3"
   },

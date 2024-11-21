@@ -1,6 +1,7 @@
+import { apiReference } from "@scalar/hono-api-reference";
 import { createApp } from "@utils/app";
-import HTML from "@utils/swagger";
 import { HTTPException } from "hono/http-exception";
+import { UAParser } from "ua-parser-js";
 import appBot from "./bot";
 import appProxy from "./proxy";
 import appRules from "./rules";
@@ -20,7 +21,17 @@ app.onError(async (err, c) => {
   return c.text(`${err}`, 500, { "X-Error": `${err}` });
 });
 
-app.get("/", async (c) => c.html(HTML));
+app.get("/", async (c) => {
+  const ua = UAParser(c.req.header("User-Agent"));
+  if (ua.browser.name) return c.redirect("/reference");
+  return c.newResponse(null,204)
+});
+app.get("/reference", apiReference({
+  spec: {
+    url:"/openapi.json"
+  },
+  pageTitle: "liblaf's API Reference"
+}))
 app.route("/bot", appBot);
 app.route("/proxy", appProxy);
 app.route("/rules", appRules);
