@@ -60,7 +60,7 @@ export function configRoute(query: SingboxQuery): Route {
       //   ],
       //   outbound: OutboundTag.REJECT,
       // },
-      { rule_set: [RuleSetTag.ADS], outbound: OutboundTag.REJECT },
+      // { rule_set: [RuleSetTag.ADS], outbound: OutboundTag.REJECT },
       {
         ip_is_private: true,
         rule_set: [RuleSetTag.PRIVATE],
