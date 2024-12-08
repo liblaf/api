@@ -8,7 +8,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@hono/zod-openapi": "^0.16.0",
+    "@hono/zod-openapi": "^0.18.0",
     "@scalar/hono-api-reference": "^0.5.160",
     "date-fns": "^4.0.0",
     "grammy": "^1.30.0",
