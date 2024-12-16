@@ -3,9 +3,9 @@ import { PROFILE_SCHEMA } from "@liblaf/sub-converter";
 
 export async function getProfile(
   kv: KVNamespace,
-  chatId: number,
+  id: number | string,
 ): Promise<Profile | undefined> {
-  const raw = await kv.get(chatId.toString(), "json");
+  const raw = await kv.get(id.toString(), "json");
   if (!raw) return undefined;
   return PROFILE_SCHEMA.parse(raw);
 }

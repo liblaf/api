@@ -1,8 +1,7 @@
-import { createApp } from "@/utils";
+import { createApp, getProfile } from "@/utils";
 import { createRoute } from "@hono/zod-openapi";
 import type { Profile, SubscriptionUserinfo } from "@liblaf/sub-converter";
 import {
-  PROFILE_SCHEMA,
   SUBSCRIPTION_USERINFO_SCHEMA,
   fetchAllInfo,
 } from "@liblaf/sub-converter";
@@ -86,15 +85,5 @@ app.openapi(
     return c.json(cfg);
   },
 );
-
-async function getProfile(
-  kv: KVNamespace,
-  id: string,
-): Promise<Profile | undefined> {
-  const raw = await kv.get(id, "json");
-  if (!raw) return;
-  const profile: Profile = PROFILE_SCHEMA.parse(raw);
-  return profile;
-}
 
 export default app;
