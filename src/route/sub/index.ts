@@ -11,6 +11,7 @@ import {
   TEMPLATE_OPTIONS_SCHEMA,
   fetchSingboxProviders,
   getTemplateFactory,
+  sanitize,
 } from "@liblaf/sub-converter/client/sing-box";
 import { z } from "zod";
 
@@ -81,7 +82,7 @@ app.openapi(
       profile.providers,
     );
     const template = getTemplateFactory(query.preset);
-    const cfg = template(providers, query);
+    const cfg = sanitize(template(providers, query));
     return c.json(cfg);
   },
 );
