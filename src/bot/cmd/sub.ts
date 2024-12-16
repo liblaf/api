@@ -1,50 +1,44 @@
-import {} from "@liblaf/sub-converter";
+import { getProfile } from "@/utils";
+import type { Profile, SubscriptionUserinfo } from "@liblaf/sub-converter";
+import { fetchAllInfo } from "@liblaf/sub-converter";
 import { format } from "date-fns";
 import type { CommandContext, Context } from "grammy";
-type Info = {
-  name: string;
-  url: string;
-  info: SubscriptionUserInfo;
-  error?: string;
-};
 
 export function sub(env: CloudflareBindings) {
   return async (ctx: CommandContext<Context>): Promise<void> => {
-    const profileOpts = (await env.sub.get(
-      ctx.chat.id.toString(),
-      "json",
-    )) as ProfileOptions;
-    if (!profileOpts) {
+    const profile: Profile | undefined = await getProfile(
+      env.KV_SUB,
+      ctx.chat.id,
+    );
+    if (!profile) {
       await ctx.reply("🚫 Profile not found.");
       return;
     }
-    const profile = new Profile(profileOpts);
-    const infos: Info[] = await profile.fetchSubInfo();
+    const infos: SubscriptionUserinfo[] = await fetchAllInfo(profile.providers);
     const message: string = prettyInfo(infos);
     await ctx.reply(message, { parse_mode: "HTML" });
   };
 }
 
-function prettyInfo(info: Info[]): string {
+function prettyInfo(info: SubscriptionUserinfo[]): string {
   const message: string = info
-    .map((i: Info): string => {
+    .map((i: SubscriptionUserinfo): string => {
       let item = `<a href="${i.url}"><b>${i.name}</b></a>:`;
-      const ii: SubscriptionUserinfo = i.info;
-      if (ii.download !== undefined && ii.total !== undefined) {
-        const usage: number = ii.download + (ii.upload || 0);
-        const ratio: number = usage / ii.total;
+      if (i.download !== undefined && i.total !== undefined) {
+        const usage: number = i.download + (i.upload || 0);
+        const ratio: number = usage / i.total;
         const emoji = ratio < 0.6 ? "🟢" : ratio < 0.8 ? "🟡" : "🔴";
-        item += ` ${emoji} ${prettyBytes(usage)} / ${prettyBytes(ii.total)}`;
+        item += ` ${emoji} ${prettyBytes(usage)} / ${prettyBytes(i.total)}`;
       }
-      if (ii.expire) {
-        const expire = new Date(ii.expire * 1000);
-        const remain: number = ii.expire * 1000 - Date.now();
+      if (i.expire) {
+        const expire = new Date(i.expire * 1000);
+        const remain: number = i.expire * 1000 - Date.now();
         const days: number = Math.floor(remain / 86400000);
         const emoji = days < 7 ? "🔴" : days < 14 ? "🟡" : "🟢";
         item += ` ${emoji} ${format(expire, "yyyy-MM-dd")}`;
       }
-      if (ii.reset_day_of_month) item += ` 🔄 ${ii.reset_day_of_month}`;
-      if (ii.reset_date) item += ` 🔄 ${ii.reset_date}`;
+      if (i.reset_day_of_month) item += ` 🔄 ${i.reset_day_of_month}`;
+      if (i.reset_date) item += ` 🔄 ${i.reset_date}`;
       if (i.error) item += i.error;
       return item;
     })
