@@ -8,7 +8,7 @@ export async function fetchUnsafe(
   const resp: Response = await fetch(input, { redirect: "follow", ...init });
   if (!resp.ok) {
     console.error({ input, init, resp });
-    const res: Response = resp.clone();
+    const res: Response = new Response(resp.body, resp);
     res.headers.set("X-Error-Url", `${input}`);
     throw new HTTPException(resp.status as StatusCode, { res: res });
   }

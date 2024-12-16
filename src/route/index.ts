@@ -1,7 +1,9 @@
 import { createApp } from "@/utils";
 import { apiReference } from "@scalar/hono-api-reference";
 import { HTTPException } from "hono/http-exception";
+import inspect from "object-inspect";
 import { UAParser } from "ua-parser-js";
+import appAssets from "./assets";
 import appBot from "./bot";
 import appProxy from "./proxy";
 import appRules from "./rules";
@@ -16,9 +18,9 @@ app.doc("/openapi.json", {
 });
 
 app.onError(async (err, c) => {
-  console.error(err);
+  console.error(inspect(err));
   if (err instanceof HTTPException) return err.getResponse();
-  return c.text(`${err}`, 500, { "X-Error": `${err}` });
+  return c.text(inspect(err), 500);
 });
 
 app.get("/", async (c) => {
@@ -35,6 +37,7 @@ app.get(
   }),
 );
 
+app.route("/assets", appAssets);
 app.route("/bot", appBot);
 app.route("/proxy", appProxy);
 app.route("/rules", appRules);

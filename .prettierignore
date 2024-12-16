@@ -1,2 +1,4 @@
+*-lock.*
 *.js
+*.lock
 *.ts

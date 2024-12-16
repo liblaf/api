@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json",
   "version": "0.2",
   "language": "en",
-  "words": ["geoip", "liblaf", "liblaf's", "tmpl", "utilz"],
+  "words": ["geoip", "liblaf", "liblaf's", "metacubexd", "tmpl", "utilz"],
   "ignorePaths": [
     "**/.cspell.*",
     "**/.git",
