@@ -1,15 +1,20 @@
+import { createApp } from "@/utils";
 import { createRoute } from "@hono/zod-openapi";
-import { genSingbox } from "@sub/gen/sing-box";
-import { getProfile } from "@sub/profile/kv";
-import { SUBSCRIPTION_USERINFO_SCHEMA } from "@sub/types/info";
-import { SINGBOX_QUERY_SCHEMA } from "@sub/types/sing-box/query";
-import { createApp } from "@utils/app";
+import type { Profile, SubscriptionUserinfo } from "@liblaf/sub-converter";
+import {
+  PROFILE_SCHEMA,
+  SUBSCRIPTION_USERINFO_SCHEMA,
+  fetchAllInfo,
+} from "@liblaf/sub-converter";
+import type { Outbound } from "@liblaf/sub-converter/client/sing-box";
+import {
+  TEMPLATE_OPTIONS_SCHEMA,
+  fetchSingboxProviders,
+  getTemplateFactory,
+} from "@liblaf/sub-converter/client/sing-box";
 import { z } from "zod";
-import appDummy from "./dummy";
 
 const app = createApp();
-
-app.route("/dummy", appDummy);
 
 app.openapi(
   createRoute({
@@ -24,12 +29,7 @@ app.openapi(
         content: {
           "application/json": {
             schema: z.object({
-              results: z.array(
-                z.object({
-                  name: z.string(),
-                  info: SUBSCRIPTION_USERINFO_SCHEMA,
-                }),
-              ),
+              results: z.array(SUBSCRIPTION_USERINFO_SCHEMA),
             }),
           },
         },
@@ -39,9 +39,11 @@ app.openapi(
   }),
   async (c) => {
     const { id } = c.req.valid("param");
-    const profile = await getProfile(c.env.sub, id);
+    const profile: Profile | undefined = await getProfile(c.env.KV_SUB, id);
     if (!profile) return await c.notFound();
-    const results = await profile.fetchSubInfo();
+    const results: SubscriptionUserinfo[] = await fetchAllInfo(
+      profile.providers,
+    );
     return c.json({ results });
   },
 );
@@ -54,7 +56,9 @@ app.openapi(
     summary: "Get subscription sing-box config",
     request: {
       params: z.object({ id: z.string() }),
-      query: SINGBOX_QUERY_SCHEMA,
+      query: TEMPLATE_OPTIONS_SCHEMA.extend({
+        preset: z.enum(["default", "ios"]).default("default"),
+      }),
     },
     responses: {
       200: {
@@ -71,12 +75,25 @@ app.openapi(
   async (c) => {
     const { id } = c.req.valid("param");
     const query = c.req.valid("query");
-    const profile = await getProfile(c.env.sub, id);
+    const profile: Profile | undefined = await getProfile(c.env.KV_SUB, id);
     if (!profile) return await c.notFound();
-    const providers = await profile.fetchSingbox();
-    const config = genSingbox(providers, query);
-    return c.json(config);
+    const providers: Map<string, Outbound[]> = await fetchSingboxProviders(
+      profile.providers,
+    );
+    const template = getTemplateFactory(query.preset);
+    const cfg = template(providers, query);
+    return c.json(cfg);
   },
 );
+
+async function getProfile(
+  kv: KVNamespace,
+  id: string,
+): Promise<Profile | undefined> {
+  const raw = await kv.get(id, "json");
+  if (!raw) return;
+  const profile: Profile = PROFILE_SCHEMA.parse(raw);
+  return profile;
+}
 
 export default app;

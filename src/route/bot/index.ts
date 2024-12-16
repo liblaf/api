@@ -1,4 +1,4 @@
-import { createApp } from "@utils/app";
+import { createApp } from "@/utils";
 import appSend from "./send";
 import appWebhook from "./webhook";
 

@@ -1,3 +1,3 @@
-import app from "@route/index";
+import app from "@/route";
 
 export default app;

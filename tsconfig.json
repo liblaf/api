@@ -10,12 +10,10 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
 
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@bot/*": ["bot/*"],
-      "@route/*": ["route/*"],
-      "@sub/*": ["sub/*"],
-      "@utils/*": ["utils/*"]
+      "@": ["src"],
+      "@/*": ["src/*"]
     }
   }
 }

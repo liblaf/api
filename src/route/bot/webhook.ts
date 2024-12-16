@@ -1,6 +1,6 @@
-import { createBot } from "@bot/index";
+import { createBot } from "@/bot";
+import { createApp } from "@/utils";
 import { createRoute } from "@hono/zod-openapi";
-import { createApp } from "@utils/app";
 import { webhookCallback } from "grammy";
 import { z } from "zod";
 

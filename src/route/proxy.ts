@@ -1,5 +1,4 @@
-import { createApp } from "@utils/app";
-import { fetchUnsafe } from "@utils/fetch";
+import { createApp, fetchUnsafe } from "@/utils";
 
 const app = createApp();
 

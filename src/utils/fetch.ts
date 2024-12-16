@@ -5,10 +5,10 @@ export async function fetchUnsafe(
   input: RequestInfo,
   init?: RequestInit<RequestInitCfProperties>,
 ): Promise<Response> {
-  const resp = await fetch(input, { redirect: "follow", ...init });
+  const resp: Response = await fetch(input, { redirect: "follow", ...init });
   if (!resp.ok) {
-    console.error(`Failed to fetch: ${input}`);
-    const res = new Response(resp.body, resp);
+    console.error({ input, init, resp });
+    const res: Response = resp.clone();
     res.headers.set("X-Error-Url", `${input}`);
     throw new HTTPException(resp.status as StatusCode, { res: res });
   }

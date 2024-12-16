@@ -1,13 +1,10 @@
-import { Profile } from "@sub/profile";
-import type { SubscriptionUserinfo } from "@sub/types/info";
-import type { ProfileOptions } from "@sub/types/profile";
+import {} from "@liblaf/sub-converter";
 import { format } from "date-fns";
 import type { CommandContext, Context } from "grammy";
-
 type Info = {
   name: string;
   url: string;
-  info: SubscriptionUserinfo;
+  info: SubscriptionUserInfo;
   error?: string;
 };
 

@@ -1,6 +1,5 @@
+import { createApp, fetchUnsafe } from "@/utils";
 import { createRoute } from "@hono/zod-openapi";
-import { createApp } from "@utils/app";
-import { fetchUnsafe } from "@utils/fetch";
 import { z } from "zod";
 
 const app = createApp();
