@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@hono/zod-openapi':
         specifier: ^0.18.3
-        version: 0.18.3(hono@4.6.14)(zod@3.24.1)
+        version: 0.18.3(hono@4.6.15)(zod@3.24.1)
       '@liblaf/sub-converter':
         specifier: ^0.0.8
         version: 0.0.8(typescript@5.7.2)
       '@scalar/hono-api-reference':
         specifier: ^0.5.164
-        version: 0.5.164(hono@4.6.14)
+        version: 0.5.164(hono@4.6.15)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -25,7 +25,7 @@ importers:
         version: 1.33.0
       hono:
         specifier: ^4.6.14
-        version: 4.6.14
+        version: 4.6.15
       object-inspect:
         specifier: ^1.13.3
         version: 1.13.3
@@ -453,8 +453,8 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
-  hono@4.6.14:
-    resolution: {integrity: sha512-j4VkyUp2xazGJ8eCCLN1Vm/bxdvm/j5ZuU9AIjLu9vapn2M44p9L3Ktr9Vnb2RN2QtcR/wVjZVMlT5k7GJQgPw==}
+  hono@4.6.15:
+    resolution: {integrity: sha512-OiQwvAOAaI2JrABBH69z5rsctHDzFzIKJge0nYXgtzGJ0KftwLWcBXm1upJC23/omNRtnqM0gjRMbtXshPdqhQ==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -813,16 +813,16 @@ snapshots:
 
   '@grammyjs/types@3.17.0': {}
 
-  '@hono/zod-openapi@0.18.3(hono@4.6.14)(zod@3.24.1)':
+  '@hono/zod-openapi@0.18.3(hono@4.6.15)(zod@3.24.1)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.1)
-      '@hono/zod-validator': 0.4.2(hono@4.6.14)(zod@3.24.1)
-      hono: 4.6.14
+      '@hono/zod-validator': 0.4.2(hono@4.6.15)(zod@3.24.1)
+      hono: 4.6.15
       zod: 3.24.1
 
-  '@hono/zod-validator@0.4.2(hono@4.6.14)(zod@3.24.1)':
+  '@hono/zod-validator@0.4.2(hono@4.6.15)(zod@3.24.1)':
     dependencies:
-      hono: 4.6.14
+      hono: 4.6.15
       zod: 3.24.1
 
   '@jridgewell/resolve-uri@3.1.2': {}
@@ -842,10 +842,10 @@ snapshots:
       typescript: 5.7.2
       zod: 3.24.1
 
-  '@scalar/hono-api-reference@0.5.164(hono@4.6.14)':
+  '@scalar/hono-api-reference@0.5.164(hono@4.6.15)':
     dependencies:
       '@scalar/types': 0.0.24
-      hono: 4.6.14
+      hono: 4.6.15
 
   '@scalar/openapi-types@0.1.5': {}
 
@@ -969,7 +969,7 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  hono@4.6.14: {}
+  hono@4.6.15: {}
 
   hookable@5.5.3: {}
 
