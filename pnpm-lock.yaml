@@ -28,7 +28,7 @@ importers:
         version: 4.6.20
       object-inspect:
         specifier: ^1.13.3
-        version: 1.13.3
+        version: 1.13.4
       ua-parser-js:
         specifier: ^2.0.0
         version: 2.0.1
@@ -518,8 +518,8 @@ packages:
       encoding:
         optional: true
 
-  object-inspect@1.13.3:
-    resolution: {integrity: sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA==}
+  object-inspect@1.13.4:
+    resolution: {integrity: sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==}
     engines: {node: '>= 0.4'}
 
   ohash@1.1.4:
@@ -1075,7 +1075,7 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
-  object-inspect@1.13.3: {}
+  object-inspect@1.13.4: {}
 
   ohash@1.1.4: {}
 
