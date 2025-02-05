@@ -12,8 +12,8 @@ importers:
         specifier: ^0.18.3
         version: 0.18.4(hono@4.6.20)(zod@3.24.1)
       '@liblaf/sub-converter':
-        specifier: ^0.0.15
-        version: 0.0.15(typescript@5.7.2)
+        specifier: ^0.0.16
+        version: 0.0.16(typescript@5.7.2)
       '@scalar/hono-api-reference':
         specifier: ^0.5.164
         version: 0.5.171(hono@4.6.20)
@@ -325,8 +325,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@liblaf/sub-converter@0.0.15':
-    resolution: {integrity: sha512-884Ko0kI8Im/7UBSdG5VXp22d8ZZR/QuWVZhURarznpBPm3QKQSr4GxFLKN0G2szWd/aOo+cKA0zFqPET4vxFQ==}
+  '@liblaf/sub-converter@0.0.16':
+    resolution: {integrity: sha512-ZecqTgT8qeZOW+CxonHVCUCU5Udoan/PA9Px7HGCMqbFLBML+6P+bnd6DiI7affa2WHPKLDuH3qbrNFqjwG7tg==}
     peerDependencies:
       typescript: ^5.0.0
 
@@ -882,7 +882,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@liblaf/sub-converter@0.0.15(typescript@5.7.2)':
+  '@liblaf/sub-converter@0.0.16(typescript@5.7.2)':
     dependencies:
       '@liblaf/utils': 0.0.5(typescript@5.7.2)
       date-fns: 4.1.0
