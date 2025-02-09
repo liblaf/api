@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.18.3",
-    "@liblaf/sub-converter": "^0.0.16",
+    "@liblaf/sub-converter": "^0.0.17",
     "@scalar/hono-api-reference": "^0.5.164",
     "date-fns": "^4.1.0",
     "grammy": "^1.33.0",
