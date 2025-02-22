@@ -16,7 +16,7 @@ importers:
         version: 0.0.17(typescript@5.7.2)
       '@scalar/hono-api-reference':
         specifier: ^0.5.164
-        version: 0.5.174(hono@4.7.2)
+        version: 0.5.175(hono@4.7.2)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -443,18 +443,18 @@ packages:
     peerDependencies:
       typescript: ^5.0.0
 
-  '@scalar/hono-api-reference@0.5.174':
-    resolution: {integrity: sha512-1qUGjKxm8hSyIHwYJBPG/9bfgnRQR5JfWYBxHwF43cJrogjfoCUuFiW753KuhmFk4/RPvs5hqnb/u6wbEsdlBA==}
+  '@scalar/hono-api-reference@0.5.175':
+    resolution: {integrity: sha512-jSY/qYFHitFFFsLgvmspDN/Fd3V3nC5Q17XJW/qhLtXX/M4pZUGVZOTLU2GsAueh10J5m7VLPZo+HQL6HC35bg==}
     engines: {node: '>=18'}
     peerDependencies:
       hono: ^4.0.0
 
-  '@scalar/openapi-types@0.1.7':
-    resolution: {integrity: sha512-oOTG3JQifg55U3DhKB7WdNIxFnJzbPJe7rqdyWdio977l8IkxQTVmObftJhdNIMvhV2K+1f/bDoMQGu6yTaD0A==}
+  '@scalar/openapi-types@0.1.8':
+    resolution: {integrity: sha512-iufA5/6hPCmRIVD2eh7qGpoKvoA08Gw/qUb2JECifBtAwA93fo7+1k9uHK440f2LMJsbxIzA+nv7RS0BmfiO/g==}
     engines: {node: '>=18'}
 
-  '@scalar/types@0.0.33':
-    resolution: {integrity: sha512-4mQYkQJO0HHaoFd8Z+vSdQAvYcCJ2bRLN9ewE+GneB8kvoLG/oM3ynroqzGQdoytH8BmhnJwD3aEUagfbK2x5g==}
+  '@scalar/types@0.0.34':
+    resolution: {integrity: sha512-q01ctijmHArM5KOny2zU+sHfhpsgOAENrDENecK2TsQNn5FYLmFZouMKeW2M6F7KFLPZnFxUiL/rT88b6Rp/Kg==}
     engines: {node: '>=18'}
 
   '@types/node-fetch@2.6.12':
@@ -1160,16 +1160,16 @@ snapshots:
       std-env: 3.8.0
       typescript: 5.7.2
 
-  '@scalar/hono-api-reference@0.5.174(hono@4.7.2)':
+  '@scalar/hono-api-reference@0.5.175(hono@4.7.2)':
     dependencies:
-      '@scalar/types': 0.0.33
+      '@scalar/types': 0.0.34
       hono: 4.7.2
 
-  '@scalar/openapi-types@0.1.7': {}
+  '@scalar/openapi-types@0.1.8': {}
 
-  '@scalar/types@0.0.33':
+  '@scalar/types@0.0.34':
     dependencies:
-      '@scalar/openapi-types': 0.1.7
+      '@scalar/openapi-types': 0.1.8
       '@unhead/schema': 1.11.19
 
   '@types/node-fetch@2.6.12':
