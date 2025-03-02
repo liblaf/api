@@ -34,7 +34,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@hono/zod-openapi": "^0.18.3",
+    "@hono/zod-openapi": "^0.19.0",
     "@liblaf/sub-converter": "^0.0.17",
     "@scalar/hono-api-reference": "^0.5.164",
     "date-fns": "^4.1.0",
