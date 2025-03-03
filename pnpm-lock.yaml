@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@hono/zod-openapi':
         specifier: ^0.19.0
-        version: 0.19.0(hono@4.7.2)(zod@3.24.2)
+        version: 0.19.2(hono@4.7.2)(zod@3.24.2)
       '@liblaf/sub-converter':
         specifier: ^0.0.17
         version: 0.0.17(typescript@5.7.2)
@@ -385,15 +385,15 @@ packages:
     peerDependencies:
       vue: ^3.2.0
 
-  '@hono/zod-openapi@0.19.0':
-    resolution: {integrity: sha512-w7uFGKnmKKGaUbFJ9WavhjTKg59uVVGeTO/IqRYSUzwmpBaIPNAbJkzeCpbnG8Y5DzbAfeDk4NJQjkrvJzy0bw==}
+  '@hono/zod-openapi@0.19.2':
+    resolution: {integrity: sha512-lkFa6wdQVgY7d7/m++Ixr3hvKCF5Y+zjTIPM37fex5ylCfX53A/W28gZRDuFZx3aR+noKob7lHfwdk9dURLzxw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       hono: '>=4.3.6'
       zod: 3.*
 
-  '@hono/zod-validator@0.4.2':
-    resolution: {integrity: sha512-1rrlBg+EpDPhzOV4hT9pxr5+xDVmKuz6YJl+la7VCwK6ass5ldyKm5fD+umJdV2zhHD6jROoCCv8NbTwyfhT0g==}
+  '@hono/zod-validator@0.4.3':
+    resolution: {integrity: sha512-xIgMYXDyJ4Hj6ekm9T9Y27s080Nl9NXHcJkOvkXPhubOLj8hZkOL8pDnnXfvCf5xEE8Q4oMFenQUZZREUY2gqQ==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
@@ -2092,14 +2092,14 @@ snapshots:
       '@tanstack/vue-virtual': 3.13.2(vue@3.5.13(typescript@5.7.2))
       vue: 3.5.13(typescript@5.7.2)
 
-  '@hono/zod-openapi@0.19.0(hono@4.7.2)(zod@3.24.2)':
+  '@hono/zod-openapi@0.19.2(hono@4.7.2)(zod@3.24.2)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.3.0(zod@3.24.2)
-      '@hono/zod-validator': 0.4.2(hono@4.7.2)(zod@3.24.2)
+      '@hono/zod-validator': 0.4.3(hono@4.7.2)(zod@3.24.2)
       hono: 4.7.2
       zod: 3.24.2
 
-  '@hono/zod-validator@0.4.2(hono@4.7.2)(zod@3.24.2)':
+  '@hono/zod-validator@0.4.3(hono@4.7.2)(zod@3.24.2)':
     dependencies:
       hono: 4.7.2
       zod: 3.24.2
