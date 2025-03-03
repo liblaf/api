@@ -12,8 +12,8 @@ importers:
         specifier: ^0.19.0
         version: 0.19.2(hono@4.7.2)(zod@3.24.2)
       '@liblaf/sub-converter':
-        specifier: ^0.0.17
-        version: 0.0.17(typescript@5.7.2)
+        specifier: ^0.1.0
+        version: 0.1.2(typescript@5.7.2)
       '@scalar/hono-api-reference':
         specifier: ^0.5.164
         version: 0.5.178(@hyperjump/browser@1.2.0)(hono@4.7.2)(tailwindcss@4.0.9)(typescript@5.7.2)
@@ -564,15 +564,11 @@ packages:
   '@lezer/yaml@1.0.3':
     resolution: {integrity: sha512-GuBLekbw9jDBDhGur82nuwkxKQ+a3W5H0GfaAthDXcAu+XdpS43VlnxA9E9hllkpSP5ellRDKjLLj7Lu9Wr6xA==}
 
-  '@liblaf/sub-converter@0.0.17':
-    resolution: {integrity: sha512-Am+jRDt3lErv2dApHsVbqn/nJUwBeYoEVhF2vhUD8ZMi6FpyPRPtDBv6Z25yBNSERevn8MYqutVaZP75MenKLQ==}
+  '@liblaf/sub-converter@0.1.2':
+    resolution: {integrity: sha512-yUTVLkcGpNmaCceYzlCJWTDQB5fk21tKGdgAeIQ+Q0B3KBo2qs7eDTt4fks7BUeF5QbyqR4BKncVQiFwy8R7xQ==}
+    hasBin: true
     peerDependencies:
-      typescript: ^5.0.0
-
-  '@liblaf/utils@0.0.7':
-    resolution: {integrity: sha512-cUt2iEx6ubDQm/LVfgJOVDB0dbpwkAT9wxUwhYiXUZ6EMlfqpNUIo7PwIk3b3vfRygZBD5sc31/wmHHVhPBgMA==}
-    peerDependencies:
-      typescript: ^5.0.0
+      typescript: ^5.7.3
 
   '@marijn/find-cluster-break@1.0.2':
     resolution: {integrity: sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==}
@@ -910,6 +906,10 @@ packages:
   comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
 
+  commander@13.1.0:
+    resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
+    engines: {node: '>=18'}
+
   confbox@0.1.8:
     resolution: {integrity: sha512-RMtmw0iFkeR4YV+fUOSucriAQNb9g8zFR52MWCtl+cCZOFRNL6zeB395vPzFhEjjn4fMxXudmELnl/KF/WrK6w==}
 
@@ -1169,9 +1169,6 @@ packages:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
 
-  js-base64@3.7.7:
-    resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
-
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
@@ -1195,9 +1192,6 @@ packages:
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
-
-  loupe@3.1.2:
-    resolution: {integrity: sha512-23I4pFZHmAemUnz8WZXbYRSKYj801VDaNv9ETuMh7IrMc7VuVVSo+Z9iLE3ni30+U48iDWfi30d3twAXBYmnCg==}
 
   lowlight@3.3.0:
     resolution: {integrity: sha512-0JNhgFoPvP6U6lE/UdVsSq99tn6DhjjpAj5MxG49ewd2mOBVtwWYIT8ClyABhq198aXXODMU6Ox8DrGy/CpTZQ==}
@@ -1513,8 +1507,8 @@ packages:
   remark-stringify@11.0.0:
     resolution: {integrity: sha512-1OSmLd3awB/t8qdoEOMazZkNsfVTeY4fTsgzcQFdXNq8ToTN4ZGwrMnlda4K6smTFKD+GRV6O48i6Z4iKgPPpw==}
 
-  remeda@2.20.0:
-    resolution: {integrity: sha512-T1qiOhoyzT0RToEbZn+saIkBvOxyFJrd4/Fr5PeR6x53PuGNq88mDAipmYhrsxbI+CmJGFVl/X+hoCkV6J8q/A==}
+  remeda@2.21.0:
+    resolution: {integrity: sha512-ANFqOts3BsvW1MrKOv9SVHG3ly0MzzLa0HIu5qLkiRuEPGPuH9ny3sgd7VdHvC2VOUSN/7RkmabPlAda6JtGgg==}
 
   require-from-string@2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
@@ -1578,9 +1572,6 @@ packages:
   stacktracey@2.1.8:
     resolution: {integrity: sha512-Kpij9riA+UNg7TnphqjH7/CzctQ/owJGNbFkfEeve4Z4uxT5+JapVLFXcsurIfN34gnTWZNJ/f7NMG0E8JDzTw==}
 
-  std-env@3.8.0:
-    resolution: {integrity: sha512-Bc3YwwCB+OzldMxOXJIIvC6cPRWr/LxOp48CdQTOkPyk/t4JWWJbrilwBd7RJzKV8QW7tJkcgAmeuLLJugl5/w==}
-
   stoppable@1.1.0:
     resolution: {integrity: sha512-KXDYZ9dszj6bzvnEMRYvxgeTHU74QBFL54XKtP3nyMuJ81CFYtABZ3bAzL2EdFUaEwJOBOgENyFj3R7oTzDyyw==}
     engines: {node: '>=4', npm: '>=6'}
@@ -1630,8 +1621,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  type-fest@4.33.0:
-    resolution: {integrity: sha512-s6zVrxuyKbbAsSAD5ZPTB77q4YIdRctkTbJ2/Dqlinwz+8ooH2gd+YA7VA6Pa93KML9GockVvoxjZ2vHP+mu8g==}
+  type-fest@4.36.0:
+    resolution: {integrity: sha512-3T/PUdKTCnkUmhQU6FFJEHsLwadsRegktX3TNHk+2JJB9HlA8gp1/VXblXVDI93kSnXF2rdPx0GMbHtJIV2LPg==}
     engines: {node: '>=16'}
 
   type-is@1.6.18:
@@ -2269,24 +2260,14 @@ snapshots:
       '@lezer/highlight': 1.2.1
       '@lezer/lr': 1.4.2
 
-  '@liblaf/sub-converter@0.0.17(typescript@5.7.2)':
+  '@liblaf/sub-converter@0.1.2(typescript@5.7.2)':
     dependencies:
-      '@liblaf/utils': 0.0.7(typescript@5.7.2)
-      date-fns: 4.1.0
-      js-base64: 3.7.7
-      loupe: 3.1.2
-      remeda: 2.20.0
-      typescript: 5.7.2
-      zod: 3.24.2
-
-  '@liblaf/utils@0.0.7(typescript@5.7.2)':
-    dependencies:
-      js-base64: 3.7.7
-      loupe: 3.1.2
+      commander: 13.1.0
       pino: 9.6.0
       pino-pretty: 13.0.0
-      std-env: 3.8.0
+      remeda: 2.21.0
       typescript: 5.7.2
+      zod: 3.24.2
 
   '@marijn/find-cluster-break@1.0.2': {}
 
@@ -2834,6 +2815,8 @@ snapshots:
 
   comma-separated-tokens@2.0.3: {}
 
+  commander@13.1.0: {}
+
   confbox@0.1.8: {}
 
   content-type@1.0.5: {}
@@ -3135,8 +3118,6 @@ snapshots:
 
   joycon@3.1.1: {}
 
-  js-base64@3.7.7: {}
-
   json-schema-traverse@1.0.0: {}
 
   json-stringify-deterministic@1.0.12: {}
@@ -3150,8 +3131,6 @@ snapshots:
   leven@4.0.0: {}
 
   longest-streak@3.1.0: {}
-
-  loupe@3.1.2: {}
 
   lowlight@3.3.0:
     dependencies:
@@ -3713,9 +3692,9 @@ snapshots:
       mdast-util-to-markdown: 2.1.2
       unified: 11.0.5
 
-  remeda@2.20.0:
+  remeda@2.21.0:
     dependencies:
-      type-fest: 4.33.0
+      type-fest: 4.36.0
 
   require-from-string@2.0.2: {}
 
@@ -3793,8 +3772,6 @@ snapshots:
       as-table: 1.0.55
       get-source: 2.0.12
 
-  std-env@3.8.0: {}
-
   stoppable@1.1.0: {}
 
   stringify-entities@4.0.4:
@@ -3836,7 +3813,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  type-fest@4.33.0: {}
+  type-fest@4.36.0: {}
 
   type-is@1.6.18:
     dependencies:
