@@ -26,7 +26,7 @@
     "@biomejs/biome": "1.9.4",
     "@cloudflare/workers-types": "^4.20241216.0",
     "@types/object-inspect": "^1.13.0",
-    "wrangler": "^3.95.0"
+    "wrangler": "^4.0.0"
   },
   "publishConfig": {
     "access": "public",
