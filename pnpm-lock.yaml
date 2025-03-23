@@ -22,7 +22,7 @@ importers:
         version: 4.1.0
       grammy:
         specifier: ^1.33.0
-        version: 1.35.0
+        version: 1.35.1
       hono:
         specifier: ^4.6.14
         version: 4.7.5
@@ -656,8 +656,8 @@ packages:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
 
-  grammy@1.35.0:
-    resolution: {integrity: sha512-Qlu5kVaekL4w5clWSpQcRxwJJoEeU13g8DTALuNbZsDAJuFJNXBuI8EqR6U1m1of7j9NEMQz59sXu+0/KsKjyg==}
+  grammy@1.35.1:
+    resolution: {integrity: sha512-6kNMODaXVj0R+dqYcHqMyjOURsCUFGvVkd7z/dDO1H1cqrGW/kyAFc4oETUKkcyUN/X80N0DchNVuc2JmTPxPQ==}
     engines: {node: ^12.20.0 || >=14.13.1}
 
   has-symbols@1.1.0:
@@ -1398,7 +1398,7 @@ snapshots:
 
   gopd@1.2.0: {}
 
-  grammy@1.35.0:
+  grammy@1.35.1:
     dependencies:
       '@grammyjs/types': 3.19.0
       abort-controller: 3.0.0
