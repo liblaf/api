@@ -13,7 +13,7 @@ importers:
         version: 0.19.2(hono@4.7.5)(zod@3.24.2)
       '@liblaf/sub-converter':
         specifier: ^0.1.0
-        version: 0.1.3(typescript@5.7.2)
+        version: 0.1.4(typescript@5.7.2)
       '@scalar/hono-api-reference':
         specifier: ^0.7.0
         version: 0.7.2(hono@4.7.5)
@@ -450,8 +450,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@liblaf/sub-converter@0.1.3':
-    resolution: {integrity: sha512-xAN3YuhBNJpm7w6yT6kFYSlAG9Oy7ABRsK2Ef/WVLTzM6GFZenqRJ8S2gbjxJii52RdL7YT1nqPgEDwTH7XAEw==}
+  '@liblaf/sub-converter@0.1.4':
+    resolution: {integrity: sha512-prwWPZWBasP3Q827pqU1PE0Hx0izaQmn1YVkNQ82eyuOCU+l7+bs9j4Cj1F6g0FgwP5/k9JroDZl+68RHOux9g==}
     hasBin: true
     peerDependencies:
       typescript: ^5.7.3
@@ -786,8 +786,8 @@ packages:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
 
-  remeda@2.21.0:
-    resolution: {integrity: sha512-ANFqOts3BsvW1MrKOv9SVHG3ly0MzzLa0HIu5qLkiRuEPGPuH9ny3sgd7VdHvC2VOUSN/7RkmabPlAda6JtGgg==}
+  remeda@2.21.2:
+    resolution: {integrity: sha512-wdhkMDou8HRpD7RnxKJ/FHJWEGXRH7jV/pb0NsdLLSoBo+G9RjtxcY41hVhogLfEMkThk6aySKjs+Yd6PnpzBA==}
 
   safe-stable-stringify@2.5.0:
     resolution: {integrity: sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==}
@@ -839,8 +839,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  type-fest@4.36.0:
-    resolution: {integrity: sha512-3T/PUdKTCnkUmhQU6FFJEHsLwadsRegktX3TNHk+2JJB9HlA8gp1/VXblXVDI93kSnXF2rdPx0GMbHtJIV2LPg==}
+  type-fest@4.37.0:
+    resolution: {integrity: sha512-S/5/0kFftkq27FPNye0XM1e2NsnoD/3FS+pBmbjmmtLT6I+i344KoOf7pvXreaFsDamWeaJX55nczA1m5PsBDg==}
     engines: {node: '>=16'}
 
   typescript@5.7.2:
@@ -1180,12 +1180,12 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@liblaf/sub-converter@0.1.3(typescript@5.7.2)':
+  '@liblaf/sub-converter@0.1.4(typescript@5.7.2)':
     dependencies:
       commander: 13.1.0
       pino: 9.6.0
       pino-pretty: 13.0.0
-      remeda: 2.21.0
+      remeda: 2.21.2
       typescript: 5.7.2
       zod: 3.24.2
 
@@ -1535,9 +1535,9 @@ snapshots:
 
   real-require@0.2.0: {}
 
-  remeda@2.21.0:
+  remeda@2.21.2:
     dependencies:
-      type-fest: 4.36.0
+      type-fest: 4.37.0
 
   safe-stable-stringify@2.5.0: {}
 
@@ -1604,7 +1604,7 @@ snapshots:
   tslib@2.8.1:
     optional: true
 
-  type-fest@4.36.0: {}
+  type-fest@4.37.0: {}
 
   typescript@5.7.2: {}
 
