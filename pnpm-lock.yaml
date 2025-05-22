@@ -15,8 +15,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.4(typescript@5.7.2)
       '@scalar/hono-api-reference':
-        specifier: ^0.7.0
-        version: 0.7.4(hono@4.7.5)
+        specifier: ^0.9.0
+        version: 0.9.1(hono@4.7.5)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -456,23 +456,23 @@ packages:
     peerDependencies:
       typescript: ^5.7.3
 
-  '@scalar/core@0.2.4':
-    resolution: {integrity: sha512-XGrg2P+FrvtzLsDm6TVl1oZv4DYmkFqJ3sI/SS2mjRlfOcblHv2CcrhYTz0+y1nG3cyHlE5esHAK0+BEI032dA==}
-    engines: {node: '>=18'}
+  '@scalar/core@0.3.1':
+    resolution: {integrity: sha512-k5TsihZcSdVnqE6JrRFdsvePDTe2RxjE+1wHdcnyFdIPief+ZdPn2fxCTlN0ozLoe08xlY3N9DHzDaneMpX58Q==}
+    engines: {node: '>=20'}
 
-  '@scalar/hono-api-reference@0.7.4':
-    resolution: {integrity: sha512-Uo2TpPdQbhnDkmTnVeTIXEXL30YY0GvBRgOo6mv1pIzZrYbTSJqxfg9um1/5wXZ6fh6w6GI3Y/tdu0GcMg5fJw==}
-    engines: {node: '>=18'}
+  '@scalar/hono-api-reference@0.9.1':
+    resolution: {integrity: sha512-IO0yPN/dssubWXNWL2xXMF6CsM/lnu56F3J0H/EtqEMT2PYCqvb2+HRbDYa9gwPbiaccZ+Me97HZJdh4pqvFMA==}
+    engines: {node: '>=20'}
     peerDependencies:
       hono: ^4.0.0
 
-  '@scalar/openapi-types@0.1.9':
-    resolution: {integrity: sha512-HQQudOSQBU7ewzfnBW9LhDmBE2XOJgSfwrh5PlUB7zJup/kaRkBGNgV2wMjNz9Af/uztiU/xNrO179FysmUT+g==}
-    engines: {node: '>=18'}
+  '@scalar/openapi-types@0.3.1':
+    resolution: {integrity: sha512-635pb0OIxhhr2yVPwqExOyNh8eo01JLOqXkDvvflHFBaGo7CHvq5sduwriXdplkn2TRNkxdkdy/eNSOMNPVa1A==}
+    engines: {node: '>=20'}
 
-  '@scalar/types@0.1.4':
-    resolution: {integrity: sha512-IAxpfrfdYfliLJR6WbuC8hxUwBUOeVsGuZxQE+zP8JDtdoHmgT6aNxCqMnGZ1ft6dvJ4jvzVR6qCWrq6Kg25oA==}
-    engines: {node: '>=18'}
+  '@scalar/types@0.2.1':
+    resolution: {integrity: sha512-eXcxuwazLABrnCjpqE4tG+FgiCKyHhKxB4V8Bn4Uj/XCBTemRd+WSzXp0mmpGuBbqz820j5UGrlZ5cWlUWaWWw==}
+    engines: {node: '>=20'}
 
   '@types/node-fetch@2.6.12':
     resolution: {integrity: sha512-8nneRWKCg3rMtF69nLQJnOYUcbafYeFSjqkw3jCRLsqkWFlHaoQrr5mXmofFGOx3DKn7UfmBMyov8ySvLRVldA==}
@@ -482,9 +482,6 @@ packages:
 
   '@types/object-inspect@1.13.0':
     resolution: {integrity: sha512-lwGTVESDDV+XsQ1pH4UifpJ1f7OtXzQ6QBOX2Afq2bM/T3oOt8hF6exJMjjIjtEWeAN2YAo25J7HxWh97CCz9w==}
-
-  '@unhead/schema@1.11.20':
-    resolution: {integrity: sha512-0zWykKAaJdm+/Y7yi/Yds20PrUK7XabLe9c3IRcjnwYmSWY6z0Cr19VIs3ozCj8P+GhR+/TI2mwtGlueCEYouA==}
 
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -679,9 +676,6 @@ packages:
     resolution: {integrity: sha512-fDOK5W2C1vZACsgLONigdZTRZxuBqFtcKh7bUQ5cVSbwI2RWjloJDcgFOVzbQrlI6pCmhlTsVYZ7zpLj4m4qMQ==}
     engines: {node: '>=16.9.0'}
 
-  hookable@5.5.3:
-    resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
-
   is-arrayish@0.3.2:
     resolution: {integrity: sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==}
 
@@ -848,10 +842,6 @@ packages:
     resolution: {integrity: sha512-S/5/0kFftkq27FPNye0XM1e2NsnoD/3FS+pBmbjmmtLT6I+i344KoOf7pvXreaFsDamWeaJX55nczA1m5PsBDg==}
     engines: {node: '>=16'}
 
-  type-fest@4.38.0:
-    resolution: {integrity: sha512-2dBz5D5ycHIoliLYLi0Q2V7KRaDlH0uWIvmk7TYlAg5slqwiPv1ezJdZm1QEM0xgk29oYWMCbIG7E6gHpvChlg==}
-    engines: {node: '>=16'}
-
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
@@ -921,11 +911,11 @@ packages:
   youch@3.2.3:
     resolution: {integrity: sha512-ZBcWz/uzZaQVdCvfV4uk616Bbpf2ee+F/AvuKDR5EwX/Y4v06xWdtMluqTD7+KlZdM93lLm9gMZYo0sKBS0pgw==}
 
-  zhead@2.2.4:
-    resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
-
   zod@3.22.3:
     resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
+
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
   zod@3.24.2:
     resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
@@ -1198,24 +1188,24 @@ snapshots:
       typescript: 5.7.2
       zod: 3.24.2
 
-  '@scalar/core@0.2.4':
+  '@scalar/core@0.3.1':
     dependencies:
-      '@scalar/types': 0.1.4
+      '@scalar/types': 0.2.1
 
-  '@scalar/hono-api-reference@0.7.4(hono@4.7.5)':
+  '@scalar/hono-api-reference@0.9.1(hono@4.7.5)':
     dependencies:
-      '@scalar/core': 0.2.4
+      '@scalar/core': 0.3.1
       hono: 4.7.5
 
-  '@scalar/openapi-types@0.1.9': {}
-
-  '@scalar/types@0.1.4':
+  '@scalar/openapi-types@0.3.1':
     dependencies:
-      '@scalar/openapi-types': 0.1.9
-      '@unhead/schema': 1.11.20
+      zod: 3.24.1
+
+  '@scalar/types@0.2.1':
+    dependencies:
+      '@scalar/openapi-types': 0.3.1
       nanoid: 5.1.5
-      type-fest: 4.38.0
-      zod: 3.24.2
+      zod: 3.24.1
 
   '@types/node-fetch@2.6.12':
     dependencies:
@@ -1227,11 +1217,6 @@ snapshots:
       undici-types: 6.20.0
 
   '@types/object-inspect@1.13.0': {}
-
-  '@unhead/schema@1.11.20':
-    dependencies:
-      hookable: 5.5.3
-      zhead: 2.2.4
 
   abort-controller@3.0.0:
     dependencies:
@@ -1433,8 +1418,6 @@ snapshots:
 
   hono@4.7.5: {}
 
-  hookable@5.5.3: {}
-
   is-arrayish@0.3.2:
     optional: true
 
@@ -1619,8 +1602,6 @@ snapshots:
 
   type-fest@4.37.0: {}
 
-  type-fest@4.38.0: {}
-
   typescript@5.7.2: {}
 
   ua-is-frozen@0.1.2: {}
@@ -1696,9 +1677,9 @@ snapshots:
       mustache: 4.2.0
       stacktracey: 2.1.8
 
-  zhead@2.2.4: {}
-
   zod@3.22.3: {}
+
+  zod@3.24.1: {}
 
   zod@3.24.2: {}
 
