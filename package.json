@@ -36,11 +36,13 @@
     "type": "afdian"
   },
   "scripts": {
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "build": "bunup",
+    "cf-typegen": "wrangler types --env example --env-interface CloudflareBindings",
     "deploy": "wrangler deploy --minify",
     "dev": "wrangler dev",
     "lint": "biome check --write",
-    "build": "bunup"
+    "prepack": "npm run build",
+    "prepare": "npm run cf-typegen"
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.19.8",

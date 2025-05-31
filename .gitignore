@@ -135,4 +135,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Cloudflare
+.dev.vars
 .wrangler/
+worker-configuration.d.ts

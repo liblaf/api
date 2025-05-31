@@ -2,9 +2,10 @@ import { createRoute, type OpenAPIHono } from "@hono/zod-openapi";
 import { version } from "../package.json";
 import { Scalar } from "@scalar/hono-api-reference";
 import { UAParser } from "ua-parser-js";
-import { createApp } from "./utils";
+import { createApp, type App } from "./utils";
+import { mihomo } from "./routes";
 
-const app: OpenAPIHono<{ Bindings: CloudflareBindings }> = createApp();
+const app: App = createApp();
 
 app.doc("/openapi.json", {
   info: {
@@ -31,5 +32,7 @@ app.openapi(
     return c.newResponse(null, 204);
   },
 );
+
+mihomo(app);
 
 export default app;
