@@ -1,14 +1,27 @@
 {
-  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json",
-  "version": "0.2",
-  "language": "en",
-  "words": ["geoip", "liblaf", "liblaf's", "metacubexd", "tmpl", "utilz"],
-  "ignorePaths": [
-    "**/.cspell.*",
-    "**/.git",
-    "**/.vscode",
-    "**/*-lock.*",
-    "**/*.lock*"
-  ],
-  "allowCompoundWords": true
+	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json",
+	"version": "0.2",
+	"language": "en",
+	"words": [
+		"afdian",
+		"bunup",
+		"direnv",
+		"dotenv",
+		"jscoverage",
+		"jspm",
+		"liblaf",
+		"nuxt",
+		"pids",
+		"vitepress",
+		"vuepress",
+		"wscript"
+	],
+	"ignorePaths": [
+		"**/.cspell.*",
+		"**/.git",
+		"**/.vscode",
+		"**/*-lock.*",
+		"**/*.lock*"
+	],
+	"allowCompoundWords": true
 }

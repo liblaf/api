@@ -1,4 +1,4 @@
-*-lock.*
-*.js
-*.lock
-*.ts
+**/.manifest.json
+**/*-lock.*
+**/*.lock
+**/*.ts

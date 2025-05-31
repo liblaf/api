@@ -1,15 +1,10 @@
-#:schema node_modules/wrangler/config-schema.json
-name = "api"
-main = "src/index.ts"
-compatibility_date = "2024-09-03"
-compatibility_flags = ["nodejs_compat"]
+#:schema https://www.unpkg.com/wrangler/config-schema.json
 
-[[kv_namespaces]]
-binding = "KV_SUB"
-id = "8b5259fc13f94d85bc4c7bc316198fa1"
+name = "api"
+main = "./src/index.ts"
+compatibility_date = "2025-05-31"
+compatibility_flags = ["nodejs_compat"]
+minify = true
 
 [observability]
 enabled = true
-
-[placement]
-mode = "smart"
