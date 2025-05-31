@@ -41,8 +41,7 @@
     "deploy": "wrangler deploy --minify",
     "dev": "wrangler dev",
     "lint": "biome check --write",
-    "prepack": "npm run build",
-    "prepare": "npm run cf-typegen"
+    "prepack": "npm run cf-typegen && npm run build"
   },
   "dependencies": {
     "@hono/zod-openapi": "^0.19.8",
