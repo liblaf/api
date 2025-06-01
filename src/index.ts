@@ -1,9 +1,9 @@
-import { createRoute, type OpenAPIHono } from "@hono/zod-openapi";
-import { version } from "../package.json";
+import { createRoute } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { UAParser } from "ua-parser-js";
-import { createApp, type App } from "./utils";
-import { mihomo } from "./routes";
+import { version } from "../package.json";
+import { mihomo, rules } from "./routes";
+import { type App, createApp } from "./utils";
 
 const app: App = createApp();
 
@@ -34,5 +34,6 @@ app.openapi(
 );
 
 mihomo(app);
+rules(app);
 
 export default app;

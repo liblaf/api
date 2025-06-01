@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import type { App } from "../utils";
 import { env } from "hono/adapter";
+import type { App } from "../utils";
 
 export function mihomo(app: App): void {
   app.openapi(
