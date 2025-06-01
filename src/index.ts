@@ -1,18 +1,19 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { UAParser } from "ua-parser-js";
-import { version } from "../package.json";
+import { version, description } from "../package.json";
 import { mihomo, rules } from "./routes";
 import { type App, createApp } from "./utils";
 
 const app: App = createApp();
 
 app.doc("/openapi.json", {
+  openapi: "3.0.0",
   info: {
     title: "liblaf's API",
+    description: description,
     version: version,
   },
-  openapi: "3.0.0",
 });
 
 app.get("/reference", Scalar({ url: "/openapi.json" }));
