@@ -9,9 +9,13 @@ export function rules(app: App): void {
       path: "/rules/{platform}/{behavior}/{name}",
       request: {
         params: z.object({
-          platform: z.enum(["mihomo", "sing-box"]),
-          behavior: z.enum(["domain", "ipcidr", "classical"]),
-          name: z.string(),
+          platform: z
+            .enum(["mihomo", "sing-box"])
+            .openapi({ example: "mihomo" }),
+          behavior: z
+            .enum(["domain", "ipcidr", "classical"])
+            .openapi({ example: "domain" }),
+          name: z.string().openapi({ example: "direct.txt" }),
         }),
       },
       responses: {
@@ -32,7 +36,9 @@ export function icons(app: App): void {
       method: "get",
       path: "/icons/{icon}",
       request: {
-        params: z.object({ icon: z.string() }),
+        params: z.object({
+          icon: z.string().openapi({ example: "Proxy.png" }),
+        }),
       },
       responses: {
         200: { description: "OK" },
