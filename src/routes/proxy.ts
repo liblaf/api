@@ -1,5 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import type { App } from "../utils";
+import type { Context } from "hono";
 
 export function rules(app: App): void {
   app.openapi(
@@ -20,8 +21,32 @@ export function rules(app: App): void {
     async (c) => {
       const { platform, behavior, name } = c.req.param();
       const url = `https://raw.githubusercontent.com/liblaf/sub-converter/refs/heads/main/rules/${platform}/${behavior}/${name}`;
-      const resp = await fetch(url, { redirect: "follow" });
-      return c.newResponse(resp.body, resp);
+      return await proxy(c, url);
     },
   );
+}
+
+export function icons(app: App): void {
+  app.openapi(
+    createRoute({
+      method: "get",
+      path: "/icons/{icon}",
+      request: {
+        params: z.object({ icon: z.string() }),
+      },
+      responses: {
+        200: { description: "OK" },
+      },
+    }),
+    async (c) => {
+      const { icon } = c.req.param();
+      const url = `https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/${icon}`;
+      return await proxy(c, url);
+    },
+  );
+}
+
+async function proxy(c: Context, url: string): Promise<Response> {
+  const resp = await fetch(url, { redirect: "follow" });
+  return c.newResponse(resp.body, resp);
 }

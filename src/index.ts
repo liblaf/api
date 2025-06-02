@@ -2,7 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { UAParser } from "ua-parser-js";
 import { version, description } from "../package.json";
-import { mihomo, rules } from "./routes";
+import { icons, mihomo, rules } from "./routes";
 import { type App, createApp } from "./utils";
 
 const app: App = createApp();
@@ -34,6 +34,7 @@ app.openapi(
   },
 );
 
+icons(app);
 mihomo(app);
 rules(app);
 
