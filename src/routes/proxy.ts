@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import type { App } from "../utils";
 import type { Context } from "hono";
+import type { App } from "../utils";
 
 export function rules(app: App): void {
   app.openapi(
