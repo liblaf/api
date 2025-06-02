@@ -1,14 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
-import { cors } from "hono/cors";
 import { UAParser } from "ua-parser-js";
 import { description, version } from "../package.json";
 import { icons, mihomo, rules } from "./routes";
 import { type App, createApp } from "./utils";
 
 const app: App = createApp();
-
-app.use("*", cors());
 
 app.doc("/openapi.json", {
   openapi: "3.0.0",
