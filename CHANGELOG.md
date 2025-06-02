@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.1.0](https://github.com/liblaf/api/compare/v0.0.0..v0.1.0) - 2025-06-01
+
+### 💥 BREAKING CHANGES
+
+- **api:** restructure mihomo subscription endpoint - ([0a64622](https://github.com/liblaf/api/commit/0a6462278033f6a5cc1b987eb83120a69fb2fa48))
+
+### ✨ Features
+
+- **routes:** add rules endpoint for sub-converter - ([a0a33ca](https://github.com/liblaf/api/commit/a0a33ca135338e424d8eb3bb5b0611d2c0518f83))
+
+### 📝 Documentation
+
+- **openapi:** add description and fix spec version - ([21bf689](https://github.com/liblaf/api/commit/21bf689290f3ac695f981c7a0b7cb5f9e5946de2))
+
+### ❤️ New Contributors
+
+- [@liblaf](https://github.com/liblaf) made their first contribution
+- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
+
 ## [0.0.0] - 2025-05-31
 
 ### 💥 BREAKING CHANGES
@@ -180,7 +199,7 @@
 
 ### ❤️ New Contributors
 
+- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution in [#101](https://github.com/liblaf/api/pull/101)
 - [@liblaf](https://github.com/liblaf) made their first contribution
 - [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#88](https://github.com/liblaf/api/pull/88)
-- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
 - [@pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci) made their first contribution in [#4](https://github.com/liblaf/api/pull/4)
