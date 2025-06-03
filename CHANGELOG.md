@@ -1,6 +1,25 @@
 # Changelog
 
-## [0.1.0](https://github.com/liblaf/api/compare/v0.0.0..v0.1.0) - 2025-06-01
+## [0.1.1](https://github.com/liblaf/api/compare/v0.1.0..v0.1.1) - 2025-06-02
+
+### ✨ Features
+
+- **routes:** add icons endpoint and refactor proxy logic - ([ca7f476](https://github.com/liblaf/api/commit/ca7f4761be4b5a03ecbbc584755c52dd60d03a89))
+- enable CORS for all routes - ([e2089cc](https://github.com/liblaf/api/commit/e2089ccb3d778dd05ee484af42b13602c0765df6))
+
+### 📝 Documentation
+
+- **openapi:** add examples to proxy route parameters - ([140b6db](https://github.com/liblaf/api/commit/140b6dbba21b9ddd6accd9808bc8158da0bb62d7))
+
+### ♻ Code Refactoring
+
+- remove unused CORS middleware - ([fb75171](https://github.com/liblaf/api/commit/fb75171a40f2aa13537994a061a35eb01738f25d))
+
+### ❤️ New Contributors
+
+- [@liblaf](https://github.com/liblaf) made their first contribution
+
+## [0.1.0](https://github.com/liblaf/api/compare/v0.0.0..v0.1.0) - 2025-06-02
 
 ### 💥 BREAKING CHANGES
 
@@ -13,11 +32,6 @@
 ### 📝 Documentation
 
 - **openapi:** add description and fix spec version - ([21bf689](https://github.com/liblaf/api/commit/21bf689290f3ac695f981c7a0b7cb5f9e5946de2))
-
-### ❤️ New Contributors
-
-- [@liblaf](https://github.com/liblaf) made their first contribution
-- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
 
 ## [0.0.0] - 2025-05-31
 
