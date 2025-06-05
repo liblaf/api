@@ -4,8 +4,14 @@ import { UAParser } from "ua-parser-js";
 import { description, version } from "../package.json";
 import { icons, mihomo, rules } from "./routes";
 import { type App, createApp } from "./utils";
+import { HTTPException } from "hono/http-exception";
 
 const app: App = createApp();
+
+app.onError(async (err, c): Promise<Response> => {
+  if (err instanceof HTTPException) return err.getResponse();
+  return c.text(`${err}`, 500);
+});
 
 app.doc("/openapi.json", {
   openapi: "3.0.0",
