@@ -1,6 +1,20 @@
 # Changelog
 
-## [0.1.1](https://github.com/liblaf/api/compare/v0.1.0..v0.1.1) - 2025-06-02
+## [0.1.2](https://github.com/liblaf/api/compare/v0.1.1..v0.1.2) - 2025-06-05
+
+### ✨ Features
+
+- add global error handler middleware - ([2edd387](https://github.com/liblaf/api/commit/2edd387e68fa21db1a6366c62e436f9939c96c71))
+
+### ♻ Code Refactoring
+
+- **proxy:** use hono/proxy instead of custom implementation - ([d9289ff](https://github.com/liblaf/api/commit/d9289ffb8b0db9f4e5450b9ce0e75ee6ad9fd712))
+
+### ❤️ New Contributors
+
+- [@liblaf](https://github.com/liblaf) made their first contribution
+
+## [0.1.1](https://github.com/liblaf/api/compare/v0.1.0..v0.1.1) - 2025-06-03
 
 ### ✨ Features
 
@@ -14,10 +28,6 @@
 ### ♻ Code Refactoring
 
 - remove unused CORS middleware - ([fb75171](https://github.com/liblaf/api/commit/fb75171a40f2aa13537994a061a35eb01738f25d))
-
-### ❤️ New Contributors
-
-- [@liblaf](https://github.com/liblaf) made their first contribution
 
 ## [0.1.0](https://github.com/liblaf/api/compare/v0.0.0..v0.1.0) - 2025-06-02
 
