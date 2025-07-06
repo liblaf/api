@@ -3,9 +3,7 @@
 
 {
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
-  "files": {
-    "ignore": ["**/worker-configuration.d.ts"]
-  },
+  "root": false,
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -27,9 +25,6 @@
     "enabled": true,
     "indentStyle": "space"
   },
-  "organizeImports": {
-    "enabled": true
-  },
   "json": {
     "formatter": {
       "enabled": false
@@ -37,5 +32,16 @@
     "linter": {
       "enabled": false
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/dist/**", "**/worker-configuration.d.ts"],
+      "formatter": {
+        "enabled": false
+      },
+      "linter": {
+        "enabled": false
+      }
+    }
+  ]
 }
