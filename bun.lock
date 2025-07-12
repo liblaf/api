@@ -8,7 +8,7 @@
         "@scalar/hono-api-reference": "^0.9.1",
         "hono": "^4.7.10",
         "ua-parser-js": "^2.0.3",
-        "zod": "^3.25.42",
+        "zod": "^4.0.0",
       },
       "devDependencies": {
         "@biomejs/biome": "^2.0.0",
@@ -520,7 +520,7 @@
 
     "youch": ["youch@3.3.4", "https://mirrors.huaweicloud.com/repository/npm/youch/-/youch-3.3.4.tgz", { "dependencies": { "cookie": "^0.7.1", "mustache": "^4.2.0", "stacktracey": "^2.1.8" } }, "sha512-UeVBXie8cA35DS6+nBkls68xaBBXCye0CNznrhszZjTbRVnJKQuNsyLKBTTL4ln1o1rh2PKtv35twV7irj5SEg=="],
 
-    "zod": ["zod@3.25.42", "https://mirrors.huaweicloud.com/repository/npm/zod/-/zod-3.25.42.tgz", {}, "sha512-PcALTLskaucbeHc41tU/xfjfhcz8z0GdhhDcSgrCTmSazUuqnYqiXO63M0QUBVwpBlsLsNVn5qHSC5Dw3KZvaQ=="],
+    "zod": ["zod@4.0.0", "", {}, "sha512-9diLdTPc/L7w/5jI4C3gHYNiGHDV9IZYxo1e5LSD8cabi65WVTWWb+g2BGPEpUUCOxR4D+6O5B0AzyMdUAXwrw=="],
 
     "@isaacs/cliui/string-width": ["string-width@5.1.2", "https://mirrors.huaweicloud.com/repository/npm/string-width/-/string-width-5.1.2.tgz", { "dependencies": { "eastasianwidth": "^0.2.0", "emoji-regex": "^9.2.2", "strip-ansi": "^7.0.1" } }, "sha512-HnLOCR3vjcY8beoNLtcjZ5/nxn2afmME6lhrDrebokqMap+XbeW8n9TXpPDOqdGK5qcI3oT0GKTW6wC7EMiVqA=="],
 
