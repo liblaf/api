@@ -1,13 +1,17 @@
 # Changelog
 
-## [0.1.3](https://github.com/liblaf/api/compare/v0.1.2...v0.1.3) (2025-07-12)
-
+## [0.1.3](https://github.com/liblaf/api/compare/v0.1.2..v0.1.3) - 2025-07-12
 
 ### ⬆️ Dependencies
 
-* **deps:** update dependency zod to v4 ([#106](https://github.com/liblaf/api/issues/106)) ([4bf6476](https://github.com/liblaf/api/commit/4bf6476669a0dfb828e7659223156c8169417f80))
+- **deps:** update dependency zod to v4 (#106) - ([4bf6476](https://github.com/liblaf/api/commit/4bf6476669a0dfb828e7659223156c8169417f80))
 
-## [0.1.2](https://github.com/liblaf/api/compare/v0.1.1..v0.1.2) - 2025-06-05
+### ❤️ New Contributors
+
+- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#106](https://github.com/liblaf/api/pull/106)
+- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
+
+## [0.1.2](https://github.com/liblaf/api/compare/v0.1.1..v0.1.2) - 2025-06-06
 
 ### ✨ Features
 
@@ -16,10 +20,6 @@
 ### ♻ Code Refactoring
 
 - **proxy:** use hono/proxy instead of custom implementation - ([d9289ff](https://github.com/liblaf/api/commit/d9289ffb8b0db9f4e5450b9ce0e75ee6ad9fd712))
-
-### ❤️ New Contributors
-
-- [@liblaf](https://github.com/liblaf) made their first contribution
 
 ## [0.1.1](https://github.com/liblaf/api/compare/v0.1.0..v0.1.1) - 2025-06-03
 
