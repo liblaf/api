@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/liblaf/api/compare/v0.1.3...v0.1.4) (2025-07-19)
+
+
+### ⬆️ Dependencies
+
+* **deps:** update dependency @hono/zod-openapi to v1 ([#108](https://github.com/liblaf/api/issues/108)) ([6e4addb](https://github.com/liblaf/api/commit/6e4addb456f5583e85e991e6c7ca91d3f05fd131))
+
 ## [0.1.3](https://github.com/liblaf/api/compare/v0.1.2..v0.1.3) - 2025-07-12
 
 ### ⬆️ Dependencies
