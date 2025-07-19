@@ -1,22 +1,20 @@
 # Changelog
 
-## [0.1.4](https://github.com/liblaf/api/compare/v0.1.3...v0.1.4) (2025-07-19)
-
+## [0.1.4](https://github.com/liblaf/api/compare/v0.1.3..v0.1.4) - 2025-07-19
 
 ### ⬆️ Dependencies
 
-* **deps:** update dependency @hono/zod-openapi to v1 ([#108](https://github.com/liblaf/api/issues/108)) ([6e4addb](https://github.com/liblaf/api/commit/6e4addb456f5583e85e991e6c7ca91d3f05fd131))
+- **deps:** update dependency @hono/zod-openapi to v1 (#108) - ([6e4addb](https://github.com/liblaf/api/commit/6e4addb456f5583e85e991e6c7ca91d3f05fd131))
 
-## [0.1.3](https://github.com/liblaf/api/compare/v0.1.2..v0.1.3) - 2025-07-12
+### ❤️ New Contributors
+
+- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#108](https://github.com/liblaf/api/pull/108)
+
+## [0.1.3](https://github.com/liblaf/api/compare/v0.1.2..v0.1.3) - 2025-07-13
 
 ### ⬆️ Dependencies
 
 - **deps:** update dependency zod to v4 (#106) - ([4bf6476](https://github.com/liblaf/api/commit/4bf6476669a0dfb828e7659223156c8169417f80))
-
-### ❤️ New Contributors
-
-- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#106](https://github.com/liblaf/api/pull/106)
-- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
 
 ## [0.1.2](https://github.com/liblaf/api/compare/v0.1.1..v0.1.2) - 2025-06-06
 
