@@ -44,7 +44,7 @@
     "prepack": "npm run cf-typegen && npm run build"
   },
   "dependencies": {
-    "@hono/zod-openapi": "^0.19.8",
+    "@hono/zod-openapi": "^1.0.0",
     "@scalar/hono-api-reference": "^0.9.1",
     "hono": "^4.7.10",
     "ua-parser-js": "^2.0.3",
