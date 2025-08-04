@@ -75,40 +75,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # <https://github.com/npm/cli/issues/1637#issuecomment-1888709776>
 
-  pre-release:
-    name: Pre-Release
-    permissions:
-      contents: write
-    needs:
-      - build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}-pre-release
-      cancel-in-progress: true
-    steps:
-      - id: auth
-        name: Auth App
-        uses: liblaf/actions/auth-app@main
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: pack
-          path: pack/
-      - name: Create Pre-Release
-        uses: liblaf/actions/release@main
-        with:
-          clobber: true
-          files: pack/*
-          prerelease: true
-          tag: dev
-          token: ${{ steps.auth.outputs.token }}
-
   release:
     name: Release
     permissions:
