@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { env } from "hono/adapter";
 import type { App } from "../utils";
 
-export function mihomo(app: App): void {
+export function subscribe(app: App): void {
   app.openapi(
     createRoute({
       method: "get",
@@ -15,7 +15,6 @@ export function mihomo(app: App): void {
         }),
         query: z.object({
           id: z
-            .string()
             .uuid()
             .openapi({ example: "00000000-0000-0000-0000-000000000000" }),
         }),
@@ -29,8 +28,7 @@ export function mihomo(app: App): void {
     async (c) => {
       const { filename } = c.req.param();
       const { id } = c.req.query();
-      if (id !== env(c).UUID) return c.newResponse(null, 403);
-      const data = await env(c).KV.get(filename);
+      const data = await env(c).KV.get(`${id}/${filename}`);
       if (!data) return c.notFound();
       return c.text(data);
     },

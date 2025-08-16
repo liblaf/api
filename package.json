@@ -44,20 +44,20 @@
     "prepack": "npm run cf-typegen && npm run build"
   },
   "dependencies": {
-    "@hono/zod-openapi": "^1.0.0",
-    "@scalar/hono-api-reference": "^0.9.1",
-    "hono": "^4.7.10",
-    "ua-parser-js": "^2.0.3",
-    "zod": "^4.0.0"
+    "@hono/zod-openapi": "^1",
+    "@scalar/hono-api-reference": "^0.9",
+    "hono": "^4",
+    "ua-parser-js": "^2",
+    "zod": "^4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.0",
-    "@tsconfig/bun": "^1.0.8",
-    "bunup": "^0.9.0",
-    "wrangler": "^4.18.0"
+    "@biomejs/biome": "^2",
+    "@tsconfig/bun": "^1",
+    "bunup": "^0.9",
+    "wrangler": "^4"
   },
   "peerDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "^5"
   },
   "publishConfig": {
     "access": "public",

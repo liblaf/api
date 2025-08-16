@@ -1,10 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
+import { HTTPException } from "hono/http-exception";
 import { UAParser } from "ua-parser-js";
 import { description, version } from "../package.json";
-import { icons, mihomo, rules } from "./routes";
+import { icons, rules, subscribe } from "./routes";
 import { type App, createApp } from "./utils";
-import { HTTPException } from "hono/http-exception";
 
 const app: App = createApp();
 
@@ -41,7 +41,7 @@ app.openapi(
 );
 
 icons(app);
-mihomo(app);
+subscribe(app);
 rules(app);
 
 export default app;
