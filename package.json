@@ -53,7 +53,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2",
     "@tsconfig/bun": "^1",
-    "bunup": "^0.9",
+    "bunup": "^0.10.0",
     "wrangler": "^4"
   },
   "peerDependencies": {
