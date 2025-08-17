@@ -1,14 +1,22 @@
 # Changelog
 
-## [0.1.4](https://github.com/liblaf/api/compare/v0.1.3..v0.1.4) - 2025-07-19
+## [0.1.5](https://github.com/liblaf/api/compare/v0.1.4..v0.1.5) - 2025-08-17
+
+### ✨ Features
+
+- **routes:** add generic subscription file handler with KV storage - ([0bb8f52](https://github.com/liblaf/api/commit/0bb8f527688649ce1550482bc2a3fe8b1506bf0f))
+
+### ❤️ New Contributors
+
+- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
+- [@liblaf](https://github.com/liblaf) made their first contribution
+- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#112](https://github.com/liblaf/api/pull/112)
+
+## [0.1.4](https://github.com/liblaf/api/compare/v0.1.3..v0.1.4) - 2025-07-20
 
 ### ⬆️ Dependencies
 
 - **deps:** update dependency @hono/zod-openapi to v1 (#108) - ([6e4addb](https://github.com/liblaf/api/commit/6e4addb456f5583e85e991e6c7ca91d3f05fd131))
-
-### ❤️ New Contributors
-
-- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#108](https://github.com/liblaf/api/pull/108)
 
 ## [0.1.3](https://github.com/liblaf/api/compare/v0.1.2..v0.1.3) - 2025-07-13
 
