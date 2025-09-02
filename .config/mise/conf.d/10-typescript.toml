@@ -4,6 +4,3 @@
 
 [env]
 _.path = ["{{ config_root }}/node_modules/.bin"]
-
-[[hooks.enter]]
-script = "bun install"

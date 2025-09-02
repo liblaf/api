@@ -1,9 +1,0 @@
-{
-  "extends": "@tsconfig/bun/tsconfig.json",
-  "compilerOptions": {
-    "allowJs": false,
-    "declaration": true,
-    "experimentalDecorators": true,
-    "isolatedDeclarations": true
-  }
-}
