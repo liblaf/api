@@ -5,40 +5,29 @@ name: Build
 
 on:
   push:
-    branches-ignore:
-      - assets**
-      - dist**
-      - gh-pages
   pull_request:
-  release:
-    types:
-      - published
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }} @ ${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  pre:
-    name: Pre
+  skip-duplicate:
+    name: Skip Duplicate
     permissions:
       actions: write
     runs-on: ubuntu-latest
     outputs:
-      should-skip: ${{ steps.pre.outputs.should-skip }}
+      should-skip: ${{ steps.skip-duplicate.outputs.should-skip }}
     steps:
-      - id: pre
-        name: Skip Duplicate Actions
-        uses: liblaf/actions-ts/pre@dist
+      - id: skip-duplicate
+        name: Skip Duplicate
+        uses: liblaf/actions/skip-duplicate@dist
         with:
           cancel-others: true
 
   build:
     name: Build
     needs:
-      - pre
-    if: needs.pre.outputs.should-skip != 'true'
+      - skip-duplicate
+    if: needs.skip-duplicate.outputs.should-skip != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -50,31 +39,9 @@ jobs:
           bun install
           bun pm bin >> "$GITHUB_PATH"
       - name: Build
-        run: bun pm pack --destination pack/
+        run: bun pm pack --destination 'pack'
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: pack
-          path: pack/
-
-  release:
-    name: Release
-    permissions:
-      contents: write
-    needs:
-      - build
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Download Artifacts
-        uses: actions/download-artifact@v5
-        with:
-          name: pack
-          path: pack/
-      - name: Upload Release Assets
-        uses: liblaf/actions/release@main
-        with:
-          files: pack/*
-          tag: ${{ github.ref_name }}
+          path: pack
