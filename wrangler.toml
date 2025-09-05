@@ -1,18 +1,16 @@
 #:schema https://www.unpkg.com/wrangler/config-schema.json
 
-name = "api"
-main = "./src/index.ts"
 compatibility_date = "2025-05-31"
 compatibility_flags = ["nodejs_compat"]
+main = "./src/index.ts"
 minify = true
-
-[observability]
-enabled = true
+name = "api"
+send_metrics = false
+upload_source_maps = true
 
 [[kv_namespaces]]
 binding = "KV"
 id = "9ee893b26f644ffa8310b02483aa9934"
 
-[[env.example.kv_namespaces]]
-binding = "KV"
-id = "00000000000000000000000000000000"
+[observability]
+enabled = true

@@ -1,4 +1,4 @@
 #:schema https://mise.jdx.dev/schema/mise.json
 
-[hooks]
-enter = ".config/mise/hooks/enter.sh"
+[hooks.enter]
+script = "bun install"

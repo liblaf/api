@@ -12,6 +12,7 @@
       },
       "devDependencies": {
         "@biomejs/biome": "^2",
+        "@liblaf/config": "^0.1.1",
         "@tsconfig/bun": "^1",
         "bunup": "^0.11.0",
         "wrangler": "^4",
@@ -169,6 +170,8 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.0", "https://mirrors.huaweicloud.com/repository/npm/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.0.tgz", {}, "sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.9", "https://mirrors.huaweicloud.com/repository/npm/@jridgewell/trace-mapping/-/trace-mapping-0.3.9.tgz", { "dependencies": { "@jridgewell/resolve-uri": "^3.0.3", "@jridgewell/sourcemap-codec": "^1.4.10" } }, "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ=="],
+
+    "@liblaf/config": ["@liblaf/config@0.1.1", "https://registry.npmmirror.com/@liblaf/config/-/config-0.1.1.tgz", { "peerDependencies": { "typescript": "^5" } }, "sha512-unhTsNhZh7Nc0CfHMp/PtZTieUOO7qgxmFg7eKSKZUru48VemnytVI5TREfzyOrCp+fzb7Jkc25PTtK3S/FwQw=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.0.1", "", { "dependencies": { "@emnapi/core": "^1.4.5", "@emnapi/runtime": "^1.4.5", "@tybys/wasm-util": "^0.10.0" } }, "sha512-KVlQ/jgywZpixGCKMNwxStmmbYEMyokZpCf2YuIChhfJA2uqfAKNEM8INz7zzTo55iEXfBhIIs3VqYyqzDLj8g=="],
 
