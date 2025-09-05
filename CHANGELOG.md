@@ -1,16 +1,23 @@
 # Changelog
 
+## [0.1.6](https://github.com/liblaf/api/compare/v0.1.5..v0.1.6) - 2025-09-05
+
+### 👷 Build System
+
+- update project configuration and build system - ([769cbe3](https://github.com/liblaf/api/commit/769cbe38e7805b312b6d1ce54511c684e60a4a6d))
+
+### ❤️ New Contributors
+
+- [@liblaf](https://github.com/liblaf) made their first contribution
+- [@github-actions[bot]](https://github.com/apps/github-actions) made their first contribution in [#118](https://github.com/liblaf/api/pull/118)
+- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#116](https://github.com/liblaf/api/pull/116)
+- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
+
 ## [0.1.5](https://github.com/liblaf/api/compare/v0.1.4..v0.1.5) - 2025-08-17
 
 ### ✨ Features
 
 - **routes:** add generic subscription file handler with KV storage - ([0bb8f52](https://github.com/liblaf/api/commit/0bb8f527688649ce1550482bc2a3fe8b1506bf0f))
-
-### ❤️ New Contributors
-
-- [@liblaf-bot[bot]](https://github.com/apps/liblaf-bot) made their first contribution
-- [@liblaf](https://github.com/liblaf) made their first contribution
-- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#112](https://github.com/liblaf/api/pull/112)
 
 ## [0.1.4](https://github.com/liblaf/api/compare/v0.1.3..v0.1.4) - 2025-07-20
 
