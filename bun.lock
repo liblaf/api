@@ -13,13 +13,15 @@
       "devDependencies": {
         "@biomejs/biome": "^2",
         "@liblaf/config": "^0.1.1",
-        "@tsconfig/bun": "^1",
         "bunup": "^0.11.0",
         "wrangler": "^4",
       },
       "peerDependencies": {
         "typescript": "^5",
       },
+      "optionalPeers": [
+        "typescript",
+      ],
     },
   },
   "packages": {
@@ -268,8 +270,6 @@
     "@sindresorhus/is": ["@sindresorhus/is@7.0.2", "https://mirrors.huaweicloud.com/repository/npm/@sindresorhus/is/-/is-7.0.2.tgz", {}, "sha512-d9xRovfKNz1SKieM0qJdO+PQonjnnIfSNWfHYnBSJ9hkjm0ZPw6HlxscDXYstp3z+7V2GOFHc+J0CYrYTjqCJw=="],
 
     "@speed-highlight/core": ["@speed-highlight/core@1.2.7", "https://mirrors.huaweicloud.com/repository/npm/@speed-highlight/core/-/core-1.2.7.tgz", {}, "sha512-0dxmVj4gxg3Jg879kvFS/msl4s9F3T9UXC1InxgOf7t5NvcPD97u/WTA5vL/IxWHMn7qSxBozqrnnE2wvl1m8g=="],
-
-    "@tsconfig/bun": ["@tsconfig/bun@1.0.8", "https://mirrors.huaweicloud.com/repository/npm/@tsconfig/bun/-/bun-1.0.8.tgz", {}, "sha512-JlJaRaS4hBTypxtFe8WhnwV8blf0R+3yehLk8XuyxUYNx6VXsKCjACSCvOYEFUiqlhlBWxtYCn/zRlOb8BzBQg=="],
 
     "@tybys/wasm-util": ["@tybys/wasm-util@0.10.0", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ=="],
 
