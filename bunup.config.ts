@@ -1,12 +1,13 @@
 import { defineConfig } from "bunup";
-import { exports, shims, unused } from "bunup/plugins";
 
 export default defineConfig({
   entry: ["src/index.ts"],
-  format: ["esm", "cjs", "iife"],
+  format: ["esm"],
   minify: true,
   dts: true,
   target: "bun",
   sourcemap: "linked",
-  plugins: [shims(), exports(), unused()],
+  shims: true,
+  exports: true,
+  unused: true,
 });
