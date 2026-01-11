@@ -7,7 +7,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.7](https://github.com/liblaf/api/releases/tag/v0.1.7) - 2025-12-14
+## [0.1.8](https://github.com/liblaf/api/releases/tag/v0.1.8) - 2026-01-05
+
+### 🐛 Bug Fixes
+
+- **deps:** update dependency chanfana to v3 (#136) - [2d9da40](https://github.com/liblaf/api/commit/2d9da4085ab160f910f84ee7e19ace7ef4fccf1e) by [@renovate[bot]](https://github.com/apps/renovate) in [#136](https://github.com/liblaf/api/pull/136)
+
+### ❤️ Contributors
+
+- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#136](https://github.com/liblaf/api/pull/136)
+- [@liblaf[bot]](https://github.com/apps/liblaf) made their first contribution in [#134](https://github.com/liblaf/api/pull/134)
+
+## [0.1.7](https://github.com/liblaf/api/releases/tag/v0.1.7) - 2025-12-21
 
 ### ✨ Features
 
@@ -15,10 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ❤️ Contributors
 
-- [@renovate[bot]](https://github.com/apps/renovate) made their first contribution in [#130](https://github.com/liblaf/api/pull/130)
+- [@liblaf[bot]](https://github.com/apps/liblaf)
+- [@renovate[bot]](https://github.com/apps/renovate)
 - [@copier-update[bot]](https://github.com/apps/copier-update) made their first contribution in [#125](https://github.com/liblaf/api/pull/125)
-- [@liblaf](https://github.com/liblaf) made their first contribution
-- [@liblaf[bot]](https://github.com/apps/liblaf) made their first contribution
+- [@liblaf](https://github.com/liblaf)
 
 ## [0.1.6](https://github.com/liblaf/api/releases/tag/v0.1.6) - 2025-09-07
 
