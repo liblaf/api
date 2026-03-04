@@ -51,8 +51,8 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@scalar/hono-api-reference": "^0.9.28",
-    "@scalar/openapi-to-markdown": "^0.3.8",
+    "@scalar/hono-api-reference": "^0.10.0",
+    "@scalar/openapi-to-markdown": "^0.4.0",
     "chanfana": "^3.0.0",
     "hono": "^4.11.0"
   },
