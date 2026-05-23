@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.2.0/README.md),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10](https://github.com/liblaf/api/compare/v0.1.9...v0.1.10) (2026-05-23)
+
+
+### 🐛 Bug Fixes
+
+* **deps:** update dependency @scalar/openapi-to-markdown to ^0.5.0 ([#151](https://github.com/liblaf/api/issues/151)) ([a2b7954](https://github.com/liblaf/api/commit/a2b7954c13c868344a3ff72895621dc19fa0e412))
+
 ## [0.1.9](https://github.com/liblaf/api/releases/tag/v0.1.9) - 2026-03-04
 
 ### 🐛 Bug Fixes
